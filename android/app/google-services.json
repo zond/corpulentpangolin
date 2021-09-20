@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "527588078303",
+    "project_id": "corpulentpangolin",
+    "storage_bucket": "corpulentpangolin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:527588078303:android:dc9176ccf9174b055d2f6a",
+        "android_client_info": {
+          "package_name": "com.diplicity.corpulentpangolin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "527588078303-1okjhub8r6346qei741tf4i53u8v3v49.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diplicity.corpulentpangolin",
+            "certificate_hash": "089b35114536b6db8c0428c35798ee31d68032f3"
+          }
+        },
+        {
+          "client_id": "527588078303-sf3mnkoecgontl6pgkj278cvfc58kqhv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP7dx4m0yCZDRxoIBt8PYkLToS6B_97Go"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "527588078303-sf3mnkoecgontl6pgkj278cvfc58kqhv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
