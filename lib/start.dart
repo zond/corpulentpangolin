@@ -30,15 +30,17 @@ class Start extends StatelessWidget {
             ),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Text("corpulentpangolin!"),
-            ),
-          ],
+      body: withLoginBackground(
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Text("corpulentpangolin!"),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -55,11 +57,3 @@ Widget withLoginBackground(Widget widget) {
     child: widget);
 }
 
-class _Loading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return withLoginBackground(
-      Spinner(),
-    );
-  }
-}
