@@ -13,12 +13,12 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<FirebaseApp>(
-        builder: (context, snapshot) {
-          return MaterialApp.router(
-            routerDelegate: appRouter.delegate(),
-            routeInformationParser: appRouter.defaultRouteParser(),
-          );
-        },
+      builder: (context, snapshot) {
+        return MaterialApp.router(
+          routerDelegate: appRouter.delegate(),
+          routeInformationParser: appRouter.defaultRouteParser(),
+        );
+      },
     );
   }
 }

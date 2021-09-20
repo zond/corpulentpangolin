@@ -14,8 +14,7 @@ class Start extends StatelessWidget {
           if (false)
             PopupMenuButton(
               icon: Icon(Icons.person),
-              itemBuilder: (context) =>
-              [
+              itemBuilder: (context) => [
                 PopupMenuItem(
                   child: Text("Logout"),
                   value: 0,
@@ -49,11 +48,10 @@ class Start extends StatelessWidget {
 
 Widget withLoginBackground(Widget widget) {
   return Container(
-    decoration: BoxDecoration(
-      image: DecorationImage(
-          image: AssetImage("assets/images/login_background.jpg"),
-          fit: BoxFit.cover),
-    ),
-    child: widget);
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage("assets/images/login_background.jpg"),
+            fit: BoxFit.cover),
+      ),
+      child: widget);
 }
-

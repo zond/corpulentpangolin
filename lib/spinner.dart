@@ -14,8 +14,8 @@ class _SpinnerState extends State<Spinner> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(seconds: 1),
     )..addListener(() {
-      setState(() {});
-    });
+        setState(() {});
+      });
     controller.repeat();
     super.initState();
   }
