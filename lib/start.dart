@@ -14,43 +14,43 @@ class Start extends StatelessWidget {
         automaticallyImplyLeading: false,
         actions: <Widget>[
           ValueListenableBuilder<User?>(
-              valueListenable: user,
-              builder: (context, user, child) {
-                if (user == null) {
-                  return PopupMenuButton(
-                    icon: Icon(Icons.person),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        child: Text("Log in"),
-                        value: 0,
-                      ),
-                    ],
-                    onSelected: (item) {
-                      switch (item) {
-                        case 0:
-                          toast(context, "Logged in");
-                          signInWithGoogle();
-                      }
-                    },
-                  );
-                } else {
-                  return PopupMenuButton(
-                    icon: Icon(Icons.person),
-                    itemBuilder: (context) => [
-                      PopupMenuItem(
-                        child: Text("Log out"),
-                        value: 0,
-                      ),
-                    ],
-                    onSelected: (item) {
-                      switch (item) {
-                        case 0:
-                          toast(context, "Logged out");
-                      }
-                    },
-                  );
-                }
-              },
+            valueListenable: user,
+            builder: (context, user, child) {
+              if (user == null) {
+                return PopupMenuButton(
+                  icon: Icon(Icons.person),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      child: Text("Log in"),
+                      value: 0,
+                    ),
+                  ],
+                  onSelected: (item) {
+                    switch (item) {
+                      case 0:
+                        toast(context, "Logged in");
+                        signInWithGoogle();
+                    }
+                  },
+                );
+              } else {
+                return PopupMenuButton(
+                  icon: Icon(Icons.person),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      child: Text("Log out"),
+                      value: 0,
+                    ),
+                  ],
+                  onSelected: (item) {
+                    switch (item) {
+                      case 0:
+                        toast(context, "Logged out");
+                    }
+                  },
+                );
+              }
+            },
           )
         ],
       ),

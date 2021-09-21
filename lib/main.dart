@@ -13,12 +13,12 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
       future: configureApp(),
-        builder: (context, snapshot) {
-          return MaterialApp.router(
-            routerDelegate: appRouter.delegate(),
-            routeInformationParser: appRouter.defaultRouteParser(),
-          );
-        },
+      builder: (context, snapshot) {
+        return MaterialApp.router(
+          routerDelegate: appRouter.delegate(),
+          routeInformationParser: appRouter.defaultRouteParser(),
+        );
+      },
     );
   }
 }
