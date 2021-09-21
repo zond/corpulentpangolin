@@ -1,16 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-final user = ValueNotifier<User?>(null);
-final FirebaseAuth auth = FirebaseAuth.instance
-  ..userChanges().listen((u) {
-    user.value = u;
-  });
 
 Future<UserCredential> signInWithGoogle() async {
   // Trigger the authentication flow
-  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  final GoogleSignInAccount? googleUser = await GoogleSignIn(
+    clientId: "527588078303-sf3mnkoecgontl6pgkj278cvfc58kqhv.apps.googleusercontent.com",
+    scopes: ["email"],
+  ).signIn();
 
   // Obtain the auth details from the request
   final GoogleSignInAuthentication googleAuth =

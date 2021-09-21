@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'toast.dart';
-import 'spinner.dart';
+import 'globals.dart';
+import 'auth.dart';
 
 class Start extends StatelessWidget {
   @override
@@ -11,22 +13,45 @@ class Start extends StatelessWidget {
         title: Text("corpulentpangolin"),
         automaticallyImplyLeading: false,
         actions: <Widget>[
-          if (false)
-            PopupMenuButton(
-              icon: Icon(Icons.person),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  child: Text("Logout"),
-                  value: 0,
-                ),
-              ],
-              onSelected: (item) {
-                switch (item) {
-                  case 0:
-                    toast(context, "Logged out");
+          ValueListenableBuilder<User?>(
+              valueListenable: user,
+              builder: (context, user, child) {
+                if (user == null) {
+                  return PopupMenuButton(
+                    icon: Icon(Icons.person),
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Text("Log in"),
+                        value: 0,
+                      ),
+                    ],
+                    onSelected: (item) {
+                      switch (item) {
+                        case 0:
+                          toast(context, "Logged in");
+                          signInWithGoogle();
+                      }
+                    },
+                  );
+                } else {
+                  return PopupMenuButton(
+                    icon: Icon(Icons.person),
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Text("Log out"),
+                        value: 0,
+                      ),
+                    ],
+                    onSelected: (item) {
+                      switch (item) {
+                        case 0:
+                          toast(context, "Logged out");
+                      }
+                    },
+                  );
                 }
               },
-            ),
+          )
         ],
       ),
       body: withLoginBackground(
