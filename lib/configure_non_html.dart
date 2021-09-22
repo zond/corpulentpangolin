@@ -1,0 +1,3 @@
+void configureConditional() {
+  // Pass
+}

@@ -28,8 +28,8 @@ class Start extends StatelessWidget {
                   onSelected: (item) {
                     switch (item) {
                       case 0:
-                        toast(context, "Logged in");
-                        signInWithGoogle();
+                        signInWithGoogle()
+                            .then((_) => toast(context, "Logged in"));
                     }
                   },
                 );
@@ -45,7 +45,9 @@ class Start extends StatelessWidget {
                   onSelected: (item) {
                     switch (item) {
                       case 0:
-                        toast(context, "Logged out");
+                        FirebaseAuth.instance
+                            .signOut()
+                            .then((_) => toast(context, "Logged out"));
                     }
                   },
                 );

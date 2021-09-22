@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
@@ -33,7 +20,18 @@
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
   <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyDN9Wex1TxNbr-gtMpFiewHsCn6l_hrNHE",
+      authDomain: "corpulentpangolin.firebaseapp.com",
+      projectId: "corpulentpangolin",
+      storageBucket: "corpulentpangolin.appspot.com",
+      messagingSenderId: "527588078303",
+      appId: "1:527588078303:web:910de1bc30bafe0a5d2f6a",
+      measurementId: "G-53YL6VYFPC"
+    });
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
     function loadMainDartJs() {
@@ -96,29 +94,6 @@
       // Service workers not supported. Just drop the <script> tag.
       loadMainDartJs();
     }
-  </script>
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyDN9Wex1TxNbr-gtMpFiewHsCn6l_hrNHE",
-      authDomain: "corpulentpangolin.firebaseapp.com",
-      projectId: "corpulentpangolin",
-      storageBucket: "corpulentpangolin.appspot.com",
-      messagingSenderId: "527588078303",
-      appId: "1:527588078303:web:910de1bc30bafe0a5d2f6a",
-      measurementId: "G-53YL6VYFPC"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
   </script>
 </body>
 </html>
