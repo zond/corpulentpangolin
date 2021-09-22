@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'toast.dart';
 import 'globals.dart';
 import 'auth.dart';
+import 'spinner.dart';
 
 class Start extends StatelessWidget {
+  final games = FirebaseFirestore.instance.collection("games").snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,15 +62,39 @@ class Start extends StatelessWidget {
       body: withLoginBackground(
         Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Text("corpulentpangolin!"),
+              Material(
+                child: ListTile(
+                  title: Text("Games"),
+                ),
               ),
+              StreamBuilder<QuerySnapshot>(
+                stream: games,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text("Error loading games",
+                        style: TextStyle(backgroundColor: Colors.white));
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return Spinner();
+                  } else {
+                    return Column(
+                      children: snapshot.data!.docs.map((game) {
+                        return ListTile(
+                          title: Text("${game.data()}"),
+                        );
+                      }).toList(),
+                    );
+                  }
+                },
+              )
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => toast(context, "click!"),
       ),
     );
   }
