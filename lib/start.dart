@@ -15,15 +15,15 @@ class Start extends StatelessWidget {
       .snapshots();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("corpulentpangolin"),
-        actions: <Widget>[
-          ValueListenableBuilder<User?>(
-            valueListenable: user,
-            builder: (context, user, child) {
-              if (user == null) {
-                return PopupMenuButton(
+    return ValueListenableBuilder<User?>(
+      valueListenable: user,
+      builder: (context, user, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text("corpulentpangolin"),
+            actions: <Widget>[
+              if (user == null)
+                PopupMenuButton(
                   icon: Icon(Icons.person),
                   itemBuilder: (context) => [
                     PopupMenuItem(
@@ -38,9 +38,9 @@ class Start extends StatelessWidget {
                             .then((_) => toast(context, "Logged in"));
                     }
                   },
-                );
-              } else {
-                return PopupMenuButton(
+                ),
+              if (user != null)
+                PopupMenuButton(
                   icon: Icon(Icons.person),
                   itemBuilder: (context) => [
                     PopupMenuItem(
@@ -56,49 +56,50 @@ class Start extends StatelessWidget {
                             .then((_) => toast(context, "Logged out"));
                     }
                   },
-                );
-              }
-            },
-          )
-        ],
-      ),
-      body: withLoginBackground(
-        Center(
-          child: Column(
-            children: <Widget>[
-              Material(
-                child: ListTile(
-                  title: Text("Games"),
                 ),
-              ),
-              StreamBuilder<QuerySnapshot>(
-                stream: games,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text("Error loading games: ${snapshot.error}",
-                        style: TextStyle(backgroundColor: Colors.white));
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return Spinner();
-                  } else {
-                    return Column(
-                      children: snapshot.data!.docs.map((game) {
-                        return ListTile(
-                          title: Text("${game.data()}"),
-                        );
-                      }).toList(),
-                    );
-                  }
-                },
-              )
             ],
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => appRouter.push(CreateGameRoute()),
-      ),
+          body: withLoginBackground(
+            Center(
+              child: Column(
+                children: <Widget>[
+                  Material(
+                    child: ListTile(
+                      title: Text("Games"),
+                    ),
+                  ),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: games,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Text("Error loading games: ${snapshot.error}",
+                            style: TextStyle(backgroundColor: Colors.white));
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return Spinner();
+                      } else {
+                        return Column(
+                          children: snapshot.data!.docs.map((game) {
+                            return ListTile(
+                              title: Text("${game.data()}"),
+                            );
+                          }).toList(),
+                        );
+                      }
+                    },
+                  )
+                ],
+              ),
+            ),
+          ),
+          floatingActionButton: user == null
+              ? null
+              : FloatingActionButton(
+                  child: Icon(Icons.add),
+                  onPressed: () => appRouter.push(CreateGameRoute()),
+                ),
+        );
+      },
     );
   }
 }
