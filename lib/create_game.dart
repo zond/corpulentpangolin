@@ -27,7 +27,7 @@ class _CreateGameState extends State<CreateGame> {
         title: Text("corpulentpangolin"),
       ),
       body: Center(
-        child: Column(
+        child: ListView(
           children: [
             ListTile(
               title: Text("Create game"),
