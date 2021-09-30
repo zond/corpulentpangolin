@@ -1,3 +1,4 @@
+import 'package:corpulentpangolin/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,13 +9,15 @@ import 'auth.dart';
 import 'spinner.dart';
 
 class Start extends StatelessWidget {
-  final games = FirebaseFirestore.instance.collection("games").snapshots();
+  final games = FirebaseFirestore.instance
+      .collection("game")
+      .where('private', isEqualTo: false)
+      .snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("corpulentpangolin"),
-        automaticallyImplyLeading: false,
         actions: <Widget>[
           ValueListenableBuilder<User?>(
             valueListenable: user,
@@ -72,7 +75,7 @@ class Start extends StatelessWidget {
                 stream: games,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
-                    return Text("Error loading games",
+                    return Text("Error loading games: ${snapshot.error}",
                         style: TextStyle(backgroundColor: Colors.white));
                   } else if (snapshot.connectionState ==
                       ConnectionState.waiting) {
@@ -94,7 +97,7 @@ class Start extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => toast(context, "click!"),
+        onPressed: () => appRouter.push(CreateGameRoute()),
       ),
     );
   }
