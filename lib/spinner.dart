@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Spinner extends StatefulWidget {
+  const Spinner({Key? key}) : super(key: key);
   @override
   State<Spinner> createState() => _SpinnerState();
 }

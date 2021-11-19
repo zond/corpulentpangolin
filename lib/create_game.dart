@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'spinner.dart';
 
 class CreateGame extends StatefulWidget {
+  const CreateGame({Key? key}) : super(key: key);
   @override
   _CreateGameState createState() => _CreateGameState();
 }
@@ -24,17 +25,17 @@ class _CreateGameState extends State<CreateGame> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("corpulentpangolin"),
+        title: const Text("corpulentpangolin"),
       ),
       body: Center(
         child: ListView(
           children: [
-            ListTile(
+            const ListTile(
               title: Text("Create game"),
             ),
             TextFormField(
               initialValue: game["desc"].toString(),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Description",
               ),
               onChanged: (newValue) {
@@ -46,13 +47,13 @@ class _CreateGameState extends State<CreateGame> {
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Text("Error loading variants: ${snapshot.error}",
-                        style: TextStyle(backgroundColor: Colors.white));
+                        style: const TextStyle(backgroundColor: Colors.white));
                   } else if (snapshot.connectionState ==
                       ConnectionState.waiting) {
-                    return Spinner();
+                    return const Spinner();
                   } else {
                     return InputDecorator(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: "Variant",
                       ),
                       child: DropdownButtonHideUnderline(
@@ -74,7 +75,7 @@ class _CreateGameState extends State<CreateGame> {
                   }
                 }),
             InputDecorator(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Private chat",
               ),
               child: Switch(
@@ -85,7 +86,7 @@ class _CreateGameState extends State<CreateGame> {
               ),
             ),
             InputDecorator(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Group chat",
               ),
               child: Switch(
@@ -96,7 +97,7 @@ class _CreateGameState extends State<CreateGame> {
               ),
             ),
             InputDecorator(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Conference chat",
               ),
               child: Switch(

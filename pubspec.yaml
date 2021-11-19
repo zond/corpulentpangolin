@@ -16,6 +16,7 @@ dependencies:
     sdk: flutter
   auto_route:
   google_sign_in:
+  provider:
   firebase_auth:
   firebase_core:
   flutter:
