@@ -4,21 +4,35 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
-
 import 'toast.dart';
 import 'auth.dart';
-import 'spinner.dart';
+import 'game_list.dart';
 
 class Start extends StatelessWidget {
-  Start({Key? key}) : super(key: key);
-  final games = FirebaseFirestore.instance
-      .collection("game")
-      .where('private', isEqualTo: false)
-      .snapshots();
+  const Start({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var user = context.watch<User?>();
     var appRouter = context.read<AppRouter>();
+    final publicGames = FirebaseFirestore.instance
+        .collection("game")
+        .where('private', isEqualTo: false)
+        .snapshots();
+    Stream<QuerySnapshot<Map<String, dynamic>>>? myPublicGames;
+    Stream<QuerySnapshot<Map<String, dynamic>>>? myPrivateGames;
+    if (user != null) {
+      myPublicGames = FirebaseFirestore.instance
+          .collection("game")
+          .where('private', isEqualTo: false)
+          .where('players.${user.uid}.uid', isEqualTo: user.uid)
+          .snapshots();
+      myPrivateGames = FirebaseFirestore.instance
+          .collection("game")
+          .where('private', isEqualTo: true)
+          .where('players.${user.uid}.uid', isEqualTo: user.uid)
+          .snapshots();
+      debugPrint(user.uid);
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("corpulentpangolin"),
@@ -35,8 +49,7 @@ class Start extends StatelessWidget {
               onSelected: (item) {
                 switch (item) {
                   case 0:
-                    signInWithGoogle()
-                        .then((_) => toast(context, "Logged in"));
+                    signInWithGoogle().then((_) => toast(context, "Logged in"));
                 }
               },
             ),
@@ -66,29 +79,24 @@ class Start extends StatelessWidget {
             children: <Widget>[
               const Material(
                 child: ListTile(
-                  title: Text("Games"),
+                  title: Text("Public games"),
                 ),
               ),
-              StreamBuilder<QuerySnapshot>(
-                stream: games,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text("Error loading games: ${snapshot.error}",
-                        style: const TextStyle(backgroundColor: Colors.white));
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return const Spinner();
-                  } else {
-                    return Column(
-                      children: snapshot.data!.docs.map((game) {
-                        return ListTile(
-                          title: Text("${game.data()}"),
-                        );
-                      }).toList(),
-                    );
-                  }
-                },
-              )
+              GameList(publicGames),
+              if (user != null) ...[
+                const Material(
+                  child: ListTile(
+                    title: Text("My public games"),
+                  ),
+                ),
+                GameList(myPublicGames!),
+                const Material(
+                  child: ListTile(
+                    title: Text("My private games"),
+                  ),
+                ),
+                GameList(myPrivateGames!),
+              ],
             ],
           ),
         ),

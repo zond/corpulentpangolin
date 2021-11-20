@@ -16,7 +16,7 @@ void main() async {
 class App extends StatelessWidget {
   final ValueNotifier<User?> user = ValueNotifier(null);
   final AppRouter appRouter = AppRouter();
-  App({ Key? key }) : super(key: key) {
+  App({Key? key}) : super(key: key) {
     FirebaseAuth.instance.userChanges().listen((u) {
       user.value = u;
     });
