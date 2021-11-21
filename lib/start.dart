@@ -16,20 +16,20 @@ class Start extends StatelessWidget {
     var appRouter = context.read<AppRouter>();
     final publicGames = FirebaseFirestore.instance
         .collection("game")
-        .where('private', isEqualTo: false)
+        .where('Private', isEqualTo: false)
         .snapshots();
     Stream<QuerySnapshot<Map<String, dynamic>>>? myPublicGames;
     Stream<QuerySnapshot<Map<String, dynamic>>>? myPrivateGames;
     if (user != null) {
       myPublicGames = FirebaseFirestore.instance
           .collection("game")
-          .where('private', isEqualTo: false)
-          .where('players', arrayContains: user.uid)
+          .where('Private', isEqualTo: false)
+          .where('Players', arrayContains: user.uid)
           .snapshots();
       myPrivateGames = FirebaseFirestore.instance
           .collection("game")
-          .where('private', isEqualTo: true)
-          .where('players', arrayContains: user.uid)
+          .where('Private', isEqualTo: true)
+          .where('Players', arrayContains: user.uid)
           .snapshots();
       debugPrint(user.uid);
     }
