@@ -24,12 +24,12 @@ class Start extends StatelessWidget {
       myPublicGames = FirebaseFirestore.instance
           .collection("game")
           .where('private', isEqualTo: false)
-          .where('players.${user.uid}.uid', isEqualTo: user.uid)
+          .where('players', arrayContains: user.uid)
           .snapshots();
       myPrivateGames = FirebaseFirestore.instance
           .collection("game")
           .where('private', isEqualTo: true)
-          .where('players.${user.uid}.uid', isEqualTo: user.uid)
+          .where('players', arrayContains: user.uid)
           .snapshots();
       debugPrint(user.uid);
     }
