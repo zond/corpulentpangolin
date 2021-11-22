@@ -1,28 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'router.gr.dart';
 import 'spinner.dart';
+import 'toast.dart';
 
 class CreateGame extends StatefulWidget {
   const CreateGame({Key? key}) : super(key: key);
+
   @override
   _CreateGameState createState() => _CreateGameState();
 }
 
 class _CreateGameState extends State<CreateGame> {
   final game = {
-    "creator_uid": FirebaseAuth.instance.currentUser?.uid,
-    "desc": "",
-    "variant": "Classical",
-    "disable_private_chat": false,
-    "disable_group_chat": false,
-    "disable_conference_chat": false,
+    "CreatorUID": FirebaseAuth.instance.currentUser?.uid,
+    "Desc": "",
+    "State": "created",
+    "Private": false,
+    "Players": [FirebaseAuth.instance.currentUser?.uid],
+    "Variant": "Classical",
+    "DisablePrivateChat": false,
+    "DisableGroupChat": false,
+    "DisableConferenceChat": false,
   };
-  final variants = FirebaseFirestore.instance.collection("variant").snapshots();
+  final variants = FirebaseFirestore.instance.collection("Variant").snapshots();
+  final gameCollection = FirebaseFirestore.instance.collection("Game");
 
   @override
   Widget build(BuildContext context) {
+    var appRouter = context.read<AppRouter>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("corpulentpangolin"),
@@ -34,12 +43,12 @@ class _CreateGameState extends State<CreateGame> {
               title: Text("Create game"),
             ),
             TextFormField(
-              initialValue: game["desc"].toString(),
+              initialValue: game["Desc"].toString(),
               decoration: const InputDecoration(
                 labelText: "Description",
               ),
               onChanged: (newValue) {
-                setState(() => game["desc"] = newValue);
+                setState(() => game["Desc"] = newValue);
               },
             ),
             StreamBuilder<QuerySnapshot>(
@@ -58,7 +67,7 @@ class _CreateGameState extends State<CreateGame> {
                       ),
                       child: DropdownButtonHideUnderline(
                         child: DropdownButton(
-                          value: game["variant"],
+                          value: game["Variant"],
                           items: snapshot.data!.docs.map((variant) {
                             return DropdownMenuItem(
                               child: Text(variant.id),
@@ -67,48 +76,59 @@ class _CreateGameState extends State<CreateGame> {
                           }).toList(),
                           onChanged: (newValue) {
                             setState(
-                                () => game["variant"] = newValue.toString());
+                                () => game["Variant"] = newValue.toString());
                           },
                         ),
                       ),
                     );
                   }
                 }),
-            InputDecorator(
-              decoration: const InputDecoration(
-                labelText: "Private chat",
-              ),
-              child: Switch(
-                value: !(game["disable_private_chat"] as bool),
-                onChanged: (newValue) {
-                  setState(() => game["disable_private_chat"] = !newValue);
-                },
-              ),
+            Row(
+              children: [
+                Switch(
+                  value: !(game["DisablePrivateChat"] as bool),
+                  onChanged: (newValue) {
+                    setState(() => game["DisablePrivateChat"] = !newValue);
+                  },
+                ),
+                const Text("Private chat"),
+              ],
             ),
-            InputDecorator(
-              decoration: const InputDecoration(
-                labelText: "Group chat",
-              ),
-              child: Switch(
-                value: !(game["disable_group_chat"] as bool),
-                onChanged: (newValue) {
-                  setState(() => game["disable_group_chat"] = !newValue);
-                },
-              ),
+            Row(
+              children: [
+                Switch(
+                  value: !(game["DisableGroupChat"] as bool),
+                  onChanged: (newValue) {
+                    setState(() => game["DisableGroupChat"] = !newValue);
+                  },
+                ),
+                const Text("Group chat"),
+              ],
             ),
-            InputDecorator(
-              decoration: const InputDecoration(
-                labelText: "Conference chat",
-              ),
-              child: Switch(
-                value: !(game["disable_conference_chat"] as bool),
-                onChanged: (newValue) {
-                  setState(() => game["disable_conference_chat"] = !newValue);
-                },
-              ),
+            Row(
+              children: [
+                Switch(
+                  value: !(game["DisableConferenceChat"] as bool),
+                  onChanged: (newValue) {
+                    setState(() => game["DisableConferenceChat"] = !newValue);
+                  },
+                ),
+                const Text("Conference chat"),
+              ],
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          debugPrint(game.toString());
+          gameCollection.add(game).then((_) {
+            appRouter.pop().then((_) => toast(context, "Game created"));
+          }).catchError((err) {
+            toast(context, "Failed creating game: $err");
+          });
+        },
       ),
     );
   }
