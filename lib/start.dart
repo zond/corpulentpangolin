@@ -74,32 +74,28 @@ class Start extends StatelessWidget {
         ],
       ),
       body: withLoginBackground(
-        Center(
-          child: Column(
-            children: <Widget>[
-              const Material(
-                child: ListTile(
-                  title: Text("Public games"),
-                ),
-              ),
-              GameList(publicGames),
-              if (user != null) ...[
-                const Material(
-                  child: ListTile(
-                    title: Text("My public games"),
-                  ),
-                ),
-                GameList(myPublicGames!),
-                const Material(
-                  child: ListTile(
-                    title: Text("My private games"),
-                  ),
-                ),
-                GameList(myPrivateGames!),
-              ],
-            ],
+        ListView(children: [
+          const Material(
+            child: ListTile(
+              title: Text("Public games"),
+            ),
           ),
-        ),
+          GameList(publicGames),
+          if (user != null) ...[
+            const Material(
+              child: ListTile(
+                title: Text("My public games"),
+              ),
+            ),
+            GameList(myPublicGames!),
+            const Material(
+              child: ListTile(
+                title: Text("My private games"),
+              ),
+            ),
+            GameList(myPrivateGames!),
+          ],
+        ]),
       ),
       floatingActionButton: user == null
           ? null

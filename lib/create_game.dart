@@ -125,7 +125,6 @@ class _CreateGameState extends State<CreateGame> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          debugPrint(game.toString());
           gameCollection.add(game).then((_) {
             appRouter.pop().then((_) => toast(context, "Game created"));
           }).catchError((err) {
