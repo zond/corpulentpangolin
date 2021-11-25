@@ -2,26 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'spinner.dart';
+import 'game_list_element.dart';
 
 class GameList extends StatelessWidget {
-  final Stream<QuerySnapshot<Map<String, dynamic>>> snapshot;
-  const GameList(this.snapshot, {Key? key}) : super(key: key);
+  final Stream<QuerySnapshot<Map<String, dynamic>>> gamesStream;
+  const GameList(this.gamesStream, {Key? key}) : super(key: key);
   @override
   Widget build(context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: snapshot,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text("Error loading games: ${snapshot.error}",
+      stream: gamesStream,
+      builder: (context, gamesQuerySnapshot) {
+        if (gamesQuerySnapshot.hasError) {
+          return Text("Error loading games: ${gamesQuerySnapshot.error}",
               style: const TextStyle(backgroundColor: Colors.white));
-        } else if (snapshot.connectionState == ConnectionState.waiting) {
+        } else if (gamesQuerySnapshot.connectionState ==
+            ConnectionState.waiting) {
           return const Spinner();
         } else {
+          final games = gamesQuerySnapshot.data!.docs;
           return Column(
-            children: snapshot.data!.docs.map((game) {
-              return ListTile(
-                title: Text("${game.data()}"),
-              );
+            children: games.map((game) {
+              return GameListElement(game.id);
             }).toList(),
           );
         }

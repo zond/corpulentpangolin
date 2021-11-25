@@ -77,20 +77,23 @@ class Start extends StatelessWidget {
         ListView(children: [
           const Material(
             child: ListTile(
-              title: Text("Public games"),
+              title: Text("Public games",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           ),
           GameList(publicGames),
           if (user != null) ...[
             const Material(
               child: ListTile(
-                title: Text("My public games"),
+                title: Text("My public games",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
             GameList(myPublicGames!),
             const Material(
               child: ListTile(
-                title: Text("My private games"),
+                title: Text("My private games",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
             GameList(myPrivateGames!),
