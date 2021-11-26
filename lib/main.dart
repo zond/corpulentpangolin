@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'router.gr.dart';
 import 'configure.dart';
+import 'variants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,8 +15,8 @@ void main() async {
 }
 
 class App extends StatelessWidget {
-  final ValueNotifier<User?> user = ValueNotifier(null);
-  final AppRouter appRouter = AppRouter();
+  final user = ValueNotifier<User?>(null);
+  final appRouter = AppRouter();
   App({Key? key}) : super(key: key) {
     FirebaseAuth.instance.userChanges().listen((u) {
       user.value = u;
@@ -27,6 +28,8 @@ class App extends StatelessWidget {
       providers: [
         ValueListenableProvider<User?>.value(value: user),
         ListenableProvider<AppRouter>.value(value: appRouter),
+        FutureProvider<Variants?>.value(
+            value: Variants.load(context), initialData: null)
       ],
       child: MaterialApp.router(
         routerDelegate: appRouter.delegate(),

@@ -18,14 +18,16 @@ class GameList extends StatelessWidget {
         } else if (gamesQuerySnapshot.connectionState ==
             ConnectionState.waiting) {
           return const Spinner();
-        } else {
-          final games = gamesQuerySnapshot.data!.docs;
-          return Column(
-            children: games.map((game) {
-              return GameListElement(game.id);
-            }).toList(),
-          );
         }
+        final games = gamesQuerySnapshot.data!.docs;
+        if (games.isEmpty) {
+          return const Material(child: ListTile(title: Text("No games found")));
+        }
+        return Column(
+          children: games.map((game) {
+            return GameListElement(gameID: game.id, game: Stream.value(game));
+          }).toList(),
+        );
       },
     );
   }

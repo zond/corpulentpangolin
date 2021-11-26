@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'router.gr.dart';
 import 'spinner.dart';
 import 'toast.dart';
+import 'variants.dart';
 
 class CreateGame extends StatefulWidget {
   const CreateGame({Key? key}) : super(key: key);
@@ -29,12 +30,12 @@ class _CreateGameState extends State<CreateGame> {
     "DisableGroupChat": false,
     "DisableConferenceChat": false,
   };
-  final variants = FirebaseFirestore.instance.collection("Variant").snapshots();
   final gameCollection = FirebaseFirestore.instance.collection("Game");
 
   @override
   Widget build(BuildContext context) {
     var appRouter = context.read<AppRouter>();
+    var variants = context.watch<Variants?>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("corpulentpangolin"),
@@ -54,38 +55,27 @@ class _CreateGameState extends State<CreateGame> {
                 setState(() => game["Desc"] = newValue);
               },
             ),
-            StreamBuilder<QuerySnapshot>(
-                stream: variants,
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text("Error loading variants: ${snapshot.error}",
-                        style: const TextStyle(backgroundColor: Colors.white));
-                  } else if (snapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return const Spinner();
-                  } else {
-                    return InputDecorator(
-                      decoration: const InputDecoration(
-                        labelText: "Variant",
+            variants == null
+                ? const Spinner()
+                : InputDecorator(
+                    decoration: const InputDecoration(
+                      labelText: "Variant",
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        value: game["Variant"],
+                        items: variants.list.map((variant) {
+                          return DropdownMenuItem(
+                            child: Text(variant["Name"].toString()),
+                            value: variant["Name"].toString(),
+                          );
+                        }).toList(),
+                        onChanged: (newValue) {
+                          setState(() => game["Variant"] = newValue.toString());
+                        },
                       ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          value: game["Variant"],
-                          items: snapshot.data!.docs.map((variant) {
-                            return DropdownMenuItem(
-                              child: Text(variant.id),
-                              value: variant.id,
-                            );
-                          }).toList(),
-                          onChanged: (newValue) {
-                            setState(
-                                () => game["Variant"] = newValue.toString());
-                          },
-                        ),
-                      ),
-                    );
-                  }
-                }),
+                    ),
+                  ),
             Row(
               children: [
                 Switch(

@@ -31,7 +31,6 @@ class Start extends StatelessWidget {
           .where('Private', isEqualTo: true)
           .where('Players', arrayContains: user.uid)
           .snapshots();
-      debugPrint(user.uid);
     }
     return Scaffold(
       appBar: AppBar(
