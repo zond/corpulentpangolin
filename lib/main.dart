@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'router.gr.dart';
 import 'configure.dart';
-import 'variants.dart';
+import 'variant.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

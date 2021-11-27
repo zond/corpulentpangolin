@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'router.gr.dart';
-import 'spinner.dart';
+import 'spinner_widget.dart';
 import 'toast.dart';
-import 'variants.dart';
+import 'variant.dart';
 
-class CreateGame extends StatefulWidget {
-  const CreateGame({Key? key}) : super(key: key);
+class CreateGamePage extends StatefulWidget {
+  const CreateGamePage({Key? key}) : super(key: key);
 
   @override
-  _CreateGameState createState() => _CreateGameState();
+  _CreateGamePageState createState() => _CreateGamePageState();
 }
 
-class _CreateGameState extends State<CreateGame> {
+class _CreateGamePageState extends State<CreateGamePage> {
   final game = {
     "CreatorUID": FirebaseAuth.instance.currentUser?.uid,
     "Desc": "",
@@ -56,7 +56,7 @@ class _CreateGameState extends State<CreateGame> {
               },
             ),
             variants == null
-                ? const Spinner()
+                ? const SpinnerWidget()
                 : InputDecorator(
                     decoration: const InputDecoration(
                       labelText: "Variant",

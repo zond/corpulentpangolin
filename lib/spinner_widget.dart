@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Spinner extends StatefulWidget {
-  const Spinner({Key? key}) : super(key: key);
+class SpinnerWidget extends StatefulWidget {
+  const SpinnerWidget({Key? key}) : super(key: key);
   @override
-  State<Spinner> createState() => _SpinnerState();
+  State<SpinnerWidget> createState() => _SpinnerWidgetState();
 }
 
-class _SpinnerState extends State<Spinner> with TickerProviderStateMixin {
+class _SpinnerWidgetState extends State<SpinnerWidget>
+    with TickerProviderStateMixin {
   late AnimationController controller;
 
   @override

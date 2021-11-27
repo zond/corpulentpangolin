@@ -1,15 +1,15 @@
-import 'package:corpulentpangolin/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
+import 'router.gr.dart';
 import 'toast.dart';
 import 'auth.dart';
-import 'game_list.dart';
+import 'game_list_widget.dart';
 
-class Start extends StatelessWidget {
-  const Start({Key? key}) : super(key: key);
+class StartPage extends StatelessWidget {
+  const StartPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var user = context.watch<User?>();
@@ -80,7 +80,7 @@ class Start extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           ),
-          GameList(publicGames),
+          GameListWidget(publicGames),
           if (user != null) ...[
             const Material(
               child: ListTile(
@@ -88,14 +88,14 @@ class Start extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
-            GameList(myPublicGames!),
+            GameListWidget(myPublicGames!),
             const Material(
               child: ListTile(
                 title: Text("My private games",
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
-            GameList(myPrivateGames!),
+            GameListWidget(myPrivateGames!),
           ],
         ]),
       ),
@@ -103,7 +103,7 @@ class Start extends StatelessWidget {
           ? null
           : FloatingActionButton(
               child: const Icon(Icons.add),
-              onPressed: () => appRouter.push(const CreateGameRoute()),
+              onPressed: () => appRouter.push(const CreateGamePageRoute()),
             ),
     );
   }

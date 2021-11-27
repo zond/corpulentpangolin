@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'spinner.dart';
-import 'game_list_element.dart';
+import 'game.dart';
+import 'spinner_widget.dart';
+import 'game_list_element_widget.dart';
 
-class GameList extends StatelessWidget {
+class GameListWidget extends StatelessWidget {
   final Stream<QuerySnapshot<Map<String, dynamic>>> gamesStream;
-  const GameList(this.gamesStream, {Key? key}) : super(key: key);
+  const GameListWidget(this.gamesStream, {Key? key}) : super(key: key);
   @override
   Widget build(context) {
     return StreamBuilder<QuerySnapshot>(
@@ -17,7 +18,7 @@ class GameList extends StatelessWidget {
               style: const TextStyle(backgroundColor: Colors.white));
         } else if (gamesQuerySnapshot.connectionState ==
             ConnectionState.waiting) {
-          return const Spinner();
+          return const SpinnerWidget();
         }
         final games = gamesQuerySnapshot.data!.docs;
         if (games.isEmpty) {
@@ -25,7 +26,11 @@ class GameList extends StatelessWidget {
         }
         return Column(
           children: games.map((game) {
-            return GameListElement(gameID: game.id, game: Stream.value(game));
+            return gameProvider(
+              gameID: game.id,
+              gameStream: Stream.value(game),
+              child: const GameListElementWidget(),
+            );
           }).toList(),
         );
       },
