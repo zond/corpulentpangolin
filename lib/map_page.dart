@@ -35,7 +35,15 @@ class _MapPageState extends State<MapPage> {
               child: InteractiveViewer(
                 maxScale: 10,
                 minScale: 0.1,
-                child: SVGWidget(source: String.fromCharCodes(mapSVG.data!)),
+                child: SVGWidget(
+                  source: String.fromCharCodes(mapSVG.data!),
+                  mutations: [
+                    (elementID) =>
+                        "document.querySelector('#$elementID #provinces').style.display = 'inline';",
+                    (elementID) =>
+                        "document.querySelector('#$elementID #ber').style.fill = 'red';",
+                  ],
+                ),
               ),
             ),
           ],

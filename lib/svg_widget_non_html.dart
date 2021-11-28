@@ -3,9 +3,13 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 class SVGWidgetConditional extends StatelessWidget {
   final String source;
+  final List<String Function(String)>? mutations;
 
-  const SVGWidgetConditional({Key? key, required this.source})
-      : super(key: key);
+  const SVGWidgetConditional({
+    Key? key,
+    required this.source,
+    this.mutations,
+  }) : super(key: key);
 
   @override
   Widget build(context) {
