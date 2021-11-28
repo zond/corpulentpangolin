@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'phase.dart';
 import 'variant.dart';
+import 'cache.dart';
 
 class Game extends MapView<String, dynamic> {
   const Game(base) : super(base);
@@ -16,7 +17,8 @@ Widget gameProvider({
   Stream<DocumentSnapshot>? gameStream,
 }) {
   gameStream = gameStream ??
-      FirebaseFirestore.instance.collection("Game").doc(gameID).snapshots();
+      cacheDocSnapshots(
+          FirebaseFirestore.instance.collection("Game").doc(gameID));
   return MultiProvider(
     providers: [
       StreamProvider<Game?>.value(
@@ -28,13 +30,12 @@ Widget gameProvider({
         initialData: null,
       ),
       StreamProvider<Phase?>.value(
-        value: FirebaseFirestore.instance
-            .collection("Game")
-            .doc(gameID)
-            .collection("Phase")
-            .orderBy("Ordinal", descending: true)
-            .limit(1)
-            .snapshots()
+        value: cacheQuerySnapshots(FirebaseFirestore.instance
+                .collection("Game")
+                .doc(gameID)
+                .collection("Phase")
+                .orderBy("Ordinal", descending: true)
+                .limit(1))
             .map((snapshot) {
           if (snapshot.size == 0) {
             return null;

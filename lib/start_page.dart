@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
 import 'router.gr.dart';
+import 'cache.dart';
 import 'toast.dart';
 import 'auth.dart';
 import 'game_list_widget.dart';
@@ -14,23 +15,20 @@ class StartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = context.watch<User?>();
     var appRouter = context.read<AppRouter>();
-    final publicGames = FirebaseFirestore.instance
+    final publicGames = cacheQuerySnapshots(FirebaseFirestore.instance
         .collection("Game")
-        .where('Private', isEqualTo: false)
-        .snapshots();
+        .where('Private', isEqualTo: false));
     Stream<QuerySnapshot<Map<String, dynamic>>>? myPublicGames;
     Stream<QuerySnapshot<Map<String, dynamic>>>? myPrivateGames;
     if (user != null) {
-      myPublicGames = FirebaseFirestore.instance
+      myPublicGames = cacheQuerySnapshots(FirebaseFirestore.instance
           .collection("Game")
           .where('Private', isEqualTo: false)
-          .where('Players', arrayContains: user.uid)
-          .snapshots();
-      myPrivateGames = FirebaseFirestore.instance
+          .where('Players', arrayContains: user.uid));
+      myPrivateGames = cacheQuerySnapshots(FirebaseFirestore.instance
           .collection("Game")
           .where('Private', isEqualTo: true)
-          .where('Players', arrayContains: user.uid)
-          .snapshots();
+          .where('Players', arrayContains: user.uid));
     }
     return Scaffold(
       appBar: AppBar(

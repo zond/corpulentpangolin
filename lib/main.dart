@@ -8,9 +8,9 @@ import 'configure.dart';
 import 'variant.dart';
 
 void main() async {
+  await configure();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  configure();
   runApp(App());
 }
 

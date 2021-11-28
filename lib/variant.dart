@@ -4,23 +4,21 @@ import 'dart:collection';
 import 'package:brotli/brotli.dart';
 
 import 'toast.dart';
+import 'cache.dart';
 
 class Variant extends MapView<String, dynamic> {
-  Future<List<int>>? _mapSVG;
-  Map<String, Future<List<int>>>? _flagSVGs;
-  Map<String, Future<List<int>>>? _unitSVGs;
   Variant(base) : super(base);
-  Future<List<int>> get mapSVG {
-    _mapSVG ??= FirebaseFirestore.instance
-        .collection("Variant")
-        .doc(this["ID"] as String)
-        .collection("Map")
-        .doc("Map")
-        .get()
-        .then((snapshot) {
-      return brotliDecode((snapshot.data()!["Bytes"] as Blob).bytes);
-    });
-    return _mapSVG!;
+  List<int> _decode(DocumentSnapshot<Map<String, dynamic>> doc) {
+    return brotliDecode((doc.data()!["Bytes"] as Blob).bytes);
+  }
+
+  Stream<List<int>> get mapSVG {
+    return cacheDocSnapshots(FirebaseFirestore.instance
+            .collection("Variant")
+            .doc(this["ID"] as String)
+            .collection("Map")
+            .doc("Map"))
+        .map(_decode);
   }
 }
 

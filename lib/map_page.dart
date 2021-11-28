@@ -22,8 +22,8 @@ class _MapPageState extends State<MapPage> {
     if (game == null || variant == null || lastPhase == null) {
       return const SpinnerWidget();
     }
-    return FutureBuilder<List<int>>(
-      future: variant.mapSVG,
+    return StreamBuilder<List<int>>(
+      stream: variant.mapSVG,
       builder: (context, mapSVG) {
         if (mapSVG.data == null) {
           return const SpinnerWidget();

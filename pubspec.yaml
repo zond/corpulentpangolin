@@ -22,7 +22,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_inappwebview:
-  dcache:
   http:
   brotli:
   cupertino_icons:

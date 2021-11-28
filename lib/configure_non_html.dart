@@ -1,3 +1,3 @@
-void configureConditional() {
+Future<void> configureConditional() async {
   // Pass
 }
