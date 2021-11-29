@@ -13,26 +13,25 @@ class _Validator implements html.NodeValidator {
   bool allowsElement(html.Element element) => true;
 }
 
-class SVGWidgetConditional extends StatelessWidget {
+class HTMLWidgetConditional extends StatelessWidget {
   final String source;
   final List<String Function(String)>? mutations;
-  const SVGWidgetConditional({
+  const HTMLWidgetConditional({
     Key? key,
     required this.source,
     this.mutations,
   }) : super(key: key);
   @override
   Widget build(context) {
-    final elementID = "SVG-${_nextID++}";
-    final mutatedSource =
-        "<div id=\"$elementID\">$source<script>${(mutations ?? []).map((mut) => mut(elementID)).join("\n")}</script></div>";
-    ui.platformViewRegistry.registerViewFactory("svg-widget", (int id) {
+    ui.platformViewRegistry.registerViewFactory("html-widget", (int id) {
+      final elementID = "HTML-${_nextID++}";
+      final mutatedSource =
+          "<div id=\"$elementID\">$source<script>${(mutations ?? []).map((mut) => mut(elementID)).join("\n")}</script></div>";
       final element = html.Element.html(mutatedSource, validator: _Validator());
       element.style.width = "100%";
       element.style.height = "100%";
       return element;
     });
-    const view = HtmlElementView(viewType: "svg-widget");
-    return view;
+    return const HtmlElementView(viewType: "html-widget");
   }
 }
