@@ -2,11 +2,13 @@ import 'package:provider/provider.dart';
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 import 'phase.dart';
 import 'variant.dart';
 import 'cache.dart';
 
+@immutable
 class Game extends MapView<String, dynamic> {
   const Game(base) : super(base);
   Object? get err {

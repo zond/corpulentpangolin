@@ -29,14 +29,14 @@ class HTMLWidgetConditional extends StatelessWidget {
   @override
   Widget build(context) {
     if (callback != null) {
-      setProperty(html.window, "flutter_cb",
+      setProperty(html.window, "flutter_cb_json",
           allowInterop((String s) => callback!(json.decode(s))));
     }
 
     ui.platformViewRegistry.registerViewFactory("html-widget", (int id) {
       final elementID = "HTML-${_nextID++}";
       final mutatedSource =
-          "<div id=\"$elementID\">$source<script>${(mutations ?? []).map((mut) => mut(elementID)).join("\n")}</script></div>";
+          "<div id=\"$elementID\">$source<script>window.flutter_cb = (m) => { window.flutter_cb_json(JSON.stringify(m)); };${(mutations ?? []).map((mut) => mut(elementID)).join("\n")}</script></div>";
       final element = html.Element.html(mutatedSource, validator: _Validator());
       element.style.width = "100%";
       element.style.height = "100%";

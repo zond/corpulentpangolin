@@ -37,10 +37,10 @@ class HTMLWidgetConditional extends StatelessWidget {
           if (mutations != null) {
             ctrl.evaluateJavascript(
                 source:
-                    "window.flutter_cb = (m) => { window.flutter_inappwebview.callHandler('flutter_cb', m); };");
-            mutations!.forEach((mut) {
+                    "window.flutter_cb = (m) => { window.flutter_inappwebview.callHandler('flutter_cb', JSON.stringify(m)); };");
+            for (var mut in mutations!) {
               ctrl.evaluateJavascript(source: mut(elementID));
-            });
+            }
           }
         },
         initialData: InAppWebViewInitialData(

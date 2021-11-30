@@ -4,28 +4,119 @@ import 'package:provider/provider.dart';
 
 import 'html_widget.dart';
 import 'phase.dart';
+import 'toast.dart';
 import 'variant.dart';
+
+// Based on http://godsnotwheregodsnot.blogspot.se/2012/09/color-distribution-methodology.html.
+const contrastColors = [
+  "#F44336",
+  "#2196F3",
+  "#80DEEA",
+  "#90A4AE",
+  "#4CAF50",
+  "#FFC107",
+  "#F5F5F5",
+  "#009688",
+  "#FFEB3B",
+  "#795548",
+  "#E91E63",
+  "#CDDC39",
+  "#FF9800",
+  "#D05CE3",
+  "#9A67EA",
+  "#FF6090",
+  "#6EC6FF",
+  "#80E27E",
+  "#A98274",
+  "#CFCFCF",
+  "#FF34FF",
+  "#1CE6FF",
+  "#FFDBE5",
+  "#FF7961",
+  "#C66900",
+  "#9C27B0",
+  "#3F51B5",
+  "#C8B900",
+  "#C2185B",
+  "#BA000D",
+  "#607D8B",
+  "#087F23",
+  "#673AB7",
+  "#0069C0",
+  "#34515E",
+  "#002984",
+  "#004C40",
+  "#FFFF6E",
+  "#B4FFFF",
+  "#6A0080",
+  "#757DE8",
+  "#04F757",
+  "#CEFDAE",
+  "#974D2B",
+  "#974D2B",
+  "#FF2F80",
+  "#0CBD66",
+  "#FF90C9",
+  "#BEC459",
+  "#0086ED",
+  "#FFB500",
+  "#0AA6D8",
+  "#A05837",
+  "#EEC3FF",
+  "#456648",
+  "#D790FF",
+  "#6A3A4C",
+  "#324E72",
+  "#A4E804",
+  "#CB7E98",
+  "#0089A3",
+  "#404E55",
+  "#FDE8DC",
+  "#5B4534",
+  "#922329",
+  "#3A2465",
+  "#99ADC0",
+  "#BC23FF",
+  "#72418F",
+  "#201625",
+  "#FFF69F",
+  "#549E79",
+  "#9B9700",
+  "#772600",
+  "#6B002C",
+  "#6367A9",
+  "#A77500",
+  "#7900D7",
+  "#1E6E00",
+  "#C8A1A1",
+  "#885578",
+  "#788D66",
+  "#7A87A1",
+  "#B77B68",
+  "#456D75",
+  "#6F0062",
+  "#00489C",
+  "#001E09",
+  "#C2FF99",
+  "#C0B9B2",
+  "#CC0744",
+  "#A079BF",
+  "#C2FFED",
+  "#372101",
+  "#00846F",
+  "#013349",
+  "#300018",
+  "#A1C299",
+  "#7B4F4B",
+  "#000035",
+  "#DDEFFF",
+  "#D16100",
+  "#B903AA",
+];
+const contrastNeutral = "#f4d7b5";
 
 String _dippyMap = r'''
 var SVG = "http://www.w3.org/2000/svg";
-// Based on http://godsnotwheregodsnot.blogspot.se/2012/09/color-distribution-methodology.html.
-var contrasts = [
-  "#F44336", "#2196F3", "#80DEEA", "#90A4AE", "#4CAF50", "#FFC107", "#F5F5F5",
-  "#009688", "#FFEB3B", "#795548", "#E91E63", "#CDDC39", "#FF9800", "#D05CE3",
-  "#9A67EA", "#FF6090", "#6EC6FF", "#80E27E", "#A98274", "#CFCFCF", "#FF34FF",
-  "#1CE6FF", "#FFDBE5", "#FF7961", "#C66900", "#9C27B0", "#3F51B5", "#C8B900",
-  "#C2185B", "#BA000D", "#607D8B", "#087F23", "#673AB7", "#0069C0", "#34515E",
-  "#002984", "#004C40", "#FFFF6E", "#B4FFFF", "#6A0080", "#757DE8", "#04F757",
-  "#CEFDAE", "#974D2B", "#974D2B", "#FF2F80", "#0CBD66", "#FF90C9", "#BEC459",
-  "#0086ED", "#FFB500", "#0AA6D8", "#A05837", "#EEC3FF", "#456648", "#D790FF",
-  "#6A3A4C", "#324E72", "#A4E804", "#CB7E98", "#0089A3", "#404E55", "#FDE8DC",
-  "#5B4534", "#922329", "#3A2465", "#99ADC0", "#BC23FF", "#72418F", "#201625",
-  "#FFF69F", "#549E79", "#9B9700", "#772600", "#6B002C", "#6367A9", "#A77500",
-  "#7900D7", "#1E6E00", "#C8A1A1", "#885578", "#788D66", "#7A87A1", "#B77B68",
-  "#456D75", "#6F0062", "#00489C", "#001E09", "#C2FF99", "#C0B9B2", "#CC0744",
-  "#A079BF", "#C2FFED", "#372101", "#00846F", "#013349", "#300018", "#A1C299",
-  "#7B4F4B", "#000035", "#DDEFFF", "#D16100", "#B903AA",
-];
 
 var Poi = class Poi {
   constructor(x, y) {
@@ -169,7 +260,7 @@ var DippyMap = class DippyMap {
 			curr = curr.parentNode;
 		}
 		copy.setAttribute("transform", `translate(${x}, ${y})`);
-		el.appendChild(copy);
+		this.el.appendChild(copy);
 		const clickHandler = (ev) => { handler(province); };
 		copy.addEventListener("click", clickHandler);
 		if (touch) {
@@ -405,39 +496,67 @@ var DippyMap = class DippyMap {
 class MapWidget extends StatelessWidget {
   const MapWidget({Key? key}) : super(key: key);
 
+  String color(Variant variant, String? nation) {
+    if (nation == null) {
+      return contrastNeutral;
+    }
+    final idx = variant.nations.indexOf(nation);
+    if (idx == -1) {
+      return contrastNeutral;
+    }
+    return contrastColors[idx % contrastColors.length];
+  }
+
+  String provinceInfo(Phase phase, Variant variant, String prov) {
+    prov = prov.split("/")[0];
+    final res = StringBuffer(variant.provinceLongNames[prov] ?? prov);
+    if (phase.supplyCenters.containsKey(prov)) {
+      res.write(" (${phase.supplyCenters[prov]})");
+    }
+    if (phase.units.containsKey(prov)) {
+      res.write(", ${phase.units[prov]!.type} (${phase.units[prov]!.nation})");
+    }
+    return res.toString();
+  }
+
+  List<String Function(String)> renderProvinces(Phase phase, Variant variant) {
+    return variant.graph.nodes.keys.expand((prov) {
+      final List<String Function(String)> res = [];
+      if (phase.supplyCenters.containsKey(prov)) {
+        res.add((_) =>
+            "map.colorProvince('$prov', '${color(variant, phase.supplyCenters[prov])}');");
+      } else {
+        res.add((_) => "map.hideProvince('$prov');");
+      }
+      res.add((_) =>
+          "map.addClickListener('$prov', () => { window.flutter_cb({'infoClicked': '$prov'}) }, { nohighlight: true, permanent: true, touch: true });");
+      return res;
+    }).toList();
+  }
+
   List<String Function(String)> renderPhase(Phase phase, Variant variant) {
-    final scs = phase["SCs"] as Map<String, dynamic>;
-    final nations = variant["Nations"] as List<dynamic>;
-    final units = phase["Units"] as Map<String, dynamic>;
-    String col(String nat) => "contrasts[${nations.indexOf(nat)}]";
     return [
       (_) => _dippyMap,
       (elementID) =>
           "var map = new DippyMap(document.querySelector('#$elementID SVG'));",
-      ...((variant["Graph"] as Map<String, dynamic>)["Nodes"]
-              as Map<String, dynamic>)
-          .keys
-          .map((prov) {
-        if (scs.containsKey(prov)) {
-          return (_) {
-            return "map.colorProvince('$prov', ${col(scs[prov])});";
-          };
-        } else {
-          return (_) {
-            return "map.hideProvince('$prov');";
-          };
-        }
-      }).toList(),
+      ...renderProvinces(phase, variant),
       (_) => "map.showProvinces();",
       (_) => "map.removeUnits();",
-      ...units.keys.map((prov) {
-        final unit = units[prov] as Map<String, dynamic>;
+      ...phase.units.keys.map((prov) {
         return (_) {
-          return "map.addUnit('unit${unit["Type"]}', '$prov', ${col(unit["Nation"] as String)}, false, false);";
+          return "map.addUnit('unit${phase.units[prov]!.type}', '$prov', '${color(variant, phase.units[prov]!.nation)}', false, false);";
         };
       }),
-      (_) => "window.flutter_cb(JSON.stringify({'m': 'working callbacks'}));",
     ];
+  }
+
+  Function(Map<String, dynamic>) jsCallback(
+      BuildContext context, Phase phase, Variant variant) {
+    return (msg) {
+      if (msg.containsKey("infoClicked")) {
+        toast(context, provinceInfo(phase, variant, "${msg["infoClicked"]}"));
+      }
+    };
   }
 
   @override
@@ -461,7 +580,7 @@ class MapWidget extends StatelessWidget {
       minScale: 0.1,
       child: HTMLWidget(
         source: svgs.html,
-        callback: (m) => debugPrint(m.toString()),
+        callback: jsCallback(context, phase, variant),
         mutations: renderPhase(phase, variant),
       ),
     );
