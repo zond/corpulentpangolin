@@ -1,5 +1,6 @@
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 Future<void> configureConditional() async {
   // Hot reloading makes this happen again even after Firestore is initialized,
@@ -7,6 +8,8 @@ Future<void> configureConditional() async {
   try {
     await FirebaseFirestore.instance
         .enablePersistence(const PersistenceSettings(synchronizeTabs: true));
-  } catch (e) {}
+  } catch (e) {
+    debugPrint("Failed to enable persistence: $e");
+  }
   setUrlStrategy(PathUrlStrategy());
 }

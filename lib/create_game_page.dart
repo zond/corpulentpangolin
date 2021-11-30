@@ -36,6 +36,9 @@ class _CreateGamePageState extends State<CreateGamePage> {
   Widget build(BuildContext context) {
     var appRouter = context.read<AppRouter>();
     var variants = context.watch<Variants?>();
+    if (variants != null && variants.err != null) {
+      return Text("Variants error: ${variants.err}");
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("corpulentpangolin"),

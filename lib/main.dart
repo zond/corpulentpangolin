@@ -28,8 +28,11 @@ class App extends StatelessWidget {
       providers: [
         ValueListenableProvider<User?>.value(value: user),
         ListenableProvider<AppRouter>.value(value: appRouter),
-        FutureProvider<Variants?>.value(
-            value: Variants.load(context), initialData: null)
+        StreamProvider<Variants?>.value(
+          value: Variants.load(),
+          initialData: null,
+          catchError: (context, e) => Variants.error(e),
+        ),
       ],
       child: MaterialApp.router(
         routerDelegate: appRouter.delegate(),

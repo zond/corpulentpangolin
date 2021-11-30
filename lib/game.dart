@@ -9,6 +9,12 @@ import 'cache.dart';
 
 class Game extends MapView<String, dynamic> {
   const Game(base) : super(base);
+  Object? get err {
+    if (containsKey("Error")) {
+      return this["Error"];
+    }
+    return null;
+  }
 }
 
 Widget gameProvider({
@@ -27,6 +33,7 @@ Widget gameProvider({
           res["ID"] = snapshot.id;
           return res;
         }),
+        catchError: (context, e) => {"Error": "$e"} as Game,
         initialData: null,
       ),
       StreamProvider<Phase?>.value(
@@ -44,6 +51,7 @@ Widget gameProvider({
           res["ID"] = snapshot.docs[0].id;
           return res;
         }),
+        catchError: (context, e) => {"Error": "$e"} as Phase,
         initialData: null,
       ),
       ProxyProvider<Game?, Variant?>(
@@ -54,6 +62,9 @@ Widget gameProvider({
           }
           if (variants == null) {
             return null;
+          }
+          if (variants.err != null) {
+            return {"Error": variants.err} as Variant;
           }
           return variants.map[game["Variant"] as String];
         },

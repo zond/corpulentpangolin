@@ -19,6 +19,17 @@ class GameListElementWidget extends StatelessWidget {
     if (game == null || variant == null) {
       return const SpinnerWidget();
     }
+    if (game.err != null ||
+        (lastPhase != null && lastPhase.err != null) ||
+        variant.err != null) {
+      return Column(
+        children: [
+          Text("${game.err}"),
+          if (lastPhase != null) Text("${lastPhase.err}"),
+          Text("${variant.err}"),
+        ],
+      );
+    }
     final nVariantNations = (variant["Nations"] as List<dynamic>).length;
     final nMembers = (game["Players"] as List<dynamic>).length;
     return Material(
