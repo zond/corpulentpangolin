@@ -24,6 +24,7 @@ dependencies:
   flutter_inappwebview:
   http:
   brotli:
+  js:
   cupertino_icons:
 
 dev_dependencies:

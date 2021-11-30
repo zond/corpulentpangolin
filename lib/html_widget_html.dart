@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'dart:html' as html;
+import 'package:js/js.dart';
+import 'package:js/js_util.dart';
+import 'dart:convert';
 
 int _nextID = 0;
 
@@ -16,13 +19,20 @@ class _Validator implements html.NodeValidator {
 class HTMLWidgetConditional extends StatelessWidget {
   final String source;
   final List<String Function(String)>? mutations;
+  final Function(Map<String, dynamic>)? callback;
   const HTMLWidgetConditional({
     Key? key,
     required this.source,
     this.mutations,
+    this.callback,
   }) : super(key: key);
   @override
   Widget build(context) {
+    if (callback != null) {
+      setProperty(html.window, "flutter_cb",
+          allowInterop((String s) => callback!(json.decode(s))));
+    }
+
     ui.platformViewRegistry.registerViewFactory("html-widget", (int id) {
       final elementID = "HTML-${_nextID++}";
       final mutatedSource =

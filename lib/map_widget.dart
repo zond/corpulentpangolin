@@ -362,7 +362,7 @@ var DippyMap = class DippyMap {
 	}
 	
 	addUnit(sourceId, province, color, dislodged, build, layer, opts = {}) {
-	  const stroke = (opts.stroke || "#000000");
+    const stroke = (opts.stroke || "#000000");
 		if (typeof layer === "undefined") {
 			layer = "#units";
 		}
@@ -436,6 +436,7 @@ class MapWidget extends StatelessWidget {
           return "map.addUnit('unit${unit["Type"]}', '$prov', ${col(unit["Nation"] as String)}, false, false);";
         };
       }),
+      (_) => "window.flutter_cb(JSON.stringify({'m': 'working callbacks'}));",
     ];
   }
 
@@ -460,6 +461,7 @@ class MapWidget extends StatelessWidget {
       minScale: 0.1,
       child: HTMLWidget(
         source: svgs.html,
+        callback: (m) => debugPrint(m.toString()),
         mutations: renderPhase(phase, variant),
       ),
     );
