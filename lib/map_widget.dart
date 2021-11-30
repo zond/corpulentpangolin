@@ -280,7 +280,7 @@ var DippyMap = class DippyMap {
 		      }
 		      unregisterTouchHandlers();
 		    };
-		    copy.addEventListener("touchend", touchEndHandler);
+		    copy.addEventListener("touchend", touchendHandler);
 		    touchmoveHandler = function(ev) {
 		      moved = true;
 		    };
