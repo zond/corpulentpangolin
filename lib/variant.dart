@@ -9,14 +9,18 @@ import 'cache.dart';
 @immutable
 class SVGBundle {
   final List<int> map;
-  final Map<String, List<int>> flags;
   final Map<String, List<int>> units;
   final Object? err;
-  const SVGBundle(
-      {required this.map,
-      required this.flags,
-      required this.units,
-      required this.err});
+  const SVGBundle({required this.map, required this.units, required this.err});
+  String get html {
+    final res = StringBuffer();
+    res.write(String.fromCharCodes(map));
+    units.forEach((key, value) {
+      res.write(
+          "<div id='${key}_unit' style='display: none;'>${String.fromCharCodes(value)}</div>");
+    });
+    return res.toString();
+  }
 }
 
 class Variant extends MapView<String, dynamic> {
@@ -34,12 +38,11 @@ class Variant extends MapView<String, dynamic> {
 
   Stream<SVGBundle?> get svgs async* {
     List<int>? map;
-    Map<String, List<int>>? flags;
     Map<String, List<int>>? units;
 
     List<SVGBundle?> maybeSendBundle() {
-      if (map != null && flags != null && units != null) {
-        return [SVGBundle(map: map!, flags: flags!, units: units!, err: null)];
+      if (map != null && units != null) {
+        return [SVGBundle(map: map!, units: units!, err: null)];
       }
       return [];
     }
@@ -51,14 +54,6 @@ class Variant extends MapView<String, dynamic> {
       cacheDocSnapshots(variantDoc.collection("Map").doc("Map"))
           .expand((mapSnapshot) {
         map = _decode(mapSnapshot);
-        return maybeSendBundle();
-      }),
-      cacheQuerySnapshots(variantDoc.collection("Flag"))
-          .expand((flagQuerySnapshot) {
-        flags = flagQuerySnapshot.docs.fold({}, (m, documentSnapshot) {
-          m![documentSnapshot.id] = _decode(documentSnapshot);
-          return m;
-        });
         return maybeSendBundle();
       }),
       cacheQuerySnapshots(variantDoc.collection("Unit"))

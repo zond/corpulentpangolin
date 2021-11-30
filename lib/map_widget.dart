@@ -452,7 +452,7 @@ class MapWidget extends StatelessWidget {
       maxScale: 10,
       minScale: 0.1,
       child: HTMLWidget(
-        source: String.fromCharCodes(svgs.map),
+        source: svgs.html,
         mutations: renderPhase(phase, variant),
       ),
     );
