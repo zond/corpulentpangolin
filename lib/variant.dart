@@ -17,7 +17,7 @@ class SVGBundle {
     res.write(String.fromCharCodes(map));
     units.forEach((key, value) {
       res.write(
-          "<div id='${key}_unit' style='display: none;'>${String.fromCharCodes(value)}</div>");
+          "<div id='unit$key' style='display: none;'>${String.fromCharCodes(value)}</div>");
     });
     return res.toString();
   }

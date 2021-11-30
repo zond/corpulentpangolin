@@ -368,7 +368,7 @@ var DippyMap = class DippyMap {
 		}
 		const shadow = document.querySelector(`#${sourceId} #shadow`).cloneNode();
 		const hull = document.querySelector(`#${sourceId} #hull`);
-		const body = document.querySelector(`#{sourceId} #body`);
+		const body = document.querySelector(`#${sourceId} #body`);
 		const loc = this.centerOf(province);
 		let unit = null;
 		let opacity = 1;
@@ -378,7 +378,7 @@ var DippyMap = class DippyMap {
 			opacity = 0.73;
 		}
 		loc.y -= 11;
-		if (hullQuery != null) {
+		if (hull != null) {
 			unit = hull.cloneNode();
 			loc.x -= 65;
 			loc.y -= 15;
@@ -406,8 +406,10 @@ class MapWidget extends StatelessWidget {
   const MapWidget({Key? key}) : super(key: key);
 
   List<String Function(String)> renderPhase(Phase phase, Variant variant) {
-    var scs = phase["SCs"] as Map<String, dynamic>;
-    var nations = variant["Nations"] as List<dynamic>;
+    final scs = phase["SCs"] as Map<String, dynamic>;
+    final nations = variant["Nations"] as List<dynamic>;
+    final units = phase["Units"] as Map<String, dynamic>;
+    String col(String nat) => "contrasts[${nations.indexOf(nat)}]";
     return [
       (_) => _dippyMap,
       (elementID) =>
@@ -417,18 +419,23 @@ class MapWidget extends StatelessWidget {
           .keys
           .map((prov) {
         if (scs.containsKey(prov)) {
-          var colorIdx = nations.indexOf(scs[prov]!);
-          return (String elementID) {
-            return "map.colorProvince('$prov', contrasts[$colorIdx]);";
+          return (_) {
+            return "map.colorProvince('$prov', ${col(scs[prov])});";
           };
         } else {
-          return (String elementID) {
+          return (_) {
             return "map.hideProvince('$prov');";
           };
         }
       }).toList(),
       (_) => "map.showProvinces();",
       (_) => "map.removeUnits();",
+      ...units.keys.map((prov) {
+        final unit = units[prov] as Map<String, dynamic>;
+        return (_) {
+          return "map.addUnit('unit${unit["Type"]}', '$prov', ${col(unit["Nation"] as String)}, false, false);";
+        };
+      }),
     ];
   }
 
