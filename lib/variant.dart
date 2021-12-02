@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:collection';
@@ -42,6 +44,13 @@ class Variant extends MapView<String, dynamic> {
 
   List<int> _decode(DocumentSnapshot<Map<String, dynamic>> doc) {
     return brotliDecode((doc.data()!["Bytes"] as Blob).bytes);
+  }
+
+  String get id {
+    if (containsKey("ID")) {
+      return this["ID"] as String;
+    }
+    return "";
   }
 
   Object? get err {
@@ -118,21 +127,37 @@ class Variants {
   final Object? err;
   const Variants._(this.map, this.list, this.err);
   static Variants error(e) => Variants._(const {}, const [], e);
-  static Stream<Variants?> load() async* {
-    yield* cacheQuerySnapshots(FirebaseFirestore.instance.collection("Variant"))
-        .map((querySnapshot) {
-      final Map<String, Variant> map = {};
-      final List<Variant> list = [];
-      querySnapshot.docs.sort((QueryDocumentSnapshot<Map<String, dynamic>> a,
-              QueryDocumentSnapshot<Map<String, dynamic>> b) =>
-          a.id.compareTo(b.id));
-      for (final variantDoc in querySnapshot.docs) {
-        final variant = Variant(variantDoc.data());
-        variant["ID"] = variantDoc.id;
-        map[variantDoc.id] = variant;
-        list.add(variant);
+  static Stream<Variants?> load() {
+    final variantsStreamController = StreamController<Variants?>();
+    final Map<String, Variant> foundVariants = {};
+    final List<StreamSubscription> variantSubscriptions = [];
+    void pushVariants(DocumentSnapshot newVariantSnapshot) {
+      final variant = Variant(newVariantSnapshot.data());
+      variant["ID"] = newVariantSnapshot.id;
+      foundVariants[newVariantSnapshot.id] = variant;
+      final List<Variant> orderedVariants = foundVariants.values.toList();
+      orderedVariants.sort((a, b) => a.id.compareTo(b.id));
+      variantsStreamController.sink
+          .add(Variants._(foundVariants, orderedVariants, null));
+    }
+
+    cacheQuerySnapshots(FirebaseFirestore.instance.collection("Variant"))
+        .forEach((variantsQuerySnapshot) {
+      foundVariants.clear();
+      for (var variantSnapshot in variantsQuerySnapshot.docs) {
+        pushVariants(variantSnapshot);
       }
-      return Variants._(map, list, null);
+      for (var subscription in variantSubscriptions) {
+        subscription.cancel();
+      }
+      variantSubscriptions.clear();
+      for (var variantSnapshot in variantsQuerySnapshot.docs) {
+        variantSubscriptions.add(cacheDocSnapshots(FirebaseFirestore.instance
+                .collection("Variant")
+                .doc(variantSnapshot.id))
+            .listen((variantSnapshot) => pushVariants(variantSnapshot)));
+      }
     });
+    return variantsStreamController.stream;
   }
 }
