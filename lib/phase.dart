@@ -14,6 +14,13 @@ class Phase extends MapView<String, dynamic> {
     return "${this["Season"]} ${this["Year"]}, ${this["Type"]}";
   }
 
+  int get ordinal {
+    if (!containsKey("Ordinal")) {
+      return -1;
+    }
+    return this["Ordinal"] as int;
+  }
+
   Map<String, String> get supplyCenters {
     if (!containsKey("SCs")) {
       return {};

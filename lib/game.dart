@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:provider/provider.dart';
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,15 +24,46 @@ class Game extends MapView<String, dynamic> {
 Widget gameProvider({
   required String gameID,
   required Widget child,
-  Stream<DocumentSnapshot>? gameStream,
 }) {
-  gameStream = gameStream ??
-      cacheDocSnapshots(
-          FirebaseFirestore.instance.collection("Game").doc(gameID));
+  final lastPhaseStreamController = StreamController<Phase?>();
+  var newestPhaseOrdinal = -1;
+  cacheQuerySnapshots(FirebaseFirestore.instance
+          .collection("Game")
+          .doc(gameID)
+          .collection("Phase")
+          .orderBy("Ordinal", descending: true)
+          .limit(1))
+      .forEach((phaseQuerySnapshot) {
+    if (phaseQuerySnapshot.docs.isEmpty) {
+      return;
+    }
+    final phaseOrdinal = Phase(phaseQuerySnapshot.docs[0].data()).ordinal;
+    if (phaseOrdinal < newestPhaseOrdinal) {
+      return;
+    }
+    newestPhaseOrdinal = phaseOrdinal;
+    StreamSubscription? subscription;
+    subscription = cacheDocSnapshots(FirebaseFirestore.instance
+            .collection("Game")
+            .doc(gameID)
+            .collection("Phase")
+            .doc(phaseQuerySnapshot.docs[0].id))
+        .listen((phaseSnapshot) {
+      final phase = Phase(phaseSnapshot.data());
+      if (phase.ordinal < newestPhaseOrdinal) {
+        subscription?.cancel();
+        return;
+      }
+      phase["ID"] = phaseSnapshot.id;
+      lastPhaseStreamController.sink.add(phase);
+    });
+  });
   return MultiProvider(
     providers: [
       StreamProvider<Game?>.value(
-        value: gameStream.map((snapshot) {
+        value: cacheDocSnapshots(
+                FirebaseFirestore.instance.collection("Game").doc(gameID))
+            .map((snapshot) {
           final res = Game(snapshot.data());
           res["ID"] = snapshot.id;
           return res;
@@ -39,20 +72,7 @@ Widget gameProvider({
         initialData: null,
       ),
       StreamProvider<Phase?>.value(
-        value: cacheQuerySnapshots(FirebaseFirestore.instance
-                .collection("Game")
-                .doc(gameID)
-                .collection("Phase")
-                .orderBy("Ordinal", descending: true)
-                .limit(1))
-            .map((snapshot) {
-          if (snapshot.size == 0) {
-            return null;
-          }
-          final res = Phase(snapshot.docs[0].data());
-          res["ID"] = snapshot.docs[0].id;
-          return res;
-        }),
+        value: lastPhaseStreamController.stream,
         catchError: (context, e) => {"Error": "$e"} as Phase,
         initialData: null,
       ),

@@ -1,49 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:convert';
-
-int _nextID = 0;
 
 class HTMLWidgetConditional extends StatelessWidget {
   final String source;
-  final List<String Function(String)>? mutations;
-  final Function(Map<String, dynamic>)? callback;
+  final Map<String, Function(Map<String, dynamic>)>? callbacks;
   const HTMLWidgetConditional({
-    Key? key,
+    required Key key,
     required this.source,
-    this.mutations,
-    this.callback,
+    this.callbacks,
   }) : super(key: key);
 
   @override
   Widget build(context) {
-    final elementID = "HTML-${_nextID++}";
-    final mutatedSource = "<div id=\"$elementID\">$source</div>";
-    return InAppWebView(
-        initialOptions: InAppWebViewGroupOptions(
-            crossPlatform: InAppWebViewOptions(supportZoom: false)),
-        onConsoleMessage: (ctrl, m) => debugPrint("$m"),
-        onWebViewCreated: (ctrl) {
-          if (callback != null) {
-            ctrl.addJavaScriptHandler(
-              handlerName: "flutter_cb",
-              callback: (s) {
-                callback!(json.decode(s.isNotEmpty ? s[0] : {}));
-              },
-            );
-          }
-        },
-        onLoadStop: (ctrl, uri) {
-          if (mutations != null) {
-            ctrl.evaluateJavascript(
-                source:
-                    "window.flutter_cb = (m) => { window.flutter_inappwebview.callHandler('flutter_cb', JSON.stringify(m)); };");
-            for (var mut in mutations!) {
-              ctrl.evaluateJavascript(source: mut(elementID));
-            }
-          }
-        },
-        initialData: InAppWebViewInitialData(
-            data: mutatedSource, mimeType: "text/html"));
+    return WebView(
+      initialUrl: Uri.dataFromString('''
+<script>
+  ${callbacks?.keys.map((name) => "window.$name = (m) => { window.${name}_channel.postMessage(m); };").join("\n")}
+</script>
+$source
+''', mimeType: "text/html").toString(),
+      javascriptMode: JavascriptMode.unrestricted,
+      javascriptChannels: Set.from(callbacks?.keys.map((name) =>
+              JavascriptChannel(
+                  name: "${name}_channel",
+                  onMessageReceived: (m) =>
+                      callbacks![name]!(json.decode(m.message)))) ??
+          []),
+    );
   }
 }

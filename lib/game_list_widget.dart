@@ -28,7 +28,6 @@ class GameListWidget extends StatelessWidget {
           children: games.map((game) {
             return gameProvider(
               gameID: game.id,
-              gameStream: Stream.value(game),
               child: const GameListElementWidget(),
             );
           }).toList(),

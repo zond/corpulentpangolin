@@ -116,9 +116,460 @@ const contrastColors = [
 const contrastNeutral = "#f4d7b5";
 
 String _dippyMap = r'''
-var SVG = "http://www.w3.org/2000/svg";
 
-var Poi = class Poi {
+function toggle(elOn, elOff) {
+  elOn.style.display = 'block';
+  elOff.style.display = 'none';
+}
+
+function getSVGData(svg, width) {
+  return new Promise((res, rej) => {
+    const work = () => {
+      const scale = width / svg.clientWidth;
+      const clone = svg.cloneNode(true);
+      clone.setAttribute("width", svg.clientWidth * scale);
+      clone.setAttribute("height", svg.clientHeight  * scale);
+      const svgXML = new XMLSerializer().serializeToString(clone);
+      const serializedSVG = btoa(unescape(encodeURIComponent(svgXML)));
+      const snapshotImage = document.createElement("img");
+      snapshotImage.style.width = svg.clientWidth * scale;
+      snapshotImage.style.height = svg.clientHeight * scale;
+      snapshotImage.src = "data:image/svg+xml;base64," + serializedSVG;
+      snapshotImage.addEventListener("load", (_) => {
+        if ("createImageBitmap" in window) {
+          createImageBitmap(
+            snapshotImage,
+            0,
+            0,
+            snapshotImage.width,
+            snapshotImage.height
+          ).then((bitmap) => {
+            const snapshotCanvas = document.createElement("canvas");
+            snapshotCanvas.setAttribute("height", svg.clientHeight * scale);
+            snapshotCanvas.setAttribute("width", svg.clientWidth * scale);
+            snapshotCanvas.style.height = svg.clientHeight * scale;
+            snapshotCanvas.style.width = svg.clientWidth * scale;
+            snapshotCanvas
+              .getContext("bitmaprenderer")
+              .transferFromImageBitmap(bitmap);
+            res(snapshotCanvas.toDataURL("image/png"));
+          });
+        } else {
+          const snapshotCanvas = document.createElement("canvas");
+          snapshotCanvas.setAttribute("height", svg.clientHeight * scale);
+          snapshotCanvas.setAttribute("width", svg.clientWidth * scale);
+          snapshotCanvas.style.height = svg.clientHeight * scale;
+          snapshotCanvas.style.width = svg.clientWidth * scale;
+          snapshotCanvas.getContext("2d").drawImage(snapshotImage, 0, 0);
+          res(snapshotCanvas.toDataURL("image/png"));
+        }
+      });
+    };
+    let lookAgain = null;
+    lookAgain = () => {
+      setTimeout(() => {
+        if (svg.clientWidth > 0) {
+          work();
+        } else {
+          lookAgain();
+        }
+      }, 10);
+    };
+    lookAgain();
+  });
+}
+
+const matrixReg = /matrix3d\((.*)\)/;
+
+class Transform {
+	constructor(opts = {}) {
+		this.opts = opts;
+		this.el = opts.el;
+		this.viewPort = opts.viewPort;
+		this.pzID = this.el.getAttribute("data-pz-id");
+		const originString =
+			this.el.style.transformOrigin ||
+			this.el.clientWidth / 2 +
+				"px " +
+				this.el.clientHeight / 2 +
+				"px 0px";
+		const originParts = originString.split(" ").map((part) => {
+			return Number.parseFloat(part);
+		});
+		const matrixString =
+			this.el.style.transform ||
+			"matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1)";
+		const match = matrixReg.exec(matrixString);
+		const matrixParts = match[1].split(",").map((part) => {
+			return Number.parseFloat(part);
+		});
+		this.scaleX = matrixParts[0];
+		this.scaleY = matrixParts[5];
+		this.transX = matrixParts[12];
+		this.transY = matrixParts[13];
+		this._origX = originParts[0];
+		this._origY = originParts[1];
+	}
+	apply(delay = 0.0) {
+		if (this.opts.minScale && this.opts.minScale > this.scaleX) {
+			this.scaleX = this.opts.minScale;
+		}
+		if (this.opts.minScale && this.opts.minScale > this.scaleY) {
+			this.scaleY = this.opts.minScale;
+		}
+		if (this.opts.maxScale && this.opts.maxScale < this.scaleX) {
+			this.scaleX = this.opts.maxScale;
+		}
+		if (this.opts.maxScale && this.opts.maxScale < this.scaleY) {
+			this.scaleY = this.opts.maxScale;
+		}
+		if (this.opts.maxTrans) {
+			const rect = this.el.getBoundingClientRect();
+			const viewPortRect = this.viewPort.getBoundingClientRect();
+			const elLeftEdge = rect.x - viewPortRect.x;
+			const maxHorizTrans = viewPortRect.width * this.opts.maxTrans;
+			const tooMuchTransRight = elLeftEdge - maxHorizTrans;
+			if (tooMuchTransRight > 0) {
+				this.transX -= tooMuchTransRight;
+			}
+			const elRightEdge = rect.x - viewPortRect.x + rect.width;
+			const tooMuchTransLeft =
+				viewPortRect.width - maxHorizTrans - elRightEdge;
+			if (tooMuchTransLeft > 0) {
+				this.transX += tooMuchTransLeft;
+			}
+			const elTopEdge = rect.y - viewPortRect.y;
+			const maxVertTrans = viewPortRect.height * this.opts.maxTrans;
+			const tooMuchTransDown = elTopEdge - maxVertTrans;
+			if (tooMuchTransDown > 0) {
+				this.transY -= tooMuchTransDown;
+			}
+			const elBottomEdge = rect.y - viewPortRect.y + rect.height;
+			const tooMuchTransUp =
+				viewPortRect.height - maxVertTrans - elBottomEdge;
+			if (tooMuchTransUp > 0) {
+				this.transY += tooMuchTransUp;
+			}
+		}
+		const newTransformOrigin =
+			"" + this._origX + "px " + this._origY + "px 0px";
+		const newTransform =
+			"matrix3d(" +
+			this.scaleX +
+			",0,0,0,0," +
+			this.scaleY +
+			",0,0,0,0,1,0," +
+			this.transX +
+			"," +
+			this.transY +
+			",0,1)";
+		if (delay > 0) {
+			const ts = new Date().getTime();
+			const animID = this.pzID + ts;
+			document.getElementById(this.pzID).innerHTML =
+				`
+@keyframes ` +
+				animID +
+				` {
+  from {
+    transform-origin: ` +
+				(this.el.style.transformOrigin || "50% 50%") +
+				`;
+	transform: ` +
+				(this.el.style.transform ||
+					"matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1)") +
+				`;
+  }
+  to {
+    transform-origin: ` +
+				newTransformOrigin +
+				`;
+	transform: ` +
+				newTransform +
+				`;
+  }
+}
+`;
+			this.el.style.animationName = animID;
+			this.el.style.animationDuration = "" + delay + "s";
+		}
+		this.el.style.transformOrigin =
+			"" + this._origX + "px " + this._origY + "px 0px";
+		this.el.style.transform =
+			"matrix3d(" +
+			this.scaleX +
+			",0,0,0,0," +
+			this.scaleY +
+			",0,0,0,0,1,0," +
+			this.transX +
+			"," +
+			this.transY +
+			",0,1)";
+	}
+	get origX() {
+		return this._origX;
+	}
+	get origY() {
+		return this._origY;
+	}
+	set origX(newOrigX) {
+		const delta = (this._origX - newOrigX) * (this.scaleX - 1);
+		this.transX -= delta;
+		this._origX = newOrigX;
+	}
+	set origY(newOrigY) {
+		const delta = (this._origY - newOrigY) * (this.scaleY - 1);
+		this.transY -= delta;
+		this._origY = newOrigY;
+	}
+}
+
+class BinaryEvent {
+	constructor(onStart, onEnd) {
+		this.onStart = onStart;
+		this.onEnd = onEnd;
+		this.timeout = null;
+	}
+	start(ms = 0) {
+		if (!this.onStart || !this.onEnd) return;
+		clearTimeout(this.timeout);
+		this.onStart();
+		if (ms) {
+			this.timeout = setTimeout((_) => {
+				this.onEnd();
+			}, ms);
+		}
+	}
+	end() {
+		if (!this.onStart || !this.onEnd) return;
+		clearTimeout(this.timeout);
+		this.onEnd();
+	}
+}
+
+class PZ {
+	constructor(opts = {}) {
+		this.opts = opts;
+		this.binaryZoom = new BinaryEvent(opts.onZoomStart, opts.onZoomEnd);
+		this.binaryPan = new BinaryEvent(opts.onPanStart, opts.onPanEnd);
+		this.el = opts.el;
+		this.el.setAttribute("data-pz-id", opts.pzid);
+		if (!document.getElementById(opts.pzid)) {
+			const pzStyle = document.createElement("style");
+			pzStyle.setAttribute("id", opts.pzid);
+			document.head.appendChild(pzStyle);
+		}
+		this.viewPort = opts.viewPort;
+		this.zoomEndTimeout = null;
+		this.viewPort.addEventListener("dblclick", (dblClickEvent) => {
+			const trans = new Transform(this.opts);
+			const rect = this.el.getBoundingClientRect();
+			trans.origX = (dblClickEvent.clientX - rect.left) / trans.scaleX;
+			trans.origY = (dblClickEvent.clientY - rect.top) / trans.scaleY;
+			trans.scaleX *= 1.5;
+			trans.scaleY *= 1.5;
+			this.binaryZoom.start(300);
+			trans.apply(0.5);
+		});
+		this.viewPort.addEventListener("wheel", (wheelEvent) => {
+			wheelEvent.preventDefault();
+			const trans = new Transform(this.opts);
+			const rect = this.el.getBoundingClientRect();
+			trans.origX = (wheelEvent.clientX - rect.left) / trans.scaleX;
+			trans.origY = (wheelEvent.clientY - rect.top) / trans.scaleY;
+			const scale =
+				1 + wheelEvent.deltaY * (wheelEvent.ctrlKey ? -0.01 : -0.002);
+			trans.scaleX *= scale;
+			trans.scaleY *= scale;
+			this.binaryZoom.start(300);
+			trans.apply();
+		});
+		this.viewPort.addEventListener("mousedown", (mouseDownEvent) => {
+			mouseDownEvent.preventDefault();
+			let lastEvent = mouseDownEvent;
+			const listeners = {};
+			listeners["mousemove"] = (mouseMoveEvent) => {
+				this.binaryPan.start();
+				const trans = new Transform(this.opts);
+				trans.transX += mouseMoveEvent.clientX - lastEvent.clientX;
+				trans.transY += mouseMoveEvent.clientY - lastEvent.clientY;
+				lastEvent = mouseMoveEvent;
+				trans.apply();
+			};
+			listeners["mouseup"] = (mouseUpEvent) => {
+				this.binaryPan.end();
+				for (const eventName in listeners) {
+					this.viewPort.removeEventListener(
+						eventName,
+						listeners[eventName]
+					);
+				}
+			};
+			listeners["mouseleave"] = (mouseLeaveEvent) => {
+				const buttons = mouseLeaveEvent.buttons;
+				listeners["mouseenter"] = (mouseEnterEvent) => {
+					if (mouseEnterEvent.buttons !== buttons) {
+						listeners["mouseup"](mouseEnterEvent);
+					}
+					this.viewPort.removeEventListener(
+						"mouseenter",
+						listeners["mouseenter"]
+					);
+					delete listeners["mouseenter"];
+				};
+				this.viewPort.addEventListener(
+					"mouseenter",
+					listeners["mouseenter"]
+				);
+			};
+			for (const eventName in listeners) {
+				this.viewPort.addEventListener(eventName, listeners[eventName]);
+			}
+		});
+		this.touches = {};
+		this.touching = false;
+		this.lastSingleTouchStartAt = null;
+		this.viewPort.addEventListener("touchstart", (touchStartEvent) => {
+			if (touchStartEvent.touches.length === 1) {
+				if (
+					this.lastSingleTouchStartAt &&
+					new Date().getTime() - this.lastSingleTouchStartAt < 300
+				) {
+					this.lastSingleTouchStartAt = null;
+					const trans = new Transform(this.opts);
+					const rect = this.el.getBoundingClientRect();
+					trans.origX =
+						(touchStartEvent.touches[0].clientX - rect.left) /
+						trans.scaleX;
+					trans.origY =
+						(touchStartEvent.touches[0].clientY - rect.top) /
+						trans.scaleY;
+					trans.scaleX *= 1.5;
+					trans.scaleY *= 1.5;
+					this.binaryZoom.start(500);
+					trans.apply(0.5);
+					return;
+				} else {
+					this.lastSingleTouchStartAt = new Date().getTime();
+				}
+			}
+			for (let i = 0; i < touchStartEvent.changedTouches.length; i++) {
+				this.touches[touchStartEvent.changedTouches[i].identifier] =
+					touchStartEvent.changedTouches[i];
+			}
+			if (this.touching) {
+				return;
+			}
+			this.touching = true;
+			const touchMoveListener = (touchMoveEvent) => {
+				touchMoveEvent.preventDefault();
+				const movement = this.averageMovement(
+					touchMoveEvent.changedTouches
+				);
+				const trans = new Transform(this.opts);
+				const rect = this.el.getBoundingClientRect();
+				const pos = this.averagePos(touchMoveEvent.touches);
+				trans.origX = (pos[0] - rect.left) / trans.scaleX;
+				trans.origY = (pos[1] - rect.top) / trans.scaleY;
+				trans.transX += movement[0];
+				trans.transY += movement[1];
+				if (touchMoveEvent.touches.length > 1) {
+					this.binaryZoom.start();
+					const ratio = this.distanceChangeRatio(
+						touchMoveEvent.touches
+					);
+					trans.scaleX *= ratio;
+					trans.scaleY *= ratio;
+				}
+				this.binaryPan.start();
+				trans.apply();
+				for (let i = 0; i < touchMoveEvent.changedTouches.length; i++) {
+					this.touches[touchMoveEvent.changedTouches[i].identifier] =
+						touchMoveEvent.changedTouches[i];
+				}
+			};
+			const touchEndListener = (touchEndEvent) => {
+				for (let i = 0; i < touchEndEvent.changedTouches.length; i++) {
+					delete this.touches[
+						touchEndEvent.changedTouches[i].identifier
+					];
+				}
+				if (Object.keys(this.touches).length === 0) {
+					this.binaryZoom.end();
+					this.binaryPan.end();
+					this.touching = false;
+					this.viewPort.removeEventListener(
+						"touchmove",
+						touchMoveListener
+					);
+					this.viewPort.removeEventListener(
+						"touchend",
+						touchEndListener
+					);
+				}
+			};
+			this.viewPort.addEventListener("touchmove", touchMoveListener);
+			this.viewPort.addEventListener("touchend", touchEndListener);
+		});
+	}
+	distanceChangeRatio(touchList) {
+		const oldTouches = [];
+		const newTouches = [];
+		for (let i = 0; i < touchList.length; i++) {
+			const oldTouch = this.touches[touchList[i].identifier];
+			if (oldTouch) {
+				oldTouches.push(oldTouch);
+				newTouches.push(touchList[i]);
+			}
+		}
+		const oldDist = this.maxDist(oldTouches);
+		const newDist = this.maxDist(newTouches);
+		return newDist / oldDist;
+	}
+	maxDist(touchAry) {
+		let max = -1;
+		for (let idx1 = 0; idx1 < touchAry.length - 1; idx1++) {
+			for (let idx2 = idx1 + 1; idx2 < touchAry.length; idx2++) {
+				const t1 = touchAry[idx1];
+				const t2 = touchAry[idx2];
+				const dist = Math.pow(
+					Math.pow(t1.clientX - t2.clientX, 2) +
+						Math.pow(t1.clientY - t2.clientY, 2),
+					0.5
+				);
+				if (dist > max) {
+					max = dist;
+				}
+			}
+		}
+		return max;
+	}
+	averagePos(touchList) {
+		const sum = [0.0, 0.0];
+		for (let i = 0; i < touchList.length; i++) {
+			sum[0] += touchList[i].clientX;
+			sum[1] += touchList[i].clientY;
+		}
+		return [sum[0] / touchList.length, sum[1] / touchList.length];
+	}
+	averageMovement(touchList) {
+		const sum = [0.0, 0.0];
+		let len = 0.0;
+		for (let i = 0; i < touchList.length; i++) {
+			const oldTouch = this.touches[touchList[i].identifier];
+			if (oldTouch) {
+				sum[0] += touchList[i].clientX - oldTouch.clientX;
+				sum[1] += touchList[i].clientY - oldTouch.clientY;
+				len += 1;
+			}
+		}
+		return [sum[0] / len, sum[1] / len];
+	}
+}
+
+const SVG = "http://www.w3.org/2000/svg";
+
+class Poi {
   constructor(x, y) {
     this.x = x;
     this.y = y;
@@ -143,7 +594,7 @@ var Poi = class Poi {
   }
 }
 
-var Vec = class Vec {
+class Vec {
   constructor(p1, p2) {
     this.p1 = p1;
     this.p2 = p2;
@@ -159,7 +610,7 @@ var Vec = class Vec {
   }
 }
 
-var DippyMap = class DippyMap {
+class DippyMap {
   constructor(el) {
     this.el = el;
     this.clickListenerRemovers = [];
@@ -493,6 +944,8 @@ var DippyMap = class DippyMap {
 }
 ''';
 
+var _nextMapID = 0;
+
 class MapWidget extends StatelessWidget {
   const MapWidget({Key? key}) : super(key: key);
 
@@ -519,33 +972,32 @@ class MapWidget extends StatelessWidget {
     return res.toString();
   }
 
-  List<String Function(String)> renderProvinces(Phase phase, Variant variant) {
+  List<String> renderProvinces(Phase phase, Variant variant) {
     return variant.graph.nodes.keys.expand((prov) {
-      final List<String Function(String)> res = [];
+      final List<String> res = [];
       if (phase.supplyCenters.containsKey(prov)) {
-        res.add((_) =>
+        res.add(
             "map.colorProvince('$prov', '${color(variant, phase.supplyCenters[prov])}');");
       } else {
-        res.add((_) => "map.hideProvince('$prov');");
+        res.add("map.hideProvince('$prov');");
       }
-      res.add((_) =>
-          "map.addClickListener('$prov', () => { window.flutter_cb({'infoClicked': '$prov'}) }, { nohighlight: true, permanent: true, touch: true });");
+      res.add(
+          "map.addClickListener('$prov', () => { flutter_cb({'infoClicked': '$prov'}) }, { nohighlight: true, permanent: true, touch: true });");
       return res;
     }).toList();
   }
 
-  List<String Function(String)> renderPhase(Phase phase, Variant variant) {
+  List<String> renderPhase(Phase phase, Variant variant) {
     return [
-      (_) => _dippyMap,
-      (elementID) =>
-          "var map = new DippyMap(document.querySelector('#$elementID SVG'));",
+      "const svg = mapViewport.querySelector('#map SVG');",
+      "const snapshot = mapViewport.querySelector('#map-snapshot');",
+      "const mapContainer = mapViewport.querySelector('#map-container');",
+      "const map = new DippyMap(svg);",
       ...renderProvinces(phase, variant),
-      (_) => "map.showProvinces();",
-      (_) => "map.removeUnits();",
+      "map.showProvinces();",
+      "map.removeUnits();",
       ...phase.units.keys.map((prov) {
-        return (_) {
-          return "map.addUnit('unit${phase.units[prov]!.type}', '$prov', '${color(variant, phase.units[prov]!.nation)}', false, false);";
-        };
+        return "map.addUnit('unit${phase.units[prov]!.type}', '$prov', '${color(variant, phase.units[prov]!.nation)}', false, false);";
       }),
     ];
   }
@@ -561,6 +1013,7 @@ class MapWidget extends StatelessWidget {
 
   @override
   Widget build(context) {
+    _nextMapID++;
     final svgs = context.watch<SVGBundle?>();
     final phase = context.watch<Phase?>();
     final variant = context.watch<Variant?>();
@@ -575,14 +1028,55 @@ class MapWidget extends StatelessWidget {
         ],
       );
     }
-    return InteractiveViewer(
-      maxScale: 10,
-      minScale: 0.1,
-      child: HTMLWidget(
-        source: svgs.html,
-        callback: jsCallback(context, phase, variant),
-        mutations: renderPhase(phase, variant),
-      ),
+    return HTMLWidget(
+      source: '''
+<div class="map-element-wrapper" id="map-element-wrapper-$_nextMapID">
+  <div id="map-viewport-$_nextMapID" style="height:100%;background-color:black;overflow:hidden;">
+    <div id="map-container" class="hehu-$_nextMapID">
+      <div id="map">${svgs.html}</div>
+      <img id="map-snapshot" style="display: none;" />
+    </div>
+  </div>
+  <script>
+    (() => {
+      Array.from(document.getElementsByClassName("map-element-wrapper")).forEach((el) => {
+        if (el.id != "map-element-wrapper-$_nextMapID") {
+          el.remove();
+        }
+      });
+      const mapViewport = document.getElementById('map-viewport-$_nextMapID');
+      const flutter_cb = (m) => { window.flutter_cb_json(JSON.stringify(m)); };
+
+      $_dippyMap
+
+      ${renderPhase(phase, variant).join("\n")}
+
+      getSVGData(svg, 1280).then((data) => {
+        snapshot.width = svg.clientWidth;
+        snapshot.style.width = svg.clientWidth;
+        snapshot.height = svg.clientHeight;
+        snapshot.style.height = svg.clientHeight;
+        snapshot.src = data;
+
+        new PZ({
+          pzid: 'dip-map-$_nextMapID',
+          minScale: 0.5,
+          maxScale: 20,
+          maxTrans: 0.5,
+          el: mapContainer,
+          viewPort: mapViewport,
+          onZoomStart: () => { toggle(snapshot, svg); },
+          onZoomEnd: () => { toggle(svg, snapshot); },
+          onPanStart: () => { toggle(snapshot, svg); },
+          onPanEnd: () => { toggle(svg, snapshot); },
+        });
+      });
+    })();
+  </script>
+</div>
+''',
+      key: const Key("map"),
+      callbacks: {"flutter_cb_json": jsCallback(context, phase, variant)},
     );
   }
 }

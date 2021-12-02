@@ -16,10 +16,10 @@ class SVGBundle {
   String get html {
     return _html ??= () {
       final res = StringBuffer();
-      res.write(String.fromCharCodes(map));
+      res.write('''<div id="map-svg">${String.fromCharCodes(map)}</div>''');
       units.forEach((key, value) {
         res.write(
-            "<div id='unit$key' style='display: none;'>${String.fromCharCodes(value)}</div>");
+            '''<div id="unit$key" style="display: none;">${String.fromCharCodes(value)}</div>''');
       });
       return res.toString();
     }();

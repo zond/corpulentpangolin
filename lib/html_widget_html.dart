@@ -5,7 +5,7 @@ import 'package:js/js.dart';
 import 'package:js/js_util.dart';
 import 'dart:convert';
 
-int _nextID = 0;
+int _nextKey = 0;
 
 class _Validator implements html.NodeValidator {
   @override
@@ -16,32 +16,34 @@ class _Validator implements html.NodeValidator {
   bool allowsElement(html.Element element) => true;
 }
 
+Map<Key, String> _html = {};
+
 class HTMLWidgetConditional extends StatelessWidget {
   final String source;
-  final List<String Function(String)>? mutations;
-  final Function(Map<String, dynamic>)? callback;
+  final Map<String, Function(Map<String, dynamic>)>? callbacks;
   const HTMLWidgetConditional({
-    Key? key,
+    required Key key,
     required this.source,
-    this.mutations,
-    this.callback,
+    this.callbacks,
   }) : super(key: key);
   @override
   Widget build(context) {
-    if (callback != null) {
-      setProperty(html.window, "flutter_cb_json",
-          allowInterop((String s) => callback!(json.decode(s))));
-    }
+    _html[key!] = source;
 
-    ui.platformViewRegistry.registerViewFactory("html-widget", (int id) {
-      final elementID = "HTML-${_nextID++}";
-      final mutatedSource =
-          "<div id=\"$elementID\">$source<script>window.flutter_cb = (m) => { window.flutter_cb_json(JSON.stringify(m)); };${(mutations ?? []).map((mut) => mut(elementID)).join("\n")}</script></div>";
-      final element = html.Element.html(mutatedSource, validator: _Validator());
+    if (callbacks != null) {
+      callbacks!.forEach((name, func) {
+        setProperty(html.window, name,
+            allowInterop((String s) => func(json.decode(s))));
+      });
+    }
+    ui.platformViewRegistry.registerViewFactory("html-widget-${key.toString()}",
+        (int id) {
+      final element = html.Element.html(_html[key], validator: _Validator());
       element.style.width = "100%";
       element.style.height = "100%";
       return element;
     });
-    return const HtmlElementView(viewType: "html-widget");
+    return HtmlElementView(
+        key: Key("${_nextKey++}"), viewType: "html-widget-${key.toString()}");
   }
 }
