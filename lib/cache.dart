@@ -4,27 +4,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 Stream<DocumentSnapshot<T>> cacheDocSnapshots<T>(DocumentReference<T> doc) {
   final streamController = StreamController<DocumentSnapshot<T>>();
-  final subscription = doc
+  final cacheSubscription = doc
       .get(const GetOptions(source: Source.cache))
       .asStream()
       .handleError((e) {}, test: (e) => e is FirebaseException)
       .listen((docSnapshot) => streamController.sink.add(docSnapshot));
-  doc.snapshots().listen((docSnapshot) {
-    subscription.cancel();
+  final liveSubscription = doc.snapshots().listen((docSnapshot) {
+    cacheSubscription.cancel();
     streamController.sink.add(docSnapshot);
   });
+  streamController.onCancel = () {
+    cacheSubscription.cancel();
+    liveSubscription.cancel();
+  };
   return streamController.stream;
 }
 
 Stream<QuerySnapshot<T>> cacheQuerySnapshots<T>(Query<T> query) {
   final streamController = StreamController<QuerySnapshot<T>>();
-  final subscription = query
+  final cacheSubscription = query
       .get(const GetOptions(source: Source.cache))
       .asStream()
       .listen((querySnapshot) => streamController.sink.add(querySnapshot));
-  query.snapshots().listen((querySnapshot) {
-    subscription.cancel();
+  final liveSubscription = query.snapshots().listen((querySnapshot) {
+    cacheSubscription.cancel();
     streamController.sink.add(querySnapshot);
   });
+  streamController.onCancel = () {
+    cacheSubscription.cancel();
+    liveSubscription.cancel();
+  };
   return streamController.stream;
 }

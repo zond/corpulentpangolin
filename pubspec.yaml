@@ -17,8 +17,8 @@ dependencies:
   auto_route:
   google_sign_in:
   provider:
-  firebase_auth:
   firebase_core:
+  firebase_auth:
   flutter:
     sdk: flutter
   webview_flutter:
@@ -26,6 +26,7 @@ dependencies:
   brotli:
   js:
   cupertino_icons:
+  url_launcher:
 
 dev_dependencies:
   auto_route_generator:

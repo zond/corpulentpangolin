@@ -20,19 +20,7 @@
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
-  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
   <script>
-    firebase.initializeApp({
-      apiKey: "AIzaSyDN9Wex1TxNbr-gtMpFiewHsCn6l_hrNHE",
-      authDomain: "corpulentpangolin.firebaseapp.com",
-      projectId: "corpulentpangolin",
-      storageBucket: "corpulentpangolin.appspot.com",
-      messagingSenderId: "527588078303",
-      appId: "1:527588078303:web:910de1bc30bafe0a5d2f6a",
-      measurementId: "G-53YL6VYFPC"
-    });
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
     function loadMainDartJs() {

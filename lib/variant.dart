@@ -142,8 +142,9 @@ class Variants {
           .add(Variants._(foundVariants, orderedVariants, null));
     }
 
-    cacheQuerySnapshots(FirebaseFirestore.instance.collection("Variant"))
-        .forEach((variantsQuerySnapshot) {
+    final variantsSubscription =
+        cacheQuerySnapshots(FirebaseFirestore.instance.collection("Variant"))
+            .listen((variantsQuerySnapshot) {
       foundVariants.clear();
       for (var variantSnapshot in variantsQuerySnapshot.docs) {
         pushVariants(variantSnapshot);
@@ -159,6 +160,12 @@ class Variants {
             .listen((variantSnapshot) => pushVariants(variantSnapshot)));
       }
     });
+    variantsStreamController.onCancel = () {
+      variantsSubscription.cancel();
+      for (var subscription in variantSubscriptions) {
+        subscription.cancel();
+      }
+    };
     return variantsStreamController.stream;
   }
 }

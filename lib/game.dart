@@ -40,13 +40,14 @@ Widget gameProvider({
 }) {
   final lastPhaseStreamController = StreamController<Phase?>();
   var newestPhaseOrdinal = -1;
-  cacheQuerySnapshots(FirebaseFirestore.instance
+  StreamSubscription? newestPhaseSubscription;
+  final lastPhaseSubscription = cacheQuerySnapshots(FirebaseFirestore.instance
           .collection("Game")
           .doc(gameID)
           .collection("Phase")
           .orderBy("Ordinal", descending: true)
           .limit(1))
-      .forEach((phaseQuerySnapshot) {
+      .listen((phaseQuerySnapshot) {
     if (phaseQuerySnapshot.docs.isEmpty) {
       return;
     }
@@ -56,8 +57,7 @@ Widget gameProvider({
     }
     lastPhaseStreamController.sink.add(phase);
     newestPhaseOrdinal = phase.ordinal;
-    StreamSubscription? subscription;
-    subscription = cacheDocSnapshots(FirebaseFirestore.instance
+    newestPhaseSubscription = cacheDocSnapshots(FirebaseFirestore.instance
             .collection("Game")
             .doc(gameID)
             .collection("Phase")
@@ -65,12 +65,16 @@ Widget gameProvider({
         .listen((phaseSnapshot) {
       final phase = Phase(phaseSnapshot);
       if (phase.ordinal < newestPhaseOrdinal) {
-        subscription?.cancel();
+        newestPhaseSubscription?.cancel();
         return;
       }
       lastPhaseStreamController.sink.add(phase);
     });
   });
+  lastPhaseStreamController.onCancel = () {
+    lastPhaseSubscription.cancel();
+    newestPhaseSubscription?.cancel();
+  };
   return MultiProvider(
     providers: [
       StreamProvider<Game?>.value(

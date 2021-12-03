@@ -10,11 +10,14 @@ import 'router.gr.dart';
 import 'configure.dart';
 import 'variant.dart';
 import 'app_user.dart';
+import 'firebase_options.dart';
 
 void main() async {
-  await configure();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await configure();
   runApp(App());
 }
 

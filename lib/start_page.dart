@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'router.gr.dart';
 import 'cache.dart';
@@ -15,22 +16,38 @@ class StartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = context.watch<User?>();
     var appRouter = context.read<AppRouter>();
-    final publicGames = cacheQuerySnapshots(FirebaseFirestore.instance
-        .collection("Game")
-        .where('Private', isEqualTo: false));
-    Stream<QuerySnapshot<Map<String, dynamic>>>? myPublicGames;
-    Stream<QuerySnapshot<Map<String, dynamic>>>? myPrivateGames;
-    if (user != null) {
-      myPublicGames = cacheQuerySnapshots(FirebaseFirestore.instance
-          .collection("Game")
-          .where('Private', isEqualTo: false)
-          .where('Players', arrayContains: user.uid));
-      myPrivateGames = cacheQuerySnapshots(FirebaseFirestore.instance
-          .collection("Game")
-          .where('Private', isEqualTo: true)
-          .where('Players', arrayContains: user.uid));
-    }
     return Scaffold(
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: const Text("Home"),
+              onTap: () => appRouter.push(const StartPageRoute()),
+            ),
+            const ListTile(
+              title: Text("Open games"),
+            ),
+            const ListTile(
+              title: Text("Live games"),
+            ),
+            const ListTile(
+              title: Text("Finished games"),
+            ),
+            ListTile(
+              title: const Text("Chat"),
+              onTap: () => launch("https://discord.gg/bu3JxYc"),
+            ),
+            ListTile(
+              title: const Text("Forum"),
+              onTap: () => launch("https://groups.google.com/g/diplicity-talk"),
+            ),
+            ListTile(
+              title: const Text("Source"),
+              onTap: () => launch("https://github.com/zond/corpulentpangolin"),
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         title: const Text("corpulentpangolin"),
         actions: <Widget>[
@@ -72,13 +89,17 @@ class StartPage extends StatelessWidget {
       ),
       body: withLoginBackground(
         ListView(children: [
-          const Material(
-            child: ListTile(
-              title: Text("Public games",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+          if (user == null) ...[
+            const Material(
+              child: ListTile(
+                title: Text("Public games",
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+              ),
             ),
-          ),
-          GameListWidget(publicGames),
+            GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance
+                .collection("Game")
+                .where('Private', isEqualTo: false))),
+          ],
           if (user != null) ...[
             const Material(
               child: ListTile(
@@ -86,14 +107,20 @@ class StartPage extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
-            GameListWidget(myPublicGames!),
+            GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance
+                .collection("Game")
+                .where('Private', isEqualTo: false)
+                .where('Players', arrayContains: user.uid))),
             const Material(
               child: ListTile(
                 title: Text("My private games",
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
-            GameListWidget(myPrivateGames!),
+            GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance
+                .collection("Game")
+                .where('Private', isEqualTo: true)
+                .where('Players', arrayContains: user.uid))),
           ],
         ]),
       ),
