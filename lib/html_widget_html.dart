@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 import 'dart:html' as html;
 import 'package:js/js.dart';
 import 'package:js/js_util.dart';
-import 'dart:convert';
 
 int _nextKey = 0;
 
@@ -20,7 +19,7 @@ Map<Key, String> _html = {};
 
 class HTMLWidgetConditional extends StatelessWidget {
   final String source;
-  final Map<String, Function(Map<String, dynamic>)>? callbacks;
+  final Map<String, Function(String)>? callbacks;
   const HTMLWidgetConditional({
     required Key key,
     required this.source,
@@ -32,8 +31,7 @@ class HTMLWidgetConditional extends StatelessWidget {
 
     if (callbacks != null) {
       callbacks!.forEach((name, func) {
-        setProperty(html.window, name,
-            allowInterop((String s) => func(json.decode(s))));
+        setProperty(html.window, name, allowInterop(func));
       });
     }
     ui.platformViewRegistry.registerViewFactory("html-widget-${key.toString()}",

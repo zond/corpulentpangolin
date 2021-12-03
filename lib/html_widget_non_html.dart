@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'dart:convert';
 
 class HTMLWidgetConditional extends StatelessWidget {
   final String source;
-  final Map<String, Function(Map<String, dynamic>)>? callbacks;
+  final Map<String, Function(String)>? callbacks;
   const HTMLWidgetConditional({
     required Key key,
     required this.source,
@@ -24,8 +23,7 @@ $source
       javascriptChannels: Set.from(callbacks?.keys.map((name) =>
               JavascriptChannel(
                   name: "${name}_channel",
-                  onMessageReceived: (m) =>
-                      callbacks![name]!(json.decode(m.message)))) ??
+                  onMessageReceived: (m) => callbacks![name]!(m.message))) ??
           []),
     );
   }

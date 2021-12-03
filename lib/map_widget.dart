@@ -1,11 +1,13 @@
 import 'package:corpulentpangolin/spinner_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
 
 import 'html_widget.dart';
 import 'phase.dart';
 import 'toast.dart';
 import 'variant.dart';
+import 'game_page.dart';
 
 // Based on http://godsnotwheregodsnot.blogspot.se/2012/09/color-distribution-methodology.html.
 const contrastColors = [
@@ -305,6 +307,9 @@ class Transform {
 			"," +
 			this.transY +
 			",0,1)";
+		if (this.opts.onTransform) {
+		  this.opts.onTransform(`transform: ${this.el.style.transform}; transform-origin: ${this.el.style.transformOrigin};`);
+		}
 	}
 	get origX() {
 		return this._origX;
@@ -1003,10 +1008,14 @@ class MapWidget extends StatelessWidget {
   }
 
   Function(Map<String, dynamic>) jsCallback(
-      BuildContext context, Phase phase, Variant variant) {
+      BuildContext context, Phase phase, Variant variant, Style style) {
     return (msg) {
       if (msg.containsKey("infoClicked")) {
         toast(context, provinceInfo(phase, variant, "${msg["infoClicked"]}"));
+      } else if (msg.containsKey("mapTransformStyle")) {
+        style.content = "${msg["mapTransformStyle"]}";
+      } else {
+        debugPrint("$msg");
       }
     };
   }
@@ -1017,6 +1026,7 @@ class MapWidget extends StatelessWidget {
     final svgs = context.watch<SVGBundle?>();
     final phase = context.watch<Phase?>();
     final variant = context.watch<Variant?>();
+    final mapStyle = context.read<Style>();
     if (svgs == null) {
       return const SpinnerWidget();
     }
@@ -1033,18 +1043,13 @@ class MapWidget extends StatelessWidget {
       source: '''
 <div class="map-element-wrapper" id="map-element-wrapper-$_nextMapID">
   <div id="map-viewport-$_nextMapID" style="height:100%;background-color:black;overflow:hidden;">
-    <div id="map-container" class="hehu-$_nextMapID">
+    <div id="map-container" style="${mapStyle.content}">
       <div id="map">${svgs.html}</div>
       <img id="map-snapshot" style="display: none;" />
     </div>
   </div>
   <script>
     (() => {
-      Array.from(document.getElementsByClassName("map-element-wrapper")).forEach((el) => {
-        if (el.id != "map-element-wrapper-$_nextMapID") {
-          el.remove();
-        }
-      });
       const mapViewport = document.getElementById('map-viewport-$_nextMapID');
       const flutter_cb = (m) => { window.flutter_cb_json(JSON.stringify(m)); };
 
@@ -1060,12 +1065,13 @@ class MapWidget extends StatelessWidget {
         snapshot.src = data;
 
         new PZ({
-          pzid: 'dip-map-$_nextMapID',
+          pzid: 'dip-map-pz',
           minScale: 0.5,
           maxScale: 20,
           maxTrans: 0.5,
           el: mapContainer,
           viewPort: mapViewport,
+          onTransform: (style) => { flutter_cb({ mapTransformStyle: style }); },
           onZoomStart: () => { toggle(snapshot, svg); },
           onZoomEnd: () => { toggle(svg, snapshot); },
           onPanStart: () => { toggle(snapshot, svg); },
@@ -1078,7 +1084,10 @@ class MapWidget extends StatelessWidget {
 ''',
       key: const Key("map"),
       callbacks: phase != null && variant != null
-          ? {"flutter_cb_json": jsCallback(context, phase, variant)}
+          ? {
+              "flutter_cb_json": (m) =>
+                  jsCallback(context, phase, variant, mapStyle)(json.decode(m))
+            }
           : {},
     );
   }

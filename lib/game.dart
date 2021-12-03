@@ -69,12 +69,12 @@ Widget gameProvider({
           res["ID"] = snapshot.id;
           return res;
         }),
-        catchError: (context, e) => {"Error": "$e"} as Game,
+        catchError: (context, e) => Game({"Error": "gameProvider Game: $e"}),
         initialData: initialData,
       ),
       StreamProvider<Phase?>.value(
         value: lastPhaseStreamController.stream,
-        catchError: (context, e) => {"Error": "$e"} as Phase,
+        catchError: (context, e) => Phase({"Error": "gameProvider Phase: $e"}),
         initialData: null,
       ),
       ProxyProvider<Game?, Variant?>(
@@ -83,11 +83,14 @@ Widget gameProvider({
           if (game == null) {
             return null;
           }
+          if (game.err != null) {
+            return Variant({"Error": "gameProvider Game: ${game.err}"});
+          }
           if (variants == null) {
             return null;
           }
           if (variants.err != null) {
-            return {"Error": variants.err} as Variant;
+            return Variant({"Error": "gameProvider Variant: ${variants.err}"});
           }
           return variants.map[game["Variant"] as String];
         },
