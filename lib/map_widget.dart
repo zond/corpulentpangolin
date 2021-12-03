@@ -1017,14 +1017,15 @@ class MapWidget extends StatelessWidget {
     final svgs = context.watch<SVGBundle?>();
     final phase = context.watch<Phase?>();
     final variant = context.watch<Variant?>();
-    if (svgs == null || phase == null || variant == null) {
+    if (svgs == null) {
       return const SpinnerWidget();
     }
-    if (svgs.err != null || phase.err != null) {
+    if (svgs.err != null || variant?.err != null || phase?.err != null) {
       return Column(
         children: [
+          Text("Variant error: ${variant?.err}"),
           Text("SVGBundle error: ${svgs.err}"),
-          Text("Phase error: ${phase.err}"),
+          Text("Phase error: ${phase?.err}"),
         ],
       );
     }
@@ -1049,7 +1050,7 @@ class MapWidget extends StatelessWidget {
 
       $_dippyMap
 
-      ${renderPhase(phase, variant).join("\n")}
+      ${phase != null && variant != null ? renderPhase(phase, variant).join("\n") : ""}
 
       getSVGData(svg, 1280).then((data) => {
         snapshot.width = svg.clientWidth;
@@ -1076,7 +1077,9 @@ class MapWidget extends StatelessWidget {
 </div>
 ''',
       key: const Key("map"),
-      callbacks: {"flutter_cb_json": jsCallback(context, phase, variant)},
+      callbacks: phase != null && variant != null
+          ? {"flutter_cb_json": jsCallback(context, phase, variant)}
+          : {},
     );
   }
 }
