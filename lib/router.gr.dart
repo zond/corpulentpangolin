@@ -14,9 +14,9 @@ import 'package:flutter/material.dart' as _i8;
 import 'chat_page.dart' as _i5;
 import 'create_game_page.dart' as _i2;
 import 'game_page.dart' as _i3;
+import 'home_page.dart' as _i1;
 import 'map_page.dart' as _i4;
 import 'orders_page.dart' as _i6;
-import 'start_page.dart' as _i1;
 
 class AppRouter extends _i7.RootStackRouter {
   AppRouter([_i8.GlobalKey<_i8.NavigatorState>? navigatorKey])
@@ -24,9 +24,9 @@ class AppRouter extends _i7.RootStackRouter {
 
   @override
   final Map<String, _i7.PageFactory> pagesMap = {
-    StartPageRoute.name: (routeData) {
+    HomePageRoute.name: (routeData) {
       return _i7.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i1.StartPage());
+          routeData: routeData, child: const _i1.HomePage());
     },
     CreateGamePageRoute.name: (routeData) {
       return _i7.MaterialPageX<dynamic>(
@@ -57,7 +57,7 @@ class AppRouter extends _i7.RootStackRouter {
 
   @override
   List<_i7.RouteConfig> get routes => [
-        _i7.RouteConfig(StartPageRoute.name, path: '/'),
+        _i7.RouteConfig(HomePageRoute.name, path: '/'),
         _i7.RouteConfig(CreateGamePageRoute.name, path: 'CreateGame'),
         _i7.RouteConfig(GamePageRoute.name, path: '/Game/:gameID', children: [
           _i7.RouteConfig('#redirect',
@@ -75,11 +75,11 @@ class AppRouter extends _i7.RootStackRouter {
       ];
 }
 
-/// generated route for [_i1.StartPage]
-class StartPageRoute extends _i7.PageRouteInfo<void> {
-  const StartPageRoute() : super(name, path: '/');
+/// generated route for [_i1.HomePage]
+class HomePageRoute extends _i7.PageRouteInfo<void> {
+  const HomePageRoute() : super(name, path: '/');
 
-  static const String name = 'StartPageRoute';
+  static const String name = 'HomePageRoute';
 }
 
 /// generated route for [_i2.CreateGamePage]

@@ -1,6 +1,6 @@
 import 'package:auto_route/annotations.dart';
 
-import 'start_page.dart';
+import 'home_page.dart';
 import 'create_game_page.dart';
 import 'game_page.dart';
 import 'map_page.dart';
@@ -9,7 +9,7 @@ import 'orders_page.dart';
 
 @MaterialAutoRouter(
   routes: <AutoRoute>[
-    AutoRoute(page: StartPage, initial: true),
+    AutoRoute(page: HomePage, initial: true),
     AutoRoute(page: CreateGamePage, path: 'CreateGame'),
     AutoRoute(
       page: GamePage,

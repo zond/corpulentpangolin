@@ -10,8 +10,8 @@ import 'toast.dart';
 import 'auth.dart';
 import 'game_list_widget.dart';
 
-class StartPage extends StatelessWidget {
-  const StartPage({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     var user = context.watch<User?>();
