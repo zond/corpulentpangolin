@@ -40,7 +40,11 @@ class Graph extends MapView<String, dynamic> {
 }
 
 class Variant extends MapView<String, dynamic> {
-  Variant(base) : super(base);
+  Variant(DocumentSnapshot<Map<String, dynamic>> snapshot)
+      : super(snapshot.data()!) {
+    this["ID"] = snapshot.id;
+  }
+  Variant.fromMap(base) : super(base);
 
   List<int> _decode(DocumentSnapshot<Map<String, dynamic>> doc) {
     return brotliDecode((doc.data()!["Bytes"] as Blob).bytes);
@@ -99,9 +103,7 @@ class Variant extends MapView<String, dynamic> {
       return [];
     }
 
-    final variantDoc = FirebaseFirestore.instance
-        .collection("Variant")
-        .doc(this["ID"] as String);
+    final variantDoc = FirebaseFirestore.instance.collection("Variant").doc(id);
     yield* StreamGroup.merge([
       cacheDocSnapshots(variantDoc.collection("Map").doc("Map"))
           .expand((mapSnapshot) {
@@ -131,10 +133,9 @@ class Variants {
     final variantsStreamController = StreamController<Variants?>();
     final Map<String, Variant> foundVariants = {};
     final List<StreamSubscription> variantSubscriptions = [];
-    void pushVariants(DocumentSnapshot newVariantSnapshot) {
-      final variant = Variant(newVariantSnapshot.data());
-      variant["ID"] = newVariantSnapshot.id;
-      foundVariants[newVariantSnapshot.id] = variant;
+    void pushVariants(
+        DocumentSnapshot<Map<String, dynamic>> newVariantSnapshot) {
+      foundVariants[newVariantSnapshot.id] = Variant(newVariantSnapshot);
       final List<Variant> orderedVariants = foundVariants.values.toList();
       orderedVariants.sort((a, b) => a.id.compareTo(b.id));
       variantsStreamController.sink

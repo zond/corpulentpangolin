@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -9,7 +10,12 @@ class Unit {
 }
 
 class Phase extends MapView<String, dynamic> {
-  Phase(base) : super(base);
+  Phase(DocumentSnapshot<Map<String, dynamic>> snapshot)
+      : super(snapshot.data()!) {
+    this["ID"] = snapshot.id;
+  }
+  Phase.fromMap(Map<String, dynamic> base) : super(base);
+
   String desc() {
     return "${this["Season"]} ${this["Year"]}, ${this["Type"]}";
   }

@@ -12,7 +12,19 @@ import 'cache.dart';
 
 @immutable
 class Game extends MapView<String, dynamic> {
-  const Game(base) : super(base);
+  Game(DocumentSnapshot<Map<String, dynamic>> snapshot)
+      : super(snapshot.data()!) {
+    this["ID"] = snapshot.id;
+  }
+  const Game.fromMap(base) : super(base);
+
+  String get id {
+    if (containsKey("ID")) {
+      return this["ID"] as String;
+    }
+    return "no-id";
+  }
+
   Object? get err {
     if (containsKey("Error")) {
       return this["Error"];
@@ -38,11 +50,12 @@ Widget gameProvider({
     if (phaseQuerySnapshot.docs.isEmpty) {
       return;
     }
-    final phaseOrdinal = Phase(phaseQuerySnapshot.docs[0].data()).ordinal;
-    if (phaseOrdinal < newestPhaseOrdinal) {
+    final phase = Phase(phaseQuerySnapshot.docs[0]);
+    if (phase.ordinal < newestPhaseOrdinal) {
       return;
     }
-    newestPhaseOrdinal = phaseOrdinal;
+    lastPhaseStreamController.sink.add(phase);
+    newestPhaseOrdinal = phase.ordinal;
     StreamSubscription? subscription;
     subscription = cacheDocSnapshots(FirebaseFirestore.instance
             .collection("Game")
@@ -50,12 +63,11 @@ Widget gameProvider({
             .collection("Phase")
             .doc(phaseQuerySnapshot.docs[0].id))
         .listen((phaseSnapshot) {
-      final phase = Phase(phaseSnapshot.data());
+      final phase = Phase(phaseSnapshot);
       if (phase.ordinal < newestPhaseOrdinal) {
         subscription?.cancel();
         return;
       }
-      phase["ID"] = phaseSnapshot.id;
       lastPhaseStreamController.sink.add(phase);
     });
   });
@@ -64,17 +76,15 @@ Widget gameProvider({
       StreamProvider<Game?>.value(
         value: cacheDocSnapshots(
                 FirebaseFirestore.instance.collection("Game").doc(gameID))
-            .map((snapshot) {
-          final res = Game(snapshot.data());
-          res["ID"] = snapshot.id;
-          return res;
-        }),
-        catchError: (context, e) => Game({"Error": "gameProvider Game: $e"}),
+            .map((snapshot) => Game(snapshot)),
+        catchError: (context, e) =>
+            Game.fromMap({"Error": "gameProvider Game: $e"}),
         initialData: initialData,
       ),
       StreamProvider<Phase?>.value(
         value: lastPhaseStreamController.stream,
-        catchError: (context, e) => Phase({"Error": "gameProvider Phase: $e"}),
+        catchError: (context, e) =>
+            Phase.fromMap({"Error": "gameProvider Phase: $e"}),
         initialData: null,
       ),
       ProxyProvider<Game?, Variant?>(
@@ -84,13 +94,14 @@ Widget gameProvider({
             return null;
           }
           if (game.err != null) {
-            return Variant({"Error": "gameProvider Game: ${game.err}"});
+            return Variant.fromMap({"Error": "gameProvider Game: ${game.err}"});
           }
           if (variants == null) {
             return null;
           }
           if (variants.err != null) {
-            return Variant({"Error": "gameProvider Variant: ${variants.err}"});
+            return Variant.fromMap(
+                {"Error": "gameProvider Variant: ${variants.err}"});
           }
           return variants.map[game["Variant"] as String];
         },

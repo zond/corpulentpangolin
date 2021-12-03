@@ -10,7 +10,7 @@ class GameListWidget extends StatelessWidget {
   const GameListWidget(this.gamesStream, {Key? key}) : super(key: key);
   @override
   Widget build(context) {
-    return StreamBuilder<QuerySnapshot>(
+    return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: gamesStream,
       builder: (context, gamesQuerySnapshot) {
         if (gamesQuerySnapshot.hasError) {
@@ -28,7 +28,7 @@ class GameListWidget extends StatelessWidget {
           children: games.map((game) {
             return gameProvider(
               gameID: game.id,
-              initialData: Game(game.data() as Map<String, dynamic>),
+              initialData: Game(game),
               child: const GameListElementWidget(),
             );
           }).toList(),
