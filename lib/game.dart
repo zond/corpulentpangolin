@@ -24,6 +24,7 @@ class Game extends MapView<String, dynamic> {
 Widget gameProvider({
   required String gameID,
   required Widget child,
+  Game? initialData,
 }) {
   final lastPhaseStreamController = StreamController<Phase?>();
   var newestPhaseOrdinal = -1;
@@ -69,7 +70,7 @@ Widget gameProvider({
           return res;
         }),
         catchError: (context, e) => {"Error": "$e"} as Game,
-        initialData: null,
+        initialData: initialData,
       ),
       StreamProvider<Phase?>.value(
         value: lastPhaseStreamController.stream,

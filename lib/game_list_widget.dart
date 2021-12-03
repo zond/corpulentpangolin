@@ -28,6 +28,7 @@ class GameListWidget extends StatelessWidget {
           children: games.map((game) {
             return gameProvider(
               gameID: game.id,
+              initialData: Game(game.data() as Map<String, dynamic>),
               child: const GameListElementWidget(),
             );
           }).toList(),

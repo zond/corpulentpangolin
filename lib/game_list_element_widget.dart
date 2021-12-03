@@ -38,7 +38,7 @@ class GameListElementWidget extends StatelessWidget {
         leading: Text("$nMembers/$nVariantNations"),
         title: Text("${game["Desc"] == "" ? "[unnamed]" : game["Desc"]}"),
         subtitle: Text(
-            "${game["Variant"]}, ${lastPhase == null ? "" : " ${lastPhase.desc()}"}"),
+            "${game["Variant"]}, ${lastPhase == null ? "(loading...)" : " ${lastPhase.desc()}"}"),
       ),
     );
   }
