@@ -6,11 +6,13 @@ import 'game_page.dart';
 import 'map_page.dart';
 import 'chat_page.dart';
 import 'orders_page.dart';
+import 'open_games_page.dart';
 
 @MaterialAutoRouter(
   routes: <AutoRoute>[
     AutoRoute(page: HomePage, initial: true),
     AutoRoute(page: CreateGamePage, path: 'CreateGame'),
+    AutoRoute(page: OpenGamesPage, path: 'OpenGames'),
     AutoRoute(
       page: GamePage,
       path: "/Game/:gameID",
