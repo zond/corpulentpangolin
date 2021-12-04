@@ -19,6 +19,8 @@ dependencies:
   provider:
   firebase_core:
   firebase_auth:
+  flutter_localizations: # Add this line
+    sdk: flutter
   flutter:
     sdk: flutter
   webview_flutter:

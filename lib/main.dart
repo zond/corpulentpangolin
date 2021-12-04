@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'router.gr.dart';
 import 'configure.dart';
@@ -18,20 +19,21 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await configure();
-  runApp(App());
-}
-
-class App extends StatelessWidget {
   final user = StreamController<User?>();
+  FirebaseAuth.instance.userChanges().listen((u) {
+    user.sink.add(u);
+  });
   final appRouter = AppRouter();
-  App({Key? key}) : super(key: key) {
-    FirebaseAuth.instance.userChanges().listen((u) {
-      user.sink.add(u);
-    });
-  }
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
+  runApp(MaterialApp(
+    localizationsDelegates: const [
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+    ],
+    supportedLocales: const [
+      Locale('en', ''),
+      Locale('sv', ''),
+    ],
+    home: MultiProvider(
       providers: [
         StreamProvider<User?>.value(
           value: user.stream,
@@ -63,6 +65,6 @@ class App extends StatelessWidget {
           child: child,
         );
       },
-    );
-  }
+    ),
+  ));
 }
