@@ -2,6 +2,7 @@ import 'package:corpulentpangolin/spinner_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'html_widget.dart';
 import 'phase.dart';
@@ -965,14 +966,25 @@ class MapWidget extends StatelessWidget {
     return contrastColors[idx % contrastColors.length];
   }
 
-  String provinceInfo(Phase phase, Variant variant, String prov) {
+  String provinceInfo(
+      BuildContext context, Phase phase, Variant variant, String prov) {
+    final l10n = context.read<AppLocalizations>();
     prov = prov.split("/")[0];
     final res = StringBuffer(variant.provinceLongNames[prov] ?? prov);
     if (phase.supplyCenters.containsKey(prov)) {
       res.write(" (${phase.supplyCenters[prov]})");
     }
     if (phase.units.containsKey(prov)) {
-      res.write(", ${phase.units[prov]!.type} (${phase.units[prov]!.nation})");
+      var type = phase.units[prov]!.type;
+      switch (type) {
+        case "Army":
+          type = l10n.army;
+          break;
+        case "Fleet":
+          type = l10n.fleet;
+          break;
+      }
+      res.write(", $type (${phase.units[prov]!.nation})");
     }
     return res.toString();
   }
@@ -1011,7 +1023,8 @@ class MapWidget extends StatelessWidget {
       BuildContext context, Phase phase, Variant variant, Style style) {
     return (msg) {
       if (msg.containsKey("infoClicked")) {
-        toast(context, provinceInfo(phase, variant, "${msg["infoClicked"]}"));
+        toast(context,
+            provinceInfo(context, phase, variant, "${msg["infoClicked"]}"));
       } else if (msg.containsKey("mapTransformStyle")) {
         style.content = "${msg["mapTransformStyle"]}";
       } else {

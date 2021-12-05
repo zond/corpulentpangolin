@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'router.gr.dart';
 import 'cache.dart';
@@ -14,31 +15,31 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var user = context.watch<User?>();
-    var appRouter = context.read<AppRouter>();
+    final user = context.watch<User?>();
+    final appRouter = context.read<AppRouter>();
+    final l10n = context.read<AppLocalizations>();
     return Scaffold(
       drawer: mainDrawer(context),
       appBar: mainAppBar(context),
       body: withBackground(
         ListView(children: [
           if (user == null)
-            const Material(
-                child: ListTile(title: Text("Log in to see your games"))),
+            Material(child: ListTile(title: Text(l10n.logInToSeeYourGames))),
           if (user != null) ...[
-            const Material(
+            Material(
               child: ListTile(
-                title: Text("My public games",
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                title: Text(l10n.myPublicGames,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
             GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance
                 .collection("Game")
                 .where('Private', isEqualTo: false)
                 .where('Players', arrayContains: user.uid))),
-            const Material(
+            Material(
               child: ListTile(
-                title: Text("My private games",
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                title: Text(l10n.myPrivateGames,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),
             GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance

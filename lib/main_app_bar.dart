@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'toast.dart';
 import 'auth.dart';
@@ -26,21 +27,22 @@ PopupMenuButton _createMenu(BuildContext context, List<_MenuItem> items) {
 
 AppBar mainAppBar(BuildContext context) {
   final user = context.watch<User?>();
+  final l10n = context.read<AppLocalizations>();
   return AppBar(
     title: const Text("corpulentpangolin"),
     actions: <Widget>[
       _createMenu(context, [
         if (user == null)
           _MenuItem(
-              const Text("Log in"),
-              (_) =>
-                  signInWithGoogle().then((_) => toast(context, "Logged in"))),
+              Text(l10n.login),
+              (_) => signInWithGoogle()
+                  .then((_) => toast(context, l10n.loggedIn))),
         if (user != null)
           _MenuItem(
-              const Text("Log out"),
+              Text(l10n.logout),
               (_) => FirebaseAuth.instance
                   .signOut()
-                  .then((_) => toast(context, "Logged out"))),
+                  .then((_) => toast(context, l10n.loggedOut))),
       ]),
     ],
   );

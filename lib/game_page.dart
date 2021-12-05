@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'game.dart';
 import 'router.gr.dart';
@@ -19,6 +20,7 @@ class GamePage extends StatelessWidget {
   @override
   Widget build(context) {
     final appRouter = context.read<AppRouter>();
+    final l10n = context.read<AppLocalizations>();
     return Provider.value(
       value: Style(""),
       child: gameProvider(
@@ -47,12 +49,13 @@ class GamePage extends StatelessWidget {
               return BottomNavigationBar(
                 currentIndex: tabsRouter.activeIndex,
                 onTap: tabsRouter.setActiveIndex,
-                items: const [
-                  BottomNavigationBarItem(icon: Icon(Icons.map), label: "Map"),
+                items: [
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.forum), label: "Chat"),
+                      icon: const Icon(Icons.map), label: l10n.map),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.checklist), label: "Orders"),
+                      icon: const Icon(Icons.forum), label: l10n.chat),
+                  BottomNavigationBarItem(
+                      icon: const Icon(Icons.checklist), label: l10n.orders),
                 ],
               );
             }),

@@ -1,6 +1,9 @@
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
 @immutable
 class Unit {
@@ -16,8 +19,29 @@ class Phase extends MapView<String, dynamic> {
   }
   Phase.fromMap(Map<String, dynamic> base) : super(base);
 
-  String desc() {
-    return "${this["Season"]} ${this["Year"]}, ${this["Type"]}";
+  String desc(BuildContext context) {
+    final l10n = context.read<AppLocalizations>();
+    var season = this["Season"] as String;
+    switch (season) {
+      case "Spring":
+        season = l10n.spring;
+        break;
+      case "Fall":
+        season = l10n.fall;
+    }
+    var type = this["Type"] as String;
+    switch (type) {
+      case "Adjustment":
+        type = l10n.adjustment;
+        break;
+      case "Movement":
+        type = l10n.movement;
+        break;
+      case "Retreat":
+        type = l10n.retreat;
+        break;
+    }
+    return "$season ${this["Year"]}, $type";
   }
 
   int get ordinal {

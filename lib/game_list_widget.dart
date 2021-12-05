@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'game.dart';
 import 'spinner_widget.dart';
@@ -10,6 +12,7 @@ class GameListWidget extends StatelessWidget {
   const GameListWidget(this.gamesStream, {Key? key}) : super(key: key);
   @override
   Widget build(context) {
+    final l10n = context.read<AppLocalizations>();
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: gamesStream,
       builder: (context, gamesQuerySnapshot) {
@@ -22,7 +25,7 @@ class GameListWidget extends StatelessWidget {
         }
         final games = gamesQuerySnapshot.data!.docs;
         if (games.isEmpty) {
-          return const Material(child: ListTile(title: Text("No games found")));
+          return Material(child: ListTile(title: Text(l10n.noGamesFound)));
         }
         return Column(
           children: games.map((game) {

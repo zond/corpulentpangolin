@@ -1,0 +1,47 @@
+{
+  "helloWorld": "Hello World!",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "chat": "Chat",
+  "createGame": "Create game",
+  "description": "Description",
+  "variant": "Variant",
+  "privateChat": "Private chat",
+  "groupChat": "Group chat",
+  "publicChat": "Public chat",
+  "gameCreated": "Game created",
+  "failedCreatingGameErr": "Failed creating game: {err}",
+  "@failedCreatingGameErr": {
+    "placeholders": {
+      "err": {
+        "type": "String"
+      }
+    }
+  },
+  "unnamed": "unnamed",
+  "spring": "Spring",
+  "fall": "Fall",
+  "adjustment": "Adjustment",
+  "movement": "Movement",
+  "retreat": "Retreat",
+  "loading": "Loading...",
+  "noGamesFound": "No games found",
+  "orders": "Orders",
+  "map": "Map",
+  "logInToSeeYourGames": "Log in to see your games",
+  "myPublicGames": "My public games",
+  "myPrivateGames": "My private games",
+  "openGames": "Open games",
+  "liveGames": "Live games",
+  "finishedGames": "Finished games",
+  "login": "Log in",
+  "logout": "Log out",
+  "loggedOut": "Logged out",
+  "loggedIn": "Logged in",
+  "forum": "Forum",
+  "source": "Source",
+  "home": "Home",
+  "army": "Army",
+  "fleet": "Fleet"
+}

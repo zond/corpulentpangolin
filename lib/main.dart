@@ -5,13 +5,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'router.gr.dart';
 import 'configure.dart';
 import 'variant.dart';
 import 'app_user.dart';
 import 'firebase_options.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,14 +26,8 @@ void main() async {
   });
   final appRouter = AppRouter();
   runApp(MaterialApp(
-    localizationsDelegates: const [
-      GlobalMaterialLocalizations.delegate,
-      GlobalWidgetsLocalizations.delegate,
-    ],
-    supportedLocales: const [
-      Locale('en', ''),
-      Locale('sv', ''),
-    ],
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    supportedLocales: AppLocalizations.supportedLocales,
     home: MultiProvider(
       providers: [
         StreamProvider<User?>.value(
@@ -52,16 +47,20 @@ void main() async {
       ),
       builder: (context, child) {
         final user = context.watch<User?>();
-        if (user == null) {
-          return child!;
-        }
-        return StreamProvider<AppUser?>.value(
-          value: FirebaseFirestore.instance
-              .collection("User")
-              .doc(user.uid)
-              .snapshots()
-              .map((snapshot) => AppUser(snapshot.data())),
-          initialData: null,
+        return MultiProvider(
+          providers: [
+            Provider.value(
+              value: AppLocalizations.of(context) ?? AppLocalizationsEn(),
+            ),
+            if (user != null)
+              StreamProvider<AppUser?>.value(
+                  value: FirebaseFirestore.instance
+                      .collection("User")
+                      .doc(user.uid)
+                      .snapshots()
+                      .map((snapshot) => AppUser(snapshot.data())),
+                  initialData: null),
+          ],
           child: child,
         );
       },

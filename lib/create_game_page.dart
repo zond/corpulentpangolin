@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'router.gr.dart';
 import 'spinner_widget.dart';
@@ -34,8 +35,9 @@ class _CreateGamePageState extends State<CreateGamePage> {
 
   @override
   Widget build(BuildContext context) {
-    var appRouter = context.read<AppRouter>();
-    var variants = context.watch<Variants?>();
+    final appRouter = context.read<AppRouter>();
+    final variants = context.watch<Variants?>();
+    final l10n = context.read<AppLocalizations>();
     if (variants != null && variants.err != null) {
       return Text("Variants error: ${variants.err}");
     }
@@ -46,13 +48,13 @@ class _CreateGamePageState extends State<CreateGamePage> {
       body: Center(
         child: ListView(
           children: [
-            const ListTile(
-              title: Text("Create game"),
+            ListTile(
+              title: Text(l10n.createGame),
             ),
             TextFormField(
               initialValue: game["Desc"].toString(),
-              decoration: const InputDecoration(
-                labelText: "Description",
+              decoration: InputDecoration(
+                labelText: l10n.description,
               ),
               onChanged: (newValue) {
                 setState(() => game["Desc"] = newValue);
@@ -61,8 +63,8 @@ class _CreateGamePageState extends State<CreateGamePage> {
             variants == null
                 ? const SpinnerWidget()
                 : InputDecorator(
-                    decoration: const InputDecoration(
-                      labelText: "Variant",
+                    decoration: InputDecoration(
+                      labelText: l10n.variant,
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton(
@@ -87,7 +89,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
                     setState(() => game["DisablePrivateChat"] = !newValue);
                   },
                 ),
-                const Text("Private chat"),
+                Text(l10n.privateChat),
               ],
             ),
             Row(
@@ -98,7 +100,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
                     setState(() => game["DisableGroupChat"] = !newValue);
                   },
                 ),
-                const Text("Group chat"),
+                Text(l10n.groupChat),
               ],
             ),
             Row(
@@ -109,7 +111,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
                     setState(() => game["DisableConferenceChat"] = !newValue);
                   },
                 ),
-                const Text("Conference chat"),
+                Text(l10n.publicChat),
               ],
             ),
           ],
@@ -119,9 +121,9 @@ class _CreateGamePageState extends State<CreateGamePage> {
         child: const Icon(Icons.add),
         onPressed: () {
           gameCollection.add(game).then((_) {
-            appRouter.pop().then((_) => toast(context, "Game created"));
+            appRouter.pop().then((_) => toast(context, l10n.gameCreated));
           }).catchError((err) {
-            toast(context, "Failed creating game: $err");
+            toast(context, l10n.failedCreatingGameErr(err));
           });
         },
       ),
