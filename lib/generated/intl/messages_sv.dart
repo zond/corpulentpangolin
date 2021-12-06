@@ -36,7 +36,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Spel skapat"),
         "groupChat": MessageLookupByLibrary.simpleMessage("Gruppchat"),
-        "helloWorld": MessageLookupByLibrary.simpleMessage("Hej världen!"),
         "home": MessageLookupByLibrary.simpleMessage("Hem"),
         "liveGames": MessageLookupByLibrary.simpleMessage("Pågående spel"),
         "loading": MessageLookupByLibrary.simpleMessage("Laddar..."),
@@ -48,10 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "logout": MessageLookupByLibrary.simpleMessage("Logga ut"),
         "map": MessageLookupByLibrary.simpleMessage("Karta"),
         "movement": MessageLookupByLibrary.simpleMessage("Förflyttning"),
-        "myPrivateGames":
-            MessageLookupByLibrary.simpleMessage("Mina privata spel"),
-        "myPublicGames":
-            MessageLookupByLibrary.simpleMessage("Mina offentliga spel"),
+        "myGames": MessageLookupByLibrary.simpleMessage("Mina spel"),
         "noGamesFound": MessageLookupByLibrary.simpleMessage("Inga spel funna"),
         "openGames": MessageLookupByLibrary.simpleMessage("Öppna spel"),
         "orders": MessageLookupByLibrary.simpleMessage("Order"),

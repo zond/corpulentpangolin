@@ -50,16 +50,6 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Hello World!`
-  String get helloWorld {
-    return Intl.message(
-      'Hello World!',
-      name: 'helloWorld',
-      desc: 'The conventional newborn programmer greeting',
-      args: [],
-    );
-  }
-
   /// `Chat`
   String get chat {
     return Intl.message(
@@ -260,26 +250,6 @@ class S {
     );
   }
 
-  /// `My public games`
-  String get myPublicGames {
-    return Intl.message(
-      'My public games',
-      name: 'myPublicGames',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `My private games`
-  String get myPrivateGames {
-    return Intl.message(
-      'My private games',
-      name: 'myPrivateGames',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Open games`
   String get openGames {
     return Intl.message(
@@ -395,6 +365,16 @@ class S {
     return Intl.message(
       'Fleet',
       name: 'fleet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My games`
+  String get myGames {
+    return Intl.message(
+      'My games',
+      name: 'myGames',
       desc: '',
       args: [],
     );

@@ -1,8 +1,4 @@
 {
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  },
   "chat": "Chat",
   "createGame": "Create game",
   "description": "Description",
@@ -30,8 +26,6 @@
   "orders": "Orders",
   "map": "Map",
   "logInToSeeYourGames": "Log in to see your games",
-  "myPublicGames": "My public games",
-  "myPrivateGames": "My private games",
   "openGames": "Open games",
   "liveGames": "Live games",
   "finishedGames": "Finished games",
@@ -43,5 +37,6 @@
   "source": "Source",
   "home": "Home",
   "army": "Army",
-  "fleet": "Fleet"
+  "fleet": "Fleet",
+  "myGames": "My games"
 }

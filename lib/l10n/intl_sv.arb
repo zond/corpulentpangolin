@@ -1,5 +1,4 @@
 {
-  "helloWorld": "Hej världen!",
   "chat": "Chat",
   "createGame": "Skapa spel",
   "description": "Beskrivning",
@@ -20,8 +19,6 @@
   "orders": "Order",
   "map": "Karta",
   "logInToSeeYourGames": "Logga in för att se dina spel",
-  "myPublicGames": "Mina offentliga spel",
-  "myPrivateGames": "Mina privata spel",
   "openGames": "Öppna spel",
   "liveGames": "Pågående spel",
   "finishedGames": "Avslutade spel",
@@ -33,5 +30,6 @@
   "source": "Källkod",
   "home": "Hem",
   "army": "Armé",
-  "fleet": "Flotta"
+  "fleet": "Flotta",
+  "myGames": "Mina spel"
 }

@@ -36,7 +36,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Game created"),
         "groupChat": MessageLookupByLibrary.simpleMessage("Group chat"),
-        "helloWorld": MessageLookupByLibrary.simpleMessage("Hello World!"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "liveGames": MessageLookupByLibrary.simpleMessage("Live games"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
@@ -48,10 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "logout": MessageLookupByLibrary.simpleMessage("Log out"),
         "map": MessageLookupByLibrary.simpleMessage("Map"),
         "movement": MessageLookupByLibrary.simpleMessage("Movement"),
-        "myPrivateGames":
-            MessageLookupByLibrary.simpleMessage("My private games"),
-        "myPublicGames":
-            MessageLookupByLibrary.simpleMessage("My public games"),
+        "myGames": MessageLookupByLibrary.simpleMessage("My games"),
         "noGamesFound": MessageLookupByLibrary.simpleMessage("No games found"),
         "openGames": MessageLookupByLibrary.simpleMessage("Open games"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),

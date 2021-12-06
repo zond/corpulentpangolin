@@ -19,17 +19,21 @@ class CreateGamePage extends StatefulWidget {
 class _CreateGamePageState extends State<CreateGamePage> {
   final game = {
     "CreatorUID": FirebaseAuth.instance.currentUser?.uid,
+    "OwnerUID": "",
+    "MusteringRequired": true,
     "Desc": "",
     "State": "created",
     "PhaseLengthMinutes": 1440,
     "MinReliability": 0.0,
     "MinQuickness": 0.0,
+    "MinRating": 0.0,
     "Private": false,
-    "Players": [FirebaseAuth.instance.currentUser?.uid],
-    "Variant": "Classical",
     "DisablePrivateChat": false,
     "DisableGroupChat": false,
     "DisableConferenceChat": false,
+    "Variant": "Classical",
+    "Players": [FirebaseAuth.instance.currentUser?.uid],
+    "CategorySortKey": 1000,
   };
   final gameCollection = FirebaseFirestore.instance.collection("Game");
 

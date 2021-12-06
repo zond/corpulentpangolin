@@ -22,32 +22,25 @@ class HomePage extends StatelessWidget {
       drawer: mainDrawer(context),
       appBar: mainAppBar(context),
       body: withBackground(
-        ListView(children: [
-          if (user == null)
-            Material(child: ListTile(title: Text(l10n.logInToSeeYourGames))),
-          if (user != null) ...[
-            Material(
-              child: ListTile(
-                title: Text(l10n.myPublicGames,
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
+        Column(
+          children: [
+            if (user == null)
+              Material(child: ListTile(title: Text(l10n.logInToSeeYourGames))),
+            if (user != null) ...[
+              Material(
+                child: ListTile(
+                  title: Text(l10n.myGames,
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                ),
               ),
-            ),
-            GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance
-                .collection("Game")
-                .where('Private', isEqualTo: false)
-                .where('Players', arrayContains: user.uid))),
-            Material(
-              child: ListTile(
-                title: Text(l10n.myPrivateGames,
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
-              ),
-            ),
-            GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance
-                .collection("Game")
-                .where('Private', isEqualTo: true)
-                .where('Players', arrayContains: user.uid))),
+              GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance
+                  .collection("Game")
+                  .where("Players", arrayContains: user.uid)
+                  .orderBy("CategorySortKey")
+                  .orderBy("TimeSortKey"))),
+            ],
           ],
-        ]),
+        ),
       ),
       floatingActionButton: user == null
           ? null

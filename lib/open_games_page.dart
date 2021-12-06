@@ -27,7 +27,10 @@ class OpenGamesPage extends StatelessWidget {
           ),
           GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance
               .collection("Game")
-              .where('Private', isEqualTo: false))),
+              .where("Private", isEqualTo: false)
+              .where("Seeded", isEqualTo: true)
+              .where("Started", isEqualTo: false)
+              .orderBy("TimeSortKey"))),
         ]),
       ),
     );
