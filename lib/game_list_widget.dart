@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 import 'game.dart';
 import 'spinner_widget.dart';
@@ -12,7 +13,7 @@ class GameListWidget extends StatelessWidget {
   const GameListWidget(this.gamesStream, {Key? key}) : super(key: key);
   @override
   Widget build(context) {
-    final l10n = context.read<AppLocalizations>();
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
     return StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
       stream: gamesStream,
       builder: (context, gamesQuerySnapshot) {

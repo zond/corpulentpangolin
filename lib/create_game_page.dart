@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 import 'router.gr.dart';
 import 'spinner_widget.dart';
@@ -41,7 +42,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
   Widget build(BuildContext context) {
     final appRouter = context.read<AppRouter>();
     final variants = context.watch<Variants?>();
-    final l10n = context.read<AppLocalizations>();
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
     if (variants != null && variants.err != null) {
       return Text("Variants error: ${variants.err}");
     }
@@ -127,7 +128,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
           gameCollection.add(game).then((_) {
             appRouter.pop().then((_) => toast(context, l10n.gameCreated));
           }).catchError((err) {
-            toast(context, l10n.failedCreatingGameErr(err));
+            toast(context, l10n.failedCreatingGameErr("$err"));
           });
         },
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 import 'game.dart';
 import 'router.gr.dart';
@@ -20,7 +21,7 @@ class GamePage extends StatelessWidget {
   @override
   Widget build(context) {
     final appRouter = context.read<AppRouter>();
-    final l10n = context.read<AppLocalizations>();
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
     return Provider.value(
       value: Style(""),
       child: gameProvider(

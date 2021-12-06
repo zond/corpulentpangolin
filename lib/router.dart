@@ -7,17 +7,21 @@ import 'map_page.dart';
 import 'chat_page.dart';
 import 'orders_page.dart';
 import 'open_games_page.dart';
+import 'live_games_page.dart';
+import 'finished_games_page.dart';
 
 @MaterialAutoRouter(
   routes: <AutoRoute>[
-    AutoRoute(page: HomePage, initial: true),
-    AutoRoute(page: CreateGamePage, path: 'CreateGame'),
-    AutoRoute(page: OpenGamesPage, path: 'OpenGames'),
+    AutoRoute(page: HomePage, path: '/'),
+    AutoRoute(page: CreateGamePage, path: '/CreateGame'),
+    AutoRoute(page: OpenGamesPage, path: '/OpenGames'),
+    AutoRoute(page: LiveGamesPage, path: '/LiveGames'),
+    AutoRoute(page: FinishedGamesPage, path: '/FinishedGames'),
     AutoRoute(
       page: GamePage,
       path: "/Game/:gameID",
       children: [
-        AutoRoute(page: MapPage, path: 'Map', initial: true),
+        AutoRoute(page: MapPage, path: ''),
         AutoRoute(page: ChatPage, path: 'Chat'),
         AutoRoute(page: OrdersPage, path: 'Orders'),
       ],

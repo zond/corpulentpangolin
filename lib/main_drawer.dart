@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 import 'router.gr.dart';
 
 Drawer mainDrawer(BuildContext context) {
   final appRouter = context.read<AppRouter>();
-  final l10n = context.read<AppLocalizations>();
+  final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
   return Drawer(
     child: ListView(
       children: [
@@ -21,10 +22,11 @@ Drawer mainDrawer(BuildContext context) {
         ),
         ListTile(
           title: Text(l10n.liveGames),
+          onTap: () => appRouter.push(const LiveGamesPageRoute()),
         ),
         ListTile(
-          title: Text(l10n.finishedGames),
-        ),
+            title: Text(l10n.finishedGames),
+            onTap: () => appRouter.push(const FinishedGamesPageRoute())),
         ListTile(
           title: Text(l10n.chat),
           onTap: () => launch("https://discord.gg/bu3JxYc"),

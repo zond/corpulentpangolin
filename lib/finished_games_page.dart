@@ -10,8 +10,8 @@ import 'main_app_bar.dart';
 import 'main_drawer.dart';
 import 'with_background.dart';
 
-class OpenGamesPage extends StatelessWidget {
-  const OpenGamesPage({Key? key}) : super(key: key);
+class FinishedGamesPage extends StatelessWidget {
+  const FinishedGamesPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
@@ -22,15 +22,14 @@ class OpenGamesPage extends StatelessWidget {
         ListView(children: [
           Material(
             child: ListTile(
-              title: Text(l10n.openGames,
+              title: Text(l10n.finishedGames,
                   style: const TextStyle(fontWeight: FontWeight.bold)),
             ),
           ),
           GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance
               .collection("Game")
               .where("Private", isEqualTo: false)
-              .where("Seeded", isEqualTo: true)
-              .where("Started", isEqualTo: false)
+              .where("Finished", isEqualTo: true)
               .orderBy("TimeSortKey"))),
         ]),
       ),

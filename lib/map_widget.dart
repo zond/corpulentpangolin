@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 import 'html_widget.dart';
 import 'phase.dart';
@@ -968,7 +969,7 @@ class MapWidget extends StatelessWidget {
 
   String provinceInfo(
       BuildContext context, Phase phase, Variant variant, String prov) {
-    final l10n = context.read<AppLocalizations>();
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
     prov = prov.split("/")[0];
     final res = StringBuffer(variant.provinceLongNames[prov] ?? prov);
     if (phase.supplyCenters.containsKey(prov)) {

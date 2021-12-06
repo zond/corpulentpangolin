@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 import 'router.gr.dart';
 import 'cache.dart';
@@ -17,7 +18,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = context.watch<User?>();
     final appRouter = context.read<AppRouter>();
-    final l10n = context.read<AppLocalizations>();
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
     return Scaffold(
       drawer: mainDrawer(context),
       appBar: mainAppBar(context),

@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class Phase extends MapView<String, dynamic> {
   Phase.fromMap(Map<String, dynamic> base) : super(base);
 
   String desc(BuildContext context) {
-    final l10n = context.read<AppLocalizations>();
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
     var season = this["Season"] as String;
     switch (season) {
       case "Spring":
