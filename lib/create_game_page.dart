@@ -23,8 +23,8 @@ class _CreateGamePageState extends State<CreateGamePage> {
     "OwnerUID": "",
     "MusteringRequired": true,
     "Desc": "",
-    "State": "created",
     "PhaseLengthMinutes": 1440,
+    "NonMovementPhaseLengthMinutes": 0,
     "MinReliability": 0.0,
     "MinQuickness": 0.0,
     "MinRating": 0.0,
@@ -35,6 +35,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
     "Variant": "Classical",
     "Players": [FirebaseAuth.instance.currentUser?.uid],
     "CategorySortKey": 1000,
+    "TimeSortKey": 0,
   };
   final gameCollection = FirebaseFirestore.instance.collection("Game");
 
@@ -49,6 +50,10 @@ class _CreateGamePageState extends State<CreateGamePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("corpulentpangolin"),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => appRouter.replace(const HomePageRoute()),
+        ),
       ),
       body: Center(
         child: ListView(

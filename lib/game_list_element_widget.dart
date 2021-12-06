@@ -37,7 +37,7 @@ class GameListElementWidget extends StatelessWidget {
     final nMembers = (game["Players"] as List<dynamic>).length;
     return Material(
       child: ListTile(
-        onTap: () => appRouter.pushNamed("/Game/${game.id}/Map"),
+        onTap: () => appRouter.push(GamePageRoute(gameID: game.id)),
         leading: Text("$nMembers/$nVariantNations"),
         title:
             Text("${game["Desc"] == "" ? "[${l10n.unnamed}]" : game["Desc"]}"),

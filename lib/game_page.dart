@@ -41,7 +41,7 @@ class GamePage extends StatelessWidget {
                 return AppBar(
                   title: const Text("corpulentpangolin"),
                   leading: BackButton(
-                    onPressed: () => appRouter.push(const HomePageRoute()),
+                    onPressed: () => appRouter.replace(const HomePageRoute()),
                   ),
                 );
               }

@@ -11,7 +11,6 @@ import 'configure.dart';
 import 'variant.dart';
 import 'firebase_options.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 import 'app_user.dart';
 
 void main() async {
