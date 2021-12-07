@@ -18,7 +18,7 @@ class OpenGamesPage extends StatelessWidget {
       drawer: mainDrawer(context),
       appBar: mainAppBar(context),
       body: withBackground(
-        ListView(children: [
+        Column(children: [
           Material(
             child: ListTile(
               title: Text(l10n.openGames,

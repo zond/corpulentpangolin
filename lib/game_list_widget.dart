@@ -27,14 +27,18 @@ class GameListWidget extends StatelessWidget {
         if (games.isEmpty) {
           return Material(child: ListTile(title: Text(l10n.noGamesFound)));
         }
-        return Column(
-          children: games.map((game) {
-            return gameProvider(
-              gameID: game.id,
-              initialData: Game(game),
-              child: const GameListElementWidget(),
-            );
-          }).toList(),
+        return Expanded(
+          child: ListView.builder(
+            itemCount: games.length,
+            itemBuilder: (context, idx) {
+              debugPrint("building");
+              return gameProvider(
+                gameID: games[idx].id,
+                initialData: Game(games[idx]),
+                child: const GameListElementWidget(),
+              );
+            },
+          ),
         );
       },
     );

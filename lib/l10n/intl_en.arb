@@ -38,5 +38,6 @@
   "home": "Home",
   "army": "Army",
   "fleet": "Fleet",
-  "myGames": "My games"
+  "myGames": "My games",
+  "error": "Error"
 }

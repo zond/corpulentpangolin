@@ -29,6 +29,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "createGame": MessageLookupByLibrary.simpleMessage("Skapa spel"),
         "description": MessageLookupByLibrary.simpleMessage("Beskrivning"),
+        "error": MessageLookupByLibrary.simpleMessage("Fel"),
         "failedCreatingGameErr": m0,
         "fall": MessageLookupByLibrary.simpleMessage("Höst"),
         "finishedGames": MessageLookupByLibrary.simpleMessage("Avslutade spel"),

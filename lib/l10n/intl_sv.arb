@@ -31,5 +31,6 @@
   "home": "Hem",
   "army": "Armé",
   "fleet": "Flotta",
-  "myGames": "Mina spel"
+  "myGames": "Mina spel",
+  "error": "Fel"
 }

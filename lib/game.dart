@@ -18,6 +18,27 @@ class Game extends MapView<String, dynamic> {
   }
   const Game.fromMap(base) : super(base);
 
+  bool get started {
+    if (containsKey("Started")) {
+      return this["Started"] as bool;
+    }
+    return false;
+  }
+
+  bool get finished {
+    if (containsKey("Finished")) {
+      return this["Finished"] as bool;
+    }
+    return false;
+  }
+
+  bool get seeded {
+    if (containsKey("Seeded")) {
+      return this["Seeded"] as bool;
+    }
+    return false;
+  }
+
   String get id {
     if (containsKey("ID")) {
       return this["ID"] as String;

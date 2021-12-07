@@ -9,11 +9,17 @@ import 'spinner_widget.dart';
 import 'phase.dart';
 import 'router.gr.dart';
 
-class GameListElementWidget extends StatelessWidget {
+class GameListElementWidget extends StatefulWidget {
   const GameListElementWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<GameListElementWidget> createState() => _GameListElementWidgetState();
+}
+
+class _GameListElementWidgetState extends State<GameListElementWidget> {
+  var isExpanded = false;
+  @override
+  Widget build(context) {
     final appRouter = context.read<AppRouter>();
     final game = context.watch<Game?>();
     final lastPhase = context.watch<Phase?>();
@@ -36,13 +42,59 @@ class GameListElementWidget extends StatelessWidget {
     final nVariantNations = (variant["Nations"] as List<dynamic>).length;
     final nMembers = (game["Players"] as List<dynamic>).length;
     return Material(
-      child: ListTile(
-        onTap: () => appRouter.push(GamePageRoute(gameID: game.id)),
-        leading: Text("$nMembers/$nVariantNations"),
-        title:
-            Text("${game["Desc"] == "" ? "[${l10n.unnamed}]" : game["Desc"]}"),
-        subtitle: Text(
-            "${game["Variant"]}, ${lastPhase == null ? "(${l10n.loading})" : " ${lastPhase.desc(context)}"}"),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: ListTile(
+                  onTap: () => appRouter.push(GamePageRoute(gameID: game.id)),
+                  title: Row(
+                    children: [
+                      Expanded(
+                          child: Text(
+                              "${game["Desc"] == "" ? "[${l10n.unnamed}]" : game["Desc"]}")),
+                      game.started
+                          ? const Text("<1h")
+                          : Row(
+                              children: [
+                                const Icon(Icons.people),
+                                Text("$nMembers/$nVariantNations"),
+                              ],
+                            ),
+                    ],
+                  ),
+                  subtitle: Row(
+                    children: [
+                      Expanded(
+                        child: Text("${game["Variant"]}"),
+                      ),
+                      Text(lastPhase == null
+                          ? "(${l10n.loading})"
+                          : " ${lastPhase.desc(context)}"),
+                    ],
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: Icon(isExpanded ? Icons.expand_less : Icons.expand_more),
+                onPressed: () => setState(() {
+                  isExpanded = !isExpanded;
+                }),
+              ),
+            ],
+          ),
+          if (isExpanded)
+            Card(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: const [
+                  Text(
+                      "expanded body with view, join, invite, metadata, and current players"),
+                ],
+              ),
+            ),
+        ],
       ),
     );
   }
