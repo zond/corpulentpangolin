@@ -42,5 +42,7 @@
   "d": "d",
   "h": "t",
   "m": "m",
-  "created": "Skapat: {date}"
+  "created": "Skapat: {date}",
+  "started": "Started: {date}",
+  "finished": "Avslutat: {date}"
 }

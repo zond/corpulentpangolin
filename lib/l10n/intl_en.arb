@@ -32,6 +32,24 @@
       }
     }
   },
+  "started": "Started: {date}",
+  "@started": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd"
+      }
+    }
+  },
+  "finished": "Finished: {date}",
+  "@finished": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd"
+      }
+    }
+  },
   "phaseDeadline": "Phase deadline: {deadline}",
   "@phaseDeadline": {
     "placeholders": {

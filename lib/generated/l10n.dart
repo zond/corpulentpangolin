@@ -163,6 +163,32 @@ class S {
     );
   }
 
+  /// `Started: {date}`
+  String started(DateTime date) {
+    final DateFormat dateDateFormat = DateFormat.yMd(Intl.getCurrentLocale());
+    final String dateString = dateDateFormat.format(date);
+
+    return Intl.message(
+      'Started: $dateString',
+      name: 'started',
+      desc: '',
+      args: [dateString],
+    );
+  }
+
+  /// `Finished: {date}`
+  String finished(DateTime date) {
+    final DateFormat dateDateFormat = DateFormat.yMd(Intl.getCurrentLocale());
+    final String dateString = dateDateFormat.format(date);
+
+    return Intl.message(
+      'Finished: $dateString',
+      name: 'finished',
+      desc: '',
+      args: [dateString],
+    );
+  }
+
   /// `Phase deadline: {deadline}`
   String phaseDeadline(String deadline) {
     return Intl.message(

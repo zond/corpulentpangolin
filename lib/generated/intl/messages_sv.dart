@@ -24,9 +24,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(err) => "Misslyckades med att skapa spel: \$err";
 
-  static String m2(variant) => "Spelvariant: ${variant}";
+  static String m2(date) => "Avslutat: ${date}";
 
-  static String m3(deadline) => "Faslängd: ${deadline}";
+  static String m3(variant) => "Spelvariant: ${variant}";
+
+  static String m4(deadline) => "Faslängd: ${deadline}";
+
+  static String m5(date) => "Started: ${date}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -40,11 +44,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "error": MessageLookupByLibrary.simpleMessage("Fel"),
         "failedCreatingGameErr": m1,
         "fall": MessageLookupByLibrary.simpleMessage("Höst"),
+        "finished": m2,
         "finishedGames": MessageLookupByLibrary.simpleMessage("Avslutade spel"),
         "fleet": MessageLookupByLibrary.simpleMessage("Flotta"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Spel skapat"),
-        "gameVariant": m2,
+        "gameVariant": m3,
         "groupChat": MessageLookupByLibrary.simpleMessage("Gruppchat"),
         "h": MessageLookupByLibrary.simpleMessage("t"),
         "home": MessageLookupByLibrary.simpleMessage("Hem"),
@@ -65,12 +70,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "noGamesFound": MessageLookupByLibrary.simpleMessage("Inga spel funna"),
         "openGames": MessageLookupByLibrary.simpleMessage("Öppna spel"),
         "orders": MessageLookupByLibrary.simpleMessage("Order"),
-        "phaseDeadline": m3,
+        "phaseDeadline": m4,
         "privateChat": MessageLookupByLibrary.simpleMessage("Privat chat"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Offentlig chat"),
         "retreat": MessageLookupByLibrary.simpleMessage("Reträtt"),
         "source": MessageLookupByLibrary.simpleMessage("Källkod"),
         "spring": MessageLookupByLibrary.simpleMessage("Vår"),
+        "started": m5,
         "unnamed": MessageLookupByLibrary.simpleMessage("namnlöst"),
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("Se"),

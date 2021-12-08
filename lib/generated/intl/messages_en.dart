@@ -24,9 +24,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(err) => "Failed creating game: ${err}";
 
-  static String m2(variant) => "Game variant: ${variant}";
+  static String m2(date) => "Finished: ${date}";
 
-  static String m3(deadline) => "Phase deadline: ${deadline}";
+  static String m3(variant) => "Game variant: ${variant}";
+
+  static String m4(deadline) => "Phase deadline: ${deadline}";
+
+  static String m5(date) => "Started: ${date}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -40,11 +44,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "error": MessageLookupByLibrary.simpleMessage("Error"),
         "failedCreatingGameErr": m1,
         "fall": MessageLookupByLibrary.simpleMessage("Fall"),
+        "finished": m2,
         "finishedGames": MessageLookupByLibrary.simpleMessage("Finished games"),
         "fleet": MessageLookupByLibrary.simpleMessage("Fleet"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Game created"),
-        "gameVariant": m2,
+        "gameVariant": m3,
         "groupChat": MessageLookupByLibrary.simpleMessage("Group chat"),
         "h": MessageLookupByLibrary.simpleMessage("h"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
@@ -65,12 +70,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "noGamesFound": MessageLookupByLibrary.simpleMessage("No games found"),
         "openGames": MessageLookupByLibrary.simpleMessage("Open games"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
-        "phaseDeadline": m3,
+        "phaseDeadline": m4,
         "privateChat": MessageLookupByLibrary.simpleMessage("Private chat"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Public chat"),
         "retreat": MessageLookupByLibrary.simpleMessage("Retreat"),
         "source": MessageLookupByLibrary.simpleMessage("Source"),
         "spring": MessageLookupByLibrary.simpleMessage("Spring"),
+        "started": m5,
         "unnamed": MessageLookupByLibrary.simpleMessage("unnamed"),
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("View"),

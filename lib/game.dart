@@ -37,6 +37,22 @@ class Game extends MapView<String, dynamic> {
     return nanosToDuration(context, phaseLengthMinutes * (1e9 * 60));
   }
 
+  DateTime get startedAt {
+    if (containsKey("StartedAt")) {
+      return DateTime.fromMicrosecondsSinceEpoch(
+          (this["StartedAt"] as num) ~/ 1000);
+    }
+    return DateTime.fromMicrosecondsSinceEpoch(0);
+  }
+
+  DateTime get finishedAt {
+    if (containsKey("FinishedAt")) {
+      return DateTime.fromMicrosecondsSinceEpoch(
+          (this["FinishedAt"] as num) ~/ 1000);
+    }
+    return DateTime.fromMicrosecondsSinceEpoch(0);
+  }
+
   DateTime get createdAt {
     if (containsKey("CreatedAt")) {
       return DateTime.fromMicrosecondsSinceEpoch(
@@ -71,6 +87,20 @@ class Game extends MapView<String, dynamic> {
       return this["ID"] as String;
     }
     return "no-id";
+  }
+
+  bool get isStarted {
+    if (containsKey("Started")) {
+      return this["Started"] as bool;
+    }
+    return false;
+  }
+
+  bool get isFinished {
+    if (containsKey("Finished")) {
+      return this["Finished"] as bool;
+    }
+    return false;
   }
 
   String get desc {

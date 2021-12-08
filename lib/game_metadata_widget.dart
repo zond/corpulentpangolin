@@ -49,6 +49,26 @@ class GameMetadataWidget extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyText1),
               ],
             ),
+            if (game.isStarted)
+              Row(
+                children: [
+                  const Padding(padding: EdgeInsets.only(left: 5)),
+                  const Icon(Icons.cake),
+                  const Padding(padding: EdgeInsets.only(left: 5)),
+                  Text(l10n.started(game.startedAt),
+                      style: Theme.of(context).textTheme.bodyText1),
+                ],
+              ),
+            if (game.isFinished)
+              Row(
+                children: [
+                  const Padding(padding: EdgeInsets.only(left: 5)),
+                  const Icon(Icons.cake),
+                  const Padding(padding: EdgeInsets.only(left: 5)),
+                  Text(l10n.finished(game.finishedAt),
+                      style: Theme.of(context).textTheme.bodyText1),
+                ],
+              ),
           ],
         )
       ],
