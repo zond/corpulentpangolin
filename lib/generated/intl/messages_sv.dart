@@ -80,6 +80,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "minimumReliability_V_": m6,
         "movement": MessageLookupByLibrary.simpleMessage("Förflyttning"),
         "myGames": MessageLookupByLibrary.simpleMessage("Mina spel"),
+        "nationSelection": MessageLookupByLibrary.simpleMessage("Val av land"),
         "nationSelection_Type_": m7,
         "noGamesFound": MessageLookupByLibrary.simpleMessage("Inga spel funna"),
         "nonMovementPhaseDeadline_Date_": m8,

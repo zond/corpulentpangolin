@@ -93,7 +93,23 @@ class _CreateGamePageState extends State<CreateGamePage> {
                       ),
                     ),
                   ),
-            Row(
+            InputDecorator(
+              decoration: InputDecoration(
+                labelText: l10n.nationSelection,
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  value: game["NationSelection"],
+                  items: [
+                    DropdownMenuItem(child: Text(l10n.random), value: "random"),
+                    DropdownMenuItem(child: Text(l10n.preferences), value: "preferences"),
+                  ],
+                  onChanged: (newValue) {
+                    setState(() => game["NationSelection"] = newValue.toString());
+                  },
+                ),
+              ),
+            ),            Row(
               children: [
                 Switch(
                   value: !(game["DisablePrivateChat"] as bool),

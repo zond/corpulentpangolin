@@ -51,5 +51,6 @@
   "preferences": "Prioritetslista",
   "minimumReliability_V_": "Nödvändig pålitlighet: {v}",
   "minimumQuickness_V_": "Nödvändig snabbhet: {v}",
-  "minimumRating_V_": "Nödvändig gradering: {v}"
+  "minimumRating_V_": "Nödvändig gradering: {v}",
+  "nationSelection": "Val av land"
 }

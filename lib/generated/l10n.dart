@@ -588,6 +588,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Nation selection`
+  String get nationSelection {
+    return Intl.message(
+      'Nation selection',
+      name: 'nationSelection',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

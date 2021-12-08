@@ -80,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "minimumReliability_V_": m6,
         "movement": MessageLookupByLibrary.simpleMessage("Movement"),
         "myGames": MessageLookupByLibrary.simpleMessage("My games"),
+        "nationSelection":
+            MessageLookupByLibrary.simpleMessage("Nation selection"),
         "nationSelection_Type_": m7,
         "noGamesFound": MessageLookupByLibrary.simpleMessage("No games found"),
         "nonMovementPhaseDeadline_Date_": m8,
