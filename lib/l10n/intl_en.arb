@@ -15,6 +15,31 @@
       }
     }
   },
+  "gameVariant": "Game variant: {variant}",
+  "@gameVariant": {
+    "placeholders": {
+      "variant": {
+        "type": "String"
+      }
+    }
+  },
+  "created": "Created: {date}",
+  "@created": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMd"
+      }
+    }
+  },
+  "phaseDeadline": "Phase deadline: {deadline}",
+  "@phaseDeadline": {
+    "placeholders": {
+      "deadline": {
+        "type": "String"
+      }
+    }
+  },
   "unnamed": "unnamed",
   "spring": "Spring",
   "fall": "Fall",
@@ -42,5 +67,9 @@
   "error": "Error",
   "join": "Join",
   "invite": "Invite",
-  "view": "View"
+  "view": "View",
+  "w": "w",
+  "d": "d",
+  "h": "h",
+  "m": "m"
 }

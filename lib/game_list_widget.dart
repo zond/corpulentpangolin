@@ -17,8 +17,7 @@ class GameListWidget extends StatelessWidget {
       stream: gamesStream,
       builder: (context, gamesQuerySnapshot) {
         if (gamesQuerySnapshot.hasError) {
-          return Text("Error loading games: ${gamesQuerySnapshot.error}",
-              style: const TextStyle(backgroundColor: Colors.white));
+          return Text("Error loading games: ${gamesQuerySnapshot.error}");
         } else if (gamesQuerySnapshot.connectionState ==
             ConnectionState.waiting) {
           return const SpinnerWidget();

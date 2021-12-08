@@ -22,7 +22,7 @@ class OpenGamesPage extends StatelessWidget {
           Material(
             child: ListTile(
               title: Text(l10n.openGames,
-                  style: const TextStyle(fontWeight: FontWeight.bold)),
+                  style: Theme.of(context).textTheme.headline5),
             ),
           ),
           GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance

@@ -9,6 +9,7 @@ import 'package:meta/meta.dart';
 import 'phase.dart';
 import 'variant.dart';
 import 'cache.dart';
+import 'time.dart';
 
 @immutable
 class Game extends MapView<String, dynamic> {
@@ -23,6 +24,32 @@ class Game extends MapView<String, dynamic> {
       return this["Started"] as bool;
     }
     return false;
+  }
+
+  String get variant {
+    if (containsKey("Variant")) {
+      return this["Variant"] as String;
+    }
+    return "";
+  }
+
+  String phaseLengthDuration(BuildContext context, {bool short = true}) {
+    return nanosToDuration(context, phaseLengthMinutes * (1e9 * 60));
+  }
+
+  DateTime get createdAt {
+    if (containsKey("CreatedAt")) {
+      return DateTime.fromMicrosecondsSinceEpoch(
+          (this["CreatedAt"] as num) ~/ 1000);
+    }
+    return DateTime.fromMicrosecondsSinceEpoch(0);
+  }
+
+  num get phaseLengthMinutes {
+    if (containsKey("PhaseLengthMinutes")) {
+      return this["PhaseLengthMinutes"] as num;
+    }
+    return 0;
   }
 
   bool get finished {
@@ -44,6 +71,13 @@ class Game extends MapView<String, dynamic> {
       return this["ID"] as String;
     }
     return "no-id";
+  }
+
+  String get desc {
+    if (containsKey("Decs")) {
+      return this["Desc"] as String;
+    }
+    return "";
   }
 
   Object? get err {

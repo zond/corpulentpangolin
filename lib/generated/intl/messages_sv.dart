@@ -20,7 +20,13 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'sv';
 
-  static String m0(err) => "Misslyckades med att skapa spel: \$err";
+  static String m0(date) => "Skapat: ${date}";
+
+  static String m1(err) => "Misslyckades med att skapa spel: \$err";
+
+  static String m2(variant) => "Spelvariant: ${variant}";
+
+  static String m3(deadline) => "Faslängd: ${deadline}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -28,15 +34,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "army": MessageLookupByLibrary.simpleMessage("Armé"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "createGame": MessageLookupByLibrary.simpleMessage("Skapa spel"),
+        "created": m0,
+        "d": MessageLookupByLibrary.simpleMessage("d"),
         "description": MessageLookupByLibrary.simpleMessage("Beskrivning"),
         "error": MessageLookupByLibrary.simpleMessage("Fel"),
-        "failedCreatingGameErr": m0,
+        "failedCreatingGameErr": m1,
         "fall": MessageLookupByLibrary.simpleMessage("Höst"),
         "finishedGames": MessageLookupByLibrary.simpleMessage("Avslutade spel"),
         "fleet": MessageLookupByLibrary.simpleMessage("Flotta"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Spel skapat"),
+        "gameVariant": m2,
         "groupChat": MessageLookupByLibrary.simpleMessage("Gruppchat"),
+        "h": MessageLookupByLibrary.simpleMessage("t"),
         "home": MessageLookupByLibrary.simpleMessage("Hem"),
         "invite": MessageLookupByLibrary.simpleMessage("Inbjud"),
         "join": MessageLookupByLibrary.simpleMessage("Delta"),
@@ -48,12 +58,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "loggedOut": MessageLookupByLibrary.simpleMessage("Loggade ut"),
         "login": MessageLookupByLibrary.simpleMessage("Logga in"),
         "logout": MessageLookupByLibrary.simpleMessage("Logga ut"),
+        "m": MessageLookupByLibrary.simpleMessage("m"),
         "map": MessageLookupByLibrary.simpleMessage("Karta"),
         "movement": MessageLookupByLibrary.simpleMessage("Förflyttning"),
         "myGames": MessageLookupByLibrary.simpleMessage("Mina spel"),
         "noGamesFound": MessageLookupByLibrary.simpleMessage("Inga spel funna"),
         "openGames": MessageLookupByLibrary.simpleMessage("Öppna spel"),
         "orders": MessageLookupByLibrary.simpleMessage("Order"),
+        "phaseDeadline": m3,
         "privateChat": MessageLookupByLibrary.simpleMessage("Privat chat"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Offentlig chat"),
         "retreat": MessageLookupByLibrary.simpleMessage("Reträtt"),
@@ -61,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "spring": MessageLookupByLibrary.simpleMessage("Vår"),
         "unnamed": MessageLookupByLibrary.simpleMessage("namnlöst"),
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
-        "view": MessageLookupByLibrary.simpleMessage("Se")
+        "view": MessageLookupByLibrary.simpleMessage("Se"),
+        "w": MessageLookupByLibrary.simpleMessage("v")
       };
 }

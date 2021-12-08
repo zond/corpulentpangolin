@@ -7,6 +7,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 import 'router.gr.dart';
 import 'spinner_widget.dart';
+import 'game.dart';
 import 'toast.dart';
 import 'variant.dart';
 
@@ -18,7 +19,7 @@ class CreateGamePage extends StatefulWidget {
 }
 
 class _CreateGamePageState extends State<CreateGamePage> {
-  final game = {
+  final game = Game.fromMap({
     "CreatorUID": FirebaseAuth.instance.currentUser?.uid,
     "OwnerUID": "",
     "MusteringRequired": true,
@@ -36,7 +37,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
     "Players": [FirebaseAuth.instance.currentUser?.uid],
     "CategorySortKey": 1000,
     "TimeSortKey": 0,
-  };
+  });
   final gameCollection = FirebaseFirestore.instance.collection("Game");
 
   @override
@@ -62,7 +63,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
               title: Text(l10n.createGame),
             ),
             TextFormField(
-              initialValue: game["Desc"].toString(),
+              initialValue: game.desc,
               decoration: InputDecoration(
                 labelText: l10n.description,
               ),
@@ -81,8 +82,8 @@ class _CreateGamePageState extends State<CreateGamePage> {
                         value: game["Variant"],
                         items: variants.list.map((variant) {
                           return DropdownMenuItem(
-                            child: Text(variant["Name"].toString()),
-                            value: variant["Name"].toString(),
+                            child: Text(variant.id),
+                            value: variant.id,
                           );
                         }).toList(),
                         onChanged: (newValue) {

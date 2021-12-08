@@ -140,6 +140,39 @@ class S {
     );
   }
 
+  /// `Game variant: {variant}`
+  String gameVariant(String variant) {
+    return Intl.message(
+      'Game variant: $variant',
+      name: 'gameVariant',
+      desc: '',
+      args: [variant],
+    );
+  }
+
+  /// `Created: {date}`
+  String created(DateTime date) {
+    final DateFormat dateDateFormat = DateFormat.yMd(Intl.getCurrentLocale());
+    final String dateString = dateDateFormat.format(date);
+
+    return Intl.message(
+      'Created: $dateString',
+      name: 'created',
+      desc: '',
+      args: [dateString],
+    );
+  }
+
+  /// `Phase deadline: {deadline}`
+  String phaseDeadline(String deadline) {
+    return Intl.message(
+      'Phase deadline: $deadline',
+      name: 'phaseDeadline',
+      desc: '',
+      args: [deadline],
+    );
+  }
+
   /// `unnamed`
   String get unnamed {
     return Intl.message(
@@ -415,6 +448,46 @@ class S {
     return Intl.message(
       'View',
       name: 'view',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `w`
+  String get w {
+    return Intl.message(
+      'w',
+      name: 'w',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `d`
+  String get d {
+    return Intl.message(
+      'd',
+      name: 'd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `h`
+  String get h {
+    return Intl.message(
+      'h',
+      name: 'h',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `m`
+  String get m {
+    return Intl.message(
+      'm',
+      name: 'm',
       desc: '',
       args: [],
     );

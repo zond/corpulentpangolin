@@ -35,5 +35,12 @@
   "error": "Fel",
   "join": "Delta",
   "invite": "Inbjud",
-  "view": "Se"
+  "view": "Se",
+  "gameVariant": "Spelvariant: {variant}",
+  "phaseDeadline": "Faslängd: {deadline}",
+  "w": "v",
+  "d": "d",
+  "h": "t",
+  "m": "m",
+  "created": "Skapat: {date}"
 }

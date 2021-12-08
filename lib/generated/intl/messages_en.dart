@@ -20,7 +20,13 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(err) => "Failed creating game: ${err}";
+  static String m0(date) => "Created: ${date}";
+
+  static String m1(err) => "Failed creating game: ${err}";
+
+  static String m2(variant) => "Game variant: ${variant}";
+
+  static String m3(deadline) => "Phase deadline: ${deadline}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -28,15 +34,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "army": MessageLookupByLibrary.simpleMessage("Army"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "createGame": MessageLookupByLibrary.simpleMessage("Create game"),
+        "created": m0,
+        "d": MessageLookupByLibrary.simpleMessage("d"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
-        "failedCreatingGameErr": m0,
+        "failedCreatingGameErr": m1,
         "fall": MessageLookupByLibrary.simpleMessage("Fall"),
         "finishedGames": MessageLookupByLibrary.simpleMessage("Finished games"),
         "fleet": MessageLookupByLibrary.simpleMessage("Fleet"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Game created"),
+        "gameVariant": m2,
         "groupChat": MessageLookupByLibrary.simpleMessage("Group chat"),
+        "h": MessageLookupByLibrary.simpleMessage("h"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "invite": MessageLookupByLibrary.simpleMessage("Invite"),
         "join": MessageLookupByLibrary.simpleMessage("Join"),
@@ -48,12 +58,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "loggedOut": MessageLookupByLibrary.simpleMessage("Logged out"),
         "login": MessageLookupByLibrary.simpleMessage("Log in"),
         "logout": MessageLookupByLibrary.simpleMessage("Log out"),
+        "m": MessageLookupByLibrary.simpleMessage("m"),
         "map": MessageLookupByLibrary.simpleMessage("Map"),
         "movement": MessageLookupByLibrary.simpleMessage("Movement"),
         "myGames": MessageLookupByLibrary.simpleMessage("My games"),
         "noGamesFound": MessageLookupByLibrary.simpleMessage("No games found"),
         "openGames": MessageLookupByLibrary.simpleMessage("Open games"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
+        "phaseDeadline": m3,
         "privateChat": MessageLookupByLibrary.simpleMessage("Private chat"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Public chat"),
         "retreat": MessageLookupByLibrary.simpleMessage("Retreat"),
@@ -61,6 +73,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "spring": MessageLookupByLibrary.simpleMessage("Spring"),
         "unnamed": MessageLookupByLibrary.simpleMessage("unnamed"),
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
-        "view": MessageLookupByLibrary.simpleMessage("View")
+        "view": MessageLookupByLibrary.simpleMessage("View"),
+        "w": MessageLookupByLibrary.simpleMessage("w")
       };
 }

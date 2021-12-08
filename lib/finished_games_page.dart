@@ -21,8 +21,10 @@ class FinishedGamesPage extends StatelessWidget {
         Column(children: [
           Material(
             child: ListTile(
-              title: Text(l10n.finishedGames,
-                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              title: Text(
+                l10n.finishedGames,
+                style: Theme.of(context).textTheme.headline5,
+              ),
             ),
           ),
           GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance

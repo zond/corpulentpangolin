@@ -8,6 +8,7 @@ import 'variant.dart';
 import 'spinner_widget.dart';
 import 'phase.dart';
 import 'router.gr.dart';
+import 'game_metadata_widget.dart';
 
 class GameListElementWidget extends StatefulWidget {
   const GameListElementWidget({Key? key}) : super(key: key);
@@ -105,7 +106,8 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
                         child: Text(l10n.view),
                       ),
                     ],
-                  )
+                  ),
+                  const GameMetadataWidget(),
                 ],
               ),
             ),
