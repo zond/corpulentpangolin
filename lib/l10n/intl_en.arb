@@ -39,5 +39,8 @@
   "army": "Army",
   "fleet": "Fleet",
   "myGames": "My games",
-  "error": "Error"
+  "error": "Error",
+  "join": "Join",
+  "invite": "Invite",
+  "view": "View"
 }

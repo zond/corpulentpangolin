@@ -32,5 +32,8 @@
   "army": "Armé",
   "fleet": "Flotta",
   "myGames": "Mina spel",
-  "error": "Fel"
+  "error": "Fel",
+  "join": "Delta",
+  "invite": "Inbjud",
+  "view": "Se"
 }

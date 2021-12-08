@@ -88,9 +88,24 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
             Card(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: const [
-                  Text(
-                      "expanded body with view, join, invite, metadata, and current players"),
+                children: [
+                  ButtonBar(
+                    alignment: MainAxisAlignment.start,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text(l10n.join),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text(l10n.invite),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Text(l10n.view),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

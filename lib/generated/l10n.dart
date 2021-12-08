@@ -389,6 +389,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Join`
+  String get join {
+    return Intl.message(
+      'Join',
+      name: 'join',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invite`
+  String get invite {
+    return Intl.message(
+      'Invite',
+      name: 'invite',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View`
+  String get view {
+    return Intl.message(
+      'View',
+      name: 'view',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

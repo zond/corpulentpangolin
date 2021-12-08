@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "gameCreated": MessageLookupByLibrary.simpleMessage("Spel skapat"),
         "groupChat": MessageLookupByLibrary.simpleMessage("Gruppchat"),
         "home": MessageLookupByLibrary.simpleMessage("Hem"),
+        "invite": MessageLookupByLibrary.simpleMessage("Inbjud"),
+        "join": MessageLookupByLibrary.simpleMessage("Delta"),
         "liveGames": MessageLookupByLibrary.simpleMessage("Pågående spel"),
         "loading": MessageLookupByLibrary.simpleMessage("Laddar..."),
         "logInToSeeYourGames": MessageLookupByLibrary.simpleMessage(
@@ -58,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "source": MessageLookupByLibrary.simpleMessage("Källkod"),
         "spring": MessageLookupByLibrary.simpleMessage("Vår"),
         "unnamed": MessageLookupByLibrary.simpleMessage("namnlöst"),
-        "variant": MessageLookupByLibrary.simpleMessage("Variant")
+        "variant": MessageLookupByLibrary.simpleMessage("Variant"),
+        "view": MessageLookupByLibrary.simpleMessage("Se")
       };
 }

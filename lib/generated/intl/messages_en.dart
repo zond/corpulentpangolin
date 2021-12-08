@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "gameCreated": MessageLookupByLibrary.simpleMessage("Game created"),
         "groupChat": MessageLookupByLibrary.simpleMessage("Group chat"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "invite": MessageLookupByLibrary.simpleMessage("Invite"),
+        "join": MessageLookupByLibrary.simpleMessage("Join"),
         "liveGames": MessageLookupByLibrary.simpleMessage("Live games"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
         "logInToSeeYourGames":
@@ -58,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "source": MessageLookupByLibrary.simpleMessage("Source"),
         "spring": MessageLookupByLibrary.simpleMessage("Spring"),
         "unnamed": MessageLookupByLibrary.simpleMessage("unnamed"),
-        "variant": MessageLookupByLibrary.simpleMessage("Variant")
+        "variant": MessageLookupByLibrary.simpleMessage("Variant"),
+        "view": MessageLookupByLibrary.simpleMessage("View")
       };
 }
