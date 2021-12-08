@@ -100,6 +100,20 @@ class _CreateGamePageState extends State<CreateGamePage> {
                         ),
                       ),
                     ),
+              Builder(
+                builder: (context) {
+                  if (variants == null ||
+                      !variants.map.containsKey(game.variant)) {
+                    return const SpinnerWidget();
+                  }
+                  return StreamBuilder(
+                    stream: variants.map[game.variant]!.svgs,
+                    builder: (context, snapshot) {
+                      return const SpinnerWidget();
+                    },
+                  );
+                },
+              ),
               Row(
                 children: [
                   Switch(
