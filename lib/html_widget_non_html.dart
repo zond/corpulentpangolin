@@ -13,12 +13,14 @@ class HTMLWidgetConditional extends StatelessWidget {
   @override
   Widget build(context) {
     return WebView(
-      initialUrl: Uri.dataFromString('''
+      onWebViewCreated: (controller) {
+        controller.loadHtmlString('''
 <script>
   ${callbacks?.keys.map((name) => "window.$name = (m) => { window.${name}_channel.postMessage(m); };").join("\n")}
 </script>
 $source
-''', mimeType: "text/html").toString(),
+''');
+      },
       javascriptMode: JavascriptMode.unrestricted,
       javascriptChannels: Set.from(callbacks?.keys.map((name) =>
               JavascriptChannel(
