@@ -131,71 +131,121 @@ class S {
   }
 
   /// `Failed creating game: {err}`
-  String failedCreatingGameErr(String err) {
+  String failedCreatingGame_Err_(Object err) {
     return Intl.message(
       'Failed creating game: $err',
-      name: 'failedCreatingGameErr',
+      name: 'failedCreatingGame_Err_',
       desc: '',
       args: [err],
     );
   }
 
   /// `Game variant: {variant}`
-  String gameVariant(String variant) {
+  String gameVariant_Var_(Object variant) {
     return Intl.message(
       'Game variant: $variant',
-      name: 'gameVariant',
+      name: 'gameVariant_Var_',
       desc: '',
       args: [variant],
     );
   }
 
   /// `Created: {date}`
-  String created(DateTime date) {
+  String created_Date_(DateTime date) {
     final DateFormat dateDateFormat = DateFormat.yMd(Intl.getCurrentLocale());
     final String dateString = dateDateFormat.format(date);
 
     return Intl.message(
       'Created: $dateString',
-      name: 'created',
+      name: 'created_Date_',
       desc: '',
       args: [dateString],
     );
   }
 
   /// `Started: {date}`
-  String started(DateTime date) {
+  String started_Date_(DateTime date) {
     final DateFormat dateDateFormat = DateFormat.yMd(Intl.getCurrentLocale());
     final String dateString = dateDateFormat.format(date);
 
     return Intl.message(
       'Started: $dateString',
-      name: 'started',
+      name: 'started_Date_',
       desc: '',
       args: [dateString],
     );
   }
 
   /// `Finished: {date}`
-  String finished(DateTime date) {
+  String finished_Date_(DateTime date) {
     final DateFormat dateDateFormat = DateFormat.yMd(Intl.getCurrentLocale());
     final String dateString = dateDateFormat.format(date);
 
     return Intl.message(
       'Finished: $dateString',
-      name: 'finished',
+      name: 'finished_Date_',
       desc: '',
       args: [dateString],
     );
   }
 
   /// `Phase deadline: {deadline}`
-  String phaseDeadline(String deadline) {
+  String phaseDeadline_Date_(Object deadline) {
     return Intl.message(
       'Phase deadline: $deadline',
-      name: 'phaseDeadline',
+      name: 'phaseDeadline_Date_',
       desc: '',
       args: [deadline],
+    );
+  }
+
+  /// `Non movement phase deadline: {deadline}`
+  String nonMovementPhaseDeadline_Date_(Object deadline) {
+    return Intl.message(
+      'Non movement phase deadline: $deadline',
+      name: 'nonMovementPhaseDeadline_Date_',
+      desc: '',
+      args: [deadline],
+    );
+  }
+
+  /// `Nation selection: {type}`
+  String nationSelection_Type_(Object type) {
+    return Intl.message(
+      'Nation selection: $type',
+      name: 'nationSelection_Type_',
+      desc: '',
+      args: [type],
+    );
+  }
+
+  /// `Minimum reliability: {v}`
+  String minimumReliability_V_(Object v) {
+    return Intl.message(
+      'Minimum reliability: $v',
+      name: 'minimumReliability_V_',
+      desc: '',
+      args: [v],
+    );
+  }
+
+  /// `Minimum quickness: {v}`
+  String minimumQuickness_V_(Object v) {
+    return Intl.message(
+      'Minimum quickness: $v',
+      name: 'minimumQuickness_V_',
+      desc: '',
+      args: [v],
+    );
+  }
+
+  /// `Minimum rating: {v}`
+  String minimumRating_V_(Object v) {
+    return Intl.message(
+      'Minimum rating: $v',
+      name: 'minimumRating_V_',
+      desc: '',
+      args: [v],
     );
   }
 
@@ -514,6 +564,26 @@ class S {
     return Intl.message(
       'm',
       name: 'm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Random`
+  String get random {
+    return Intl.message(
+      'Random',
+      name: 'random',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preferences`
+  String get preferences {
+    return Intl.message(
+      'Preferences',
+      name: 'preferences',
       desc: '',
       args: [],
     );

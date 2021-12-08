@@ -23,6 +23,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
     "CreatorUID": FirebaseAuth.instance.currentUser?.uid,
     "OwnerUID": "",
     "MusteringRequired": true,
+    "NationSelection": "random",
     "Desc": "",
     "PhaseLengthMinutes": 1440,
     "NonMovementPhaseLengthMinutes": 0,
@@ -134,7 +135,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
           gameCollection.add(game).then((_) {
             appRouter.pop().then((_) => toast(context, l10n.gameCreated));
           }).catchError((err) {
-            toast(context, l10n.failedCreatingGameErr("$err"));
+            toast(context, l10n.failedCreatingGame_Err_("$err"));
           });
         },
       ),

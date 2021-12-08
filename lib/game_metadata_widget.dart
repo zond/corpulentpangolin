@@ -27,7 +27,7 @@ class GameMetadataWidget extends StatelessWidget {
                 const Padding(padding: EdgeInsets.only(left: 5)),
                 const Icon(Icons.map),
                 const Padding(padding: EdgeInsets.only(left: 5)),
-                Text(l10n.gameVariant(game.variant),
+                Text(l10n.gameVariant_Var_(game.variant),
                     style: Theme.of(context).textTheme.bodyText1),
               ],
             ),
@@ -36,16 +36,30 @@ class GameMetadataWidget extends StatelessWidget {
                 const Padding(padding: EdgeInsets.only(left: 5)),
                 const Icon(Icons.av_timer),
                 const Padding(padding: EdgeInsets.only(left: 5)),
-                Text(l10n.phaseDeadline(game.phaseLengthDuration(context)),
+                Text(
+                    l10n.phaseDeadline_Date_(game.phaseLengthDuration(context)),
                     style: Theme.of(context).textTheme.bodyText1),
               ],
             ),
+            if (game.nonMovementPhaseLengthMinutes != 0 &&
+                game.nonMovementPhaseLengthMinutes != game.phaseLengthMinutes)
+              Row(
+                children: [
+                  const Padding(padding: EdgeInsets.only(left: 5)),
+                  const Icon(Icons.av_timer),
+                  const Padding(padding: EdgeInsets.only(left: 5)),
+                  Text(
+                      l10n.nonMovementPhaseDeadline_Date_(
+                          game.nonMovementPhaseLengthDuration(context)),
+                      style: Theme.of(context).textTheme.bodyText1),
+                ],
+              ),
             Row(
               children: [
                 const Padding(padding: EdgeInsets.only(left: 5)),
                 const Icon(Icons.cake),
                 const Padding(padding: EdgeInsets.only(left: 5)),
-                Text(l10n.created(game.createdAt),
+                Text(l10n.created_Date_(game.createdAt),
                     style: Theme.of(context).textTheme.bodyText1),
               ],
             ),
@@ -55,7 +69,7 @@ class GameMetadataWidget extends StatelessWidget {
                   const Padding(padding: EdgeInsets.only(left: 5)),
                   const Icon(Icons.cake),
                   const Padding(padding: EdgeInsets.only(left: 5)),
-                  Text(l10n.started(game.startedAt),
+                  Text(l10n.started_Date_(game.startedAt),
                       style: Theme.of(context).textTheme.bodyText1),
                 ],
               ),
@@ -65,7 +79,46 @@ class GameMetadataWidget extends StatelessWidget {
                   const Padding(padding: EdgeInsets.only(left: 5)),
                   const Icon(Icons.cake),
                   const Padding(padding: EdgeInsets.only(left: 5)),
-                  Text(l10n.finished(game.finishedAt),
+                  Text(l10n.finished_Date_(game.finishedAt),
+                      style: Theme.of(context).textTheme.bodyText1),
+                ],
+              ),
+            Row(
+              children: [
+                const Padding(padding: EdgeInsets.only(left: 5)),
+                const Icon(Icons.sort),
+                const Padding(padding: EdgeInsets.only(left: 5)),
+                Text(l10n.nationSelection_Type_(game.nationSelection(context)),
+                    style: Theme.of(context).textTheme.bodyText1),
+              ],
+            ),
+            if (game.minimumReliability != 0)
+              Row(
+                children: [
+                  const Padding(padding: EdgeInsets.only(left: 5)),
+                  const Icon(Icons.timer),
+                  const Padding(padding: EdgeInsets.only(left: 5)),
+                  Text(l10n.minimumReliability_V_("${game.minimumReliability}"),
+                      style: Theme.of(context).textTheme.bodyText1),
+                ],
+              ),
+            if (game.minimumQuickness != 0)
+              Row(
+                children: [
+                  const Padding(padding: EdgeInsets.only(left: 5)),
+                  const Icon(Icons.timer),
+                  const Padding(padding: EdgeInsets.only(left: 5)),
+                  Text(l10n.minimumQuickness_V_("${game.minimumQuickness}"),
+                      style: Theme.of(context).textTheme.bodyText1),
+                ],
+              ),
+            if (game.minimumRating != 0)
+              Row(
+                children: [
+                  const Padding(padding: EdgeInsets.only(left: 5)),
+                  const Icon(Icons.timer),
+                  const Padding(padding: EdgeInsets.only(left: 5)),
+                  Text(l10n.minimumRating_V_("${game.minimumRating}"),
                       style: Theme.of(context).textTheme.bodyText1),
                 ],
               ),

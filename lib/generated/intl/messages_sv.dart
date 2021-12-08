@@ -28,9 +28,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(variant) => "Spelvariant: ${variant}";
 
-  static String m4(deadline) => "Faslängd: ${deadline}";
+  static String m4(v) => "Nödvändig snabbhet: ${v}";
 
-  static String m5(date) => "Started: ${date}";
+  static String m5(v) => "Nödvändig gradering: ${v}";
+
+  static String m6(v) => "Nödvändig pålitlighet: ${v}";
+
+  static String m7(type) => "Val av land: ${type}";
+
+  static String m8(deadline) => "Faslängd ej förflyttning: ${deadline}";
+
+  static String m9(deadline) => "Faslängd: ${deadline}";
+
+  static String m10(date) => "Started: ${date}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -38,18 +48,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "army": MessageLookupByLibrary.simpleMessage("Armé"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "createGame": MessageLookupByLibrary.simpleMessage("Skapa spel"),
-        "created": m0,
+        "created_Date_": m0,
         "d": MessageLookupByLibrary.simpleMessage("d"),
         "description": MessageLookupByLibrary.simpleMessage("Beskrivning"),
         "error": MessageLookupByLibrary.simpleMessage("Fel"),
-        "failedCreatingGameErr": m1,
+        "failedCreatingGame_Err_": m1,
         "fall": MessageLookupByLibrary.simpleMessage("Höst"),
-        "finished": m2,
         "finishedGames": MessageLookupByLibrary.simpleMessage("Avslutade spel"),
+        "finished_Date_": m2,
         "fleet": MessageLookupByLibrary.simpleMessage("Flotta"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Spel skapat"),
-        "gameVariant": m3,
+        "gameVariant_Var_": m3,
         "groupChat": MessageLookupByLibrary.simpleMessage("Gruppchat"),
         "h": MessageLookupByLibrary.simpleMessage("t"),
         "home": MessageLookupByLibrary.simpleMessage("Hem"),
@@ -65,18 +75,25 @@ class MessageLookup extends MessageLookupByLibrary {
         "logout": MessageLookupByLibrary.simpleMessage("Logga ut"),
         "m": MessageLookupByLibrary.simpleMessage("m"),
         "map": MessageLookupByLibrary.simpleMessage("Karta"),
+        "minimumQuickness_V_": m4,
+        "minimumRating_V_": m5,
+        "minimumReliability_V_": m6,
         "movement": MessageLookupByLibrary.simpleMessage("Förflyttning"),
         "myGames": MessageLookupByLibrary.simpleMessage("Mina spel"),
+        "nationSelection_Type_": m7,
         "noGamesFound": MessageLookupByLibrary.simpleMessage("Inga spel funna"),
+        "nonMovementPhaseDeadline_Date_": m8,
         "openGames": MessageLookupByLibrary.simpleMessage("Öppna spel"),
         "orders": MessageLookupByLibrary.simpleMessage("Order"),
-        "phaseDeadline": m4,
+        "phaseDeadline_Date_": m9,
+        "preferences": MessageLookupByLibrary.simpleMessage("Prioritetslista"),
         "privateChat": MessageLookupByLibrary.simpleMessage("Privat chat"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Offentlig chat"),
+        "random": MessageLookupByLibrary.simpleMessage("Slumpvis"),
         "retreat": MessageLookupByLibrary.simpleMessage("Reträtt"),
         "source": MessageLookupByLibrary.simpleMessage("Källkod"),
         "spring": MessageLookupByLibrary.simpleMessage("Vår"),
-        "started": m5,
+        "started_Date_": m10,
         "unnamed": MessageLookupByLibrary.simpleMessage("namnlöst"),
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("Se"),

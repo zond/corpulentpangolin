@@ -5,6 +5,8 @@ import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 import 'phase.dart';
 import 'variant.dart';
@@ -37,6 +39,44 @@ class Game extends MapView<String, dynamic> {
     return nanosToDuration(context, phaseLengthMinutes * (1e9 * 60));
   }
 
+  num get minimumReliability {
+    if (containsKey("MinimumReliability")) {
+      return this["MinimumReliability"] as num;
+    }
+    return 0;
+  }
+
+  num get minimumQuickness {
+    if (containsKey("MinimumQuickness")) {
+      return this["MinimumQuickness"] as num;
+    }
+    return 0;
+  }
+
+  num get minimumRating {
+    if (containsKey("MinimumRating")) {
+      return this["MinimumRating"] as num;
+    }
+    return 0;
+  }
+
+  String nationSelection(BuildContext context) {
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final selection = this["NationSelection"] as String;
+    switch (selection) {
+      case "random":
+        return l10n.random;
+      case "preferences":
+        return l10n.preferences;
+    }
+    return selection;
+  }
+
+  String nonMovementPhaseLengthDuration(BuildContext context,
+      {bool short = true}) {
+    return nanosToDuration(context, nonMovementPhaseLengthMinutes * (1e9 * 60));
+  }
+
   DateTime get startedAt {
     if (containsKey("StartedAt")) {
       return DateTime.fromMicrosecondsSinceEpoch(
@@ -64,6 +104,13 @@ class Game extends MapView<String, dynamic> {
   num get phaseLengthMinutes {
     if (containsKey("PhaseLengthMinutes")) {
       return this["PhaseLengthMinutes"] as num;
+    }
+    return 0;
+  }
+
+  num get nonMovementPhaseLengthMinutes {
+    if (containsKey("NonMovementPhaseLengthMinutes")) {
+      return this["NonMovementPhaseLengthMinutes"] as num;
     }
     return 0;
   }

@@ -28,9 +28,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(variant) => "Game variant: ${variant}";
 
-  static String m4(deadline) => "Phase deadline: ${deadline}";
+  static String m4(v) => "Minimum quickness: ${v}";
 
-  static String m5(date) => "Started: ${date}";
+  static String m5(v) => "Minimum rating: ${v}";
+
+  static String m6(v) => "Minimum reliability: ${v}";
+
+  static String m7(type) => "Nation selection: ${type}";
+
+  static String m8(deadline) => "Non movement phase deadline: ${deadline}";
+
+  static String m9(deadline) => "Phase deadline: ${deadline}";
+
+  static String m10(date) => "Started: ${date}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -38,18 +48,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "army": MessageLookupByLibrary.simpleMessage("Army"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "createGame": MessageLookupByLibrary.simpleMessage("Create game"),
-        "created": m0,
+        "created_Date_": m0,
         "d": MessageLookupByLibrary.simpleMessage("d"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
-        "failedCreatingGameErr": m1,
+        "failedCreatingGame_Err_": m1,
         "fall": MessageLookupByLibrary.simpleMessage("Fall"),
-        "finished": m2,
         "finishedGames": MessageLookupByLibrary.simpleMessage("Finished games"),
+        "finished_Date_": m2,
         "fleet": MessageLookupByLibrary.simpleMessage("Fleet"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Game created"),
-        "gameVariant": m3,
+        "gameVariant_Var_": m3,
         "groupChat": MessageLookupByLibrary.simpleMessage("Group chat"),
         "h": MessageLookupByLibrary.simpleMessage("h"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
@@ -65,18 +75,25 @@ class MessageLookup extends MessageLookupByLibrary {
         "logout": MessageLookupByLibrary.simpleMessage("Log out"),
         "m": MessageLookupByLibrary.simpleMessage("m"),
         "map": MessageLookupByLibrary.simpleMessage("Map"),
+        "minimumQuickness_V_": m4,
+        "minimumRating_V_": m5,
+        "minimumReliability_V_": m6,
         "movement": MessageLookupByLibrary.simpleMessage("Movement"),
         "myGames": MessageLookupByLibrary.simpleMessage("My games"),
+        "nationSelection_Type_": m7,
         "noGamesFound": MessageLookupByLibrary.simpleMessage("No games found"),
+        "nonMovementPhaseDeadline_Date_": m8,
         "openGames": MessageLookupByLibrary.simpleMessage("Open games"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
-        "phaseDeadline": m4,
+        "phaseDeadline_Date_": m9,
+        "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
         "privateChat": MessageLookupByLibrary.simpleMessage("Private chat"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Public chat"),
+        "random": MessageLookupByLibrary.simpleMessage("Random"),
         "retreat": MessageLookupByLibrary.simpleMessage("Retreat"),
         "source": MessageLookupByLibrary.simpleMessage("Source"),
         "spring": MessageLookupByLibrary.simpleMessage("Spring"),
-        "started": m5,
+        "started_Date_": m10,
         "unnamed": MessageLookupByLibrary.simpleMessage("unnamed"),
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("View"),

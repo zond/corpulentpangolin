@@ -7,24 +7,20 @@
   "groupChat": "Group chat",
   "publicChat": "Public chat",
   "gameCreated": "Game created",
-  "failedCreatingGameErr": "Failed creating game: {err}",
-  "@failedCreatingGameErr": {
+  "failedCreatingGame_Err_": "Failed creating game: {err}",
+  "@failedCreatingGame_Err_": {
     "placeholders": {
-      "err": {
-        "type": "String"
-      }
+      "err": {}
     }
   },
-  "gameVariant": "Game variant: {variant}",
-  "@gameVariant": {
+  "gameVariant_Var_": "Game variant: {variant}",
+  "@gameVariant_Var_": {
     "placeholders": {
-      "variant": {
-        "type": "String"
-      }
+      "variant": {}
     }
   },
-  "created": "Created: {date}",
-  "@created": {
+  "created_Date_": "Created: {date}",
+  "@created_Date_": {
     "placeholders": {
       "date": {
         "type": "DateTime",
@@ -32,8 +28,8 @@
       }
     }
   },
-  "started": "Started: {date}",
-  "@started": {
+  "started_Date_": "Started: {date}",
+  "@started_Date_": {
     "placeholders": {
       "date": {
         "type": "DateTime",
@@ -41,8 +37,8 @@
       }
     }
   },
-  "finished": "Finished: {date}",
-  "@finished": {
+  "finished_Date_": "Finished: {date}",
+  "@finished_Date_": {
     "placeholders": {
       "date": {
         "type": "DateTime",
@@ -50,12 +46,40 @@
       }
     }
   },
-  "phaseDeadline": "Phase deadline: {deadline}",
-  "@phaseDeadline": {
+  "phaseDeadline_Date_": "Phase deadline: {deadline}",
+  "@phaseDeadline_Date_": {
     "placeholders": {
-      "deadline": {
-        "type": "String"
-      }
+      "deadline": {}
+    }
+  },
+  "nonMovementPhaseDeadline_Date_": "Non movement phase deadline: {deadline}",
+  "@nonMovementPhaseDeadline_Date_": {
+    "placeholders": {
+      "deadline": {}
+    }
+  },
+  "nationSelection_Type_": "Nation selection: {type}",
+  "@nationSelection_Type_": {
+    "placeholders": {
+      "type": {}
+    }
+  },
+  "minimumReliability_V_": "Minimum reliability: {v}",
+  "@minimumReliability_V_": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "minimumQuickness_V_": "Minimum quickness: {v}",
+  "@minimumQuickness_V_": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "minimumRating_V_": "Minimum rating: {v}",
+  "@minimumRating_V_": {
+    "placeholders": {
+      "v": {}
     }
   },
   "unnamed": "unnamed",
@@ -89,5 +113,7 @@
   "w": "w",
   "d": "d",
   "h": "h",
-  "m": "m"
+  "m": "m",
+  "random": "Random",
+  "preferences": "Preferences"
 }
