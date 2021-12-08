@@ -52,5 +52,9 @@
   "minimumReliability_V_": "Nödvändig pålitlighet: {v}",
   "minimumQuickness_V_": "Nödvändig snabbhet: {v}",
   "minimumRating_V_": "Nödvändig gradering: {v}",
-  "nationSelection": "Val av land"
+  "nationSelection": "Val av land",
+  "private": "Privat",
+  "manageAsGameMaster": "Administrera som spelledare",
+  "gameMasterOnlyAllowedInPrivateGames": "Spelledare endast möjligt i privata spel (risk för missbruk).",
+  "asGameMasterYouCan": "Som spelledare kan du pausa/starta spel samt kontrollera vilka som deltar (och som vilket land). För att själva spela måste du delta som spelare efter att ha skapat spelet."
 }

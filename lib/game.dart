@@ -46,6 +46,13 @@ class Game extends MapView<String, dynamic> {
     return 0;
   }
 
+  bool get private {
+    if (containsKey("Private")) {
+      return this["Private"] as bool;
+    }
+    return false;
+  }
+
   num get minimumQuickness {
     if (containsKey("MinimumQuickness")) {
       return this["MinimumQuickness"] as num;

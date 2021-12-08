@@ -46,6 +46,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "adjustment": MessageLookupByLibrary.simpleMessage("Adjustment"),
         "army": MessageLookupByLibrary.simpleMessage("Army"),
+        "asGameMasterYouCan": MessageLookupByLibrary.simpleMessage(
+            "As game master, you can pause/resume games and control who joins (and as what nation). To play yourself, you need to join as a player after creating your game."),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "createGame": MessageLookupByLibrary.simpleMessage("Create game"),
         "created_Date_": m0,
@@ -59,6 +61,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "fleet": MessageLookupByLibrary.simpleMessage("Fleet"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Game created"),
+        "gameMasterOnlyAllowedInPrivateGames":
+            MessageLookupByLibrary.simpleMessage(
+                "Game master only allowed in private games (risk of abuse)."),
         "gameVariant_Var_": m3,
         "groupChat": MessageLookupByLibrary.simpleMessage("Group chat"),
         "h": MessageLookupByLibrary.simpleMessage("h"),
@@ -74,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("Log in"),
         "logout": MessageLookupByLibrary.simpleMessage("Log out"),
         "m": MessageLookupByLibrary.simpleMessage("m"),
+        "manageAsGameMaster":
+            MessageLookupByLibrary.simpleMessage("Manage as game master"),
         "map": MessageLookupByLibrary.simpleMessage("Map"),
         "minimumQuickness_V_": m4,
         "minimumRating_V_": m5,
@@ -89,6 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "phaseDeadline_Date_": m9,
         "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
+        "private": MessageLookupByLibrary.simpleMessage("Private"),
         "privateChat": MessageLookupByLibrary.simpleMessage("Private chat"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Public chat"),
         "random": MessageLookupByLibrary.simpleMessage("Random"),

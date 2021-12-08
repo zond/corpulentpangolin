@@ -46,6 +46,10 @@ class _CreateGamePageState extends State<CreateGamePage> {
     final appRouter = context.read<AppRouter>();
     final variants = context.watch<Variants?>();
     final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final user = context.watch<User?>();
+    if (user == null) {
+      return const Text("Can't create game unless logged in!");
+    }
     if (variants != null && variants.err != null) {
       return Text("Variants error: ${variants.err}");
     }
@@ -58,94 +62,131 @@ class _CreateGamePageState extends State<CreateGamePage> {
         ),
       ),
       body: Center(
-        child: ListView(
-          children: [
-            ListTile(
-              title: Text(l10n.createGame),
-            ),
-            TextFormField(
-              initialValue: game.desc,
-              decoration: InputDecoration(
-                labelText: l10n.description,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: ListView(
+            children: [
+              ListTile(
+                title: Text(l10n.createGame),
               ),
-              onChanged: (newValue) {
-                setState(() => game["Desc"] = newValue);
-              },
-            ),
-            variants == null
-                ? const SpinnerWidget()
-                : InputDecorator(
-                    decoration: InputDecoration(
-                      labelText: l10n.variant,
-                    ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        value: game["Variant"],
-                        items: variants.list.map((variant) {
-                          return DropdownMenuItem(
-                            child: Text(variant.id),
-                            value: variant.id,
-                          );
-                        }).toList(),
-                        onChanged: (newValue) {
-                          setState(() => game["Variant"] = newValue.toString());
-                        },
+              TextFormField(
+                initialValue: game.desc,
+                decoration: InputDecoration(
+                  labelText: l10n.description,
+                ),
+                onChanged: (newValue) {
+                  setState(() => game["Desc"] = newValue);
+                },
+              ),
+              variants == null
+                  ? const SpinnerWidget()
+                  : InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: l10n.variant,
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          value: game["Variant"],
+                          items: variants.list.map((variant) {
+                            return DropdownMenuItem(
+                              child: Text(variant.id),
+                              value: variant.id,
+                            );
+                          }).toList(),
+                          onChanged: (newValue) {
+                            setState(
+                                () => game["Variant"] = newValue.toString());
+                          },
+                        ),
                       ),
                     ),
+              Row(
+                children: [
+                  Switch(
+                    value: game.private,
+                    onChanged: (newValue) {
+                      setState(() => game["Private"] = newValue);
+                    },
                   ),
-            InputDecorator(
-              decoration: InputDecoration(
-                labelText: l10n.nationSelection,
+                  Text(l10n.private),
+                ],
               ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton(
-                  value: game["NationSelection"],
-                  items: [
-                    DropdownMenuItem(child: Text(l10n.random), value: "random"),
-                    DropdownMenuItem(
-                        child: Text(l10n.preferences), value: "preferences"),
-                  ],
-                  onChanged: (newValue) {
-                    setState(
-                        () => game["NationSelection"] = newValue.toString());
-                  },
+              Row(
+                children: [
+                  Switch(
+                    value: (game["OwnerUID"] as String) == user.uid,
+                    onChanged: game.private
+                        ? (newValue) {
+                            setState(() {
+                              game["OwnerUID"] = newValue ? user.uid : "";
+                            });
+                          }
+                        : null,
+                  ),
+                  Text(l10n.manageAsGameMaster),
+                ],
+              ),
+              if (!game.private)
+                Text(l10n.gameMasterOnlyAllowedInPrivateGames,
+                    style: Theme.of(context).textTheme.bodyText2),
+              if (game.private)
+                Text(l10n.asGameMasterYouCan,
+                    style: Theme.of(context).textTheme.bodyText2),
+              InputDecorator(
+                decoration: InputDecoration(
+                  labelText: l10n.nationSelection,
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    value: game["NationSelection"],
+                    items: [
+                      DropdownMenuItem(
+                          child: Text(l10n.random), value: "random"),
+                      DropdownMenuItem(
+                          child: Text(l10n.preferences), value: "preferences"),
+                    ],
+                    onChanged: (newValue) {
+                      setState(
+                          () => game["NationSelection"] = newValue.toString());
+                    },
+                  ),
                 ),
               ),
-            ),
-            Row(
-              children: [
-                Switch(
-                  value: !(game["DisablePrivateChat"] as bool),
-                  onChanged: (newValue) {
-                    setState(() => game["DisablePrivateChat"] = !newValue);
-                  },
-                ),
-                Text(l10n.privateChat),
-              ],
-            ),
-            Row(
-              children: [
-                Switch(
-                  value: !(game["DisableGroupChat"] as bool),
-                  onChanged: (newValue) {
-                    setState(() => game["DisableGroupChat"] = !newValue);
-                  },
-                ),
-                Text(l10n.groupChat),
-              ],
-            ),
-            Row(
-              children: [
-                Switch(
-                  value: !(game["DisableConferenceChat"] as bool),
-                  onChanged: (newValue) {
-                    setState(() => game["DisableConferenceChat"] = !newValue);
-                  },
-                ),
-                Text(l10n.publicChat),
-              ],
-            ),
-          ],
+              Row(
+                children: [
+                  Switch(
+                    value: !(game["DisablePrivateChat"] as bool),
+                    onChanged: (newValue) {
+                      setState(() => game["DisablePrivateChat"] = !newValue);
+                    },
+                  ),
+                  Text(l10n.privateChat),
+                ],
+              ),
+              Row(
+                children: [
+                  Switch(
+                    value: !(game["DisableGroupChat"] as bool),
+                    onChanged: (newValue) {
+                      setState(() => game["DisableGroupChat"] = !newValue);
+                    },
+                  ),
+                  Text(l10n.groupChat),
+                ],
+              ),
+              Row(
+                children: [
+                  Switch(
+                    value: !(game["DisableConferenceChat"] as bool),
+                    onChanged: (newValue) {
+                      setState(() => game["DisableConferenceChat"] = !newValue);
+                    },
+                  ),
+                  Text(l10n.publicChat),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

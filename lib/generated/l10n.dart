@@ -598,6 +598,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Private`
+  String get private {
+    return Intl.message(
+      'Private',
+      name: 'private',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage as game master`
+  String get manageAsGameMaster {
+    return Intl.message(
+      'Manage as game master',
+      name: 'manageAsGameMaster',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Game master only allowed in private games (risk of abuse).`
+  String get gameMasterOnlyAllowedInPrivateGames {
+    return Intl.message(
+      'Game master only allowed in private games (risk of abuse).',
+      name: 'gameMasterOnlyAllowedInPrivateGames',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `As game master, you can pause/resume games and control who joins (and as what nation). To play yourself, you need to join as a player after creating your game.`
+  String get asGameMasterYouCan {
+    return Intl.message(
+      'As game master, you can pause/resume games and control who joins (and as what nation). To play yourself, you need to join as a player after creating your game.',
+      name: 'asGameMasterYouCan',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

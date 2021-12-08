@@ -46,6 +46,8 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "adjustment": MessageLookupByLibrary.simpleMessage("Justering"),
         "army": MessageLookupByLibrary.simpleMessage("Armé"),
+        "asGameMasterYouCan": MessageLookupByLibrary.simpleMessage(
+            "Som spelledare kan du pausa/starta spel samt kontrollera vilka som deltar (och som vilket land). För att själva spela måste du delta som spelare efter att ha skapat spelet."),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "createGame": MessageLookupByLibrary.simpleMessage("Skapa spel"),
         "created_Date_": m0,
@@ -59,6 +61,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "fleet": MessageLookupByLibrary.simpleMessage("Flotta"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Spel skapat"),
+        "gameMasterOnlyAllowedInPrivateGames":
+            MessageLookupByLibrary.simpleMessage(
+                "Spelledare endast möjligt i privata spel (risk för missbruk)."),
         "gameVariant_Var_": m3,
         "groupChat": MessageLookupByLibrary.simpleMessage("Gruppchat"),
         "h": MessageLookupByLibrary.simpleMessage("t"),
@@ -74,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "login": MessageLookupByLibrary.simpleMessage("Logga in"),
         "logout": MessageLookupByLibrary.simpleMessage("Logga ut"),
         "m": MessageLookupByLibrary.simpleMessage("m"),
+        "manageAsGameMaster":
+            MessageLookupByLibrary.simpleMessage("Administrera som spelledare"),
         "map": MessageLookupByLibrary.simpleMessage("Karta"),
         "minimumQuickness_V_": m4,
         "minimumRating_V_": m5,
@@ -88,6 +95,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orders": MessageLookupByLibrary.simpleMessage("Order"),
         "phaseDeadline_Date_": m9,
         "preferences": MessageLookupByLibrary.simpleMessage("Prioritetslista"),
+        "private": MessageLookupByLibrary.simpleMessage("Privat"),
         "privateChat": MessageLookupByLibrary.simpleMessage("Privat chat"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Offentlig chat"),
         "random": MessageLookupByLibrary.simpleMessage("Slumpvis"),
