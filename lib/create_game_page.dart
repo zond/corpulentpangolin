@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:corpulentpangolin/map_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,6 +54,10 @@ class _CreateGamePageState extends State<CreateGamePage> {
     if (variants != null && variants.err != null) {
       return Text("Variants error: ${variants.err}");
     }
+    final Stream<SVGBundle?>? svgs =
+        variants != null && variants.map.containsKey(game.variant)
+            ? variants.map[game.variant]!.svgs
+            : null;
     return Scaffold(
       appBar: AppBar(
         title: const Text("corpulentpangolin"),
@@ -80,40 +85,46 @@ class _CreateGamePageState extends State<CreateGamePage> {
               ),
               variants == null
                   ? const SpinnerWidget()
-                  : InputDecorator(
-                      decoration: InputDecoration(
-                        labelText: l10n.variant,
-                      ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton(
-                          value: game["Variant"],
-                          items: variants.list.map((variant) {
-                            return DropdownMenuItem(
-                              child: Text(variant.id),
-                              value: variant.id,
-                            );
-                          }).toList(),
-                          onChanged: (newValue) {
-                            setState(
-                                () => game["Variant"] = newValue.toString());
-                          },
+                  : Column(
+                      children: [
+                        InputDecorator(
+                          decoration: InputDecoration(
+                            labelText: l10n.variant,
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              value: game["Variant"],
+                              items: variants.list.map((variant) {
+                                return DropdownMenuItem(
+                                  child: Text(variant.id),
+                                  value: variant.id,
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  game["Variant"] = newValue.toString();
+                                });
+                              },
+                            ),
+                          ),
                         ),
-                      ),
+                        if (svgs != null)
+                          StreamProvider.value(
+                            value: svgs,
+                            initialData: null,
+                            builder: (context, _) {
+                              final svgs = context.watch<SVGBundle?>();
+                              if (svgs == null) {
+                                return const SpinnerWidget();
+                              }
+                              return const SizedBox(
+                                height: 200,
+                                child: MapWidget(fixedHeight: true),
+                              );
+                            },
+                          ),
+                      ],
                     ),
-              Builder(
-                builder: (context) {
-                  if (variants == null ||
-                      !variants.map.containsKey(game.variant)) {
-                    return const SpinnerWidget();
-                  }
-                  return StreamBuilder(
-                    stream: variants.map[game.variant]!.svgs,
-                    builder: (context, snapshot) {
-                      return const SpinnerWidget();
-                    },
-                  );
-                },
-              ),
               Row(
                 children: [
                   Switch(

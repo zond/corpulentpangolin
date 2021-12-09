@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
+import 'dart:convert';
 
 import 'phase.dart';
 import 'variant.dart';
@@ -196,17 +197,26 @@ Widget gameProvider({
     }
     lastPhaseStreamController.sink.add(phase);
     newestPhaseOrdinal = phase.ordinal;
+    Phase? newestPhase;
     newestPhaseSubscription = cacheDocSnapshots(FirebaseFirestore.instance
             .collection("Game")
             .doc(gameID)
             .collection("Phase")
             .doc(phaseQuerySnapshot.docs[0].id))
         .listen((phaseSnapshot) {
+      if (phaseSnapshot == null) {
+        return;
+      }
       final phase = Phase(phaseSnapshot);
       if (phase.ordinal < newestPhaseOrdinal) {
         newestPhaseSubscription?.cancel();
         return;
       }
+      if (newestPhase != null &&
+          json.encode(newestPhase) == json.encode(phase)) {
+        return;
+      }
+      newestPhase = phase;
       lastPhaseStreamController.sink.add(phase);
     });
   });
@@ -219,7 +229,12 @@ Widget gameProvider({
       StreamProvider<Game?>.value(
         value: cacheDocSnapshots(
                 FirebaseFirestore.instance.collection("Game").doc(gameID))
-            .map((snapshot) => Game(snapshot)),
+            .map((snapshot) {
+          if (snapshot.data() == null) {
+            return null;
+          }
+          return Game(snapshot);
+        }),
         catchError: (context, e) =>
             Game.fromMap({"Error": "gameProvider Game: $e"}),
         initialData: initialData,

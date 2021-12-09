@@ -12,7 +12,7 @@ import 'variant.dart';
 import 'game_page.dart';
 
 // Based on http://godsnotwheregodsnot.blogspot.se/2012/09/color-distribution-methodology.html.
-const contrastColors = [
+const _contrastColors = [
   "#F44336",
   "#2196F3",
   "#80DEEA",
@@ -117,7 +117,7 @@ const contrastColors = [
   "#D16100",
   "#B903AA",
 ];
-const contrastNeutral = "#f4d7b5";
+const _contrastNeutral = "#f4d7b5";
 
 String _dippyMap = r'''
 
@@ -953,18 +953,23 @@ class DippyMap {
 
 var _nextMapID = 0;
 
+@immutable
 class MapWidget extends StatelessWidget {
-  const MapWidget({Key? key}) : super(key: key);
+  final Color backgroundColor;
+  final bool fixedHeight;
+  const MapWidget(
+      {Key? key, this.backgroundColor = Colors.white, this.fixedHeight = false})
+      : super(key: key);
 
   String color(Variant variant, String? nation) {
     if (nation == null) {
-      return contrastNeutral;
+      return _contrastNeutral;
     }
     final idx = variant.nations.indexOf(nation);
     if (idx == -1) {
-      return contrastNeutral;
+      return _contrastNeutral;
     }
-    return contrastColors[idx % contrastColors.length];
+    return _contrastColors[idx % _contrastColors.length];
   }
 
   String provinceInfo(
@@ -1007,70 +1012,19 @@ class MapWidget extends StatelessWidget {
 
   List<String> renderPhase(Phase phase, Variant variant) {
     return [
-      "const svg = mapViewport.querySelector('#map SVG');",
-      "const snapshot = mapViewport.querySelector('#map-snapshot');",
-      "const mapContainer = mapViewport.querySelector('#map-container');",
-      "const map = new DippyMap(svg);",
+      '''
+      const svg = mapViewport.querySelector('#map SVG');
+      const snapshot = mapViewport.querySelector('#map-snapshot');
+      const mapContainer = mapViewport.querySelector('#map-container');
+      const map = new DippyMap(svg);
+      ''',
       ...renderProvinces(phase, variant),
       "map.showProvinces();",
       "map.removeUnits();",
       ...phase.units.keys.map((prov) {
         return "map.addUnit('unit${phase.units[prov]!.type}', '$prov', '${color(variant, phase.units[prov]!.nation)}', false, false);";
       }),
-    ];
-  }
-
-  Function(Map<String, dynamic>) jsCallback(
-      BuildContext context, Phase phase, Variant variant, Style style) {
-    return (msg) {
-      if (msg.containsKey("infoClicked")) {
-        toast(context,
-            provinceInfo(context, phase, variant, "${msg["infoClicked"]}"));
-      } else if (msg.containsKey("mapTransformStyle")) {
-        style.content = "${msg["mapTransformStyle"]}";
-      } else {
-        debugPrint("$msg");
-      }
-    };
-  }
-
-  @override
-  Widget build(context) {
-    _nextMapID++;
-    final svgs = context.watch<SVGBundle?>();
-    final phase = context.watch<Phase?>();
-    final variant = context.watch<Variant?>();
-    final mapStyle = context.read<Style>();
-    if (svgs == null) {
-      return const SpinnerWidget();
-    }
-    if (svgs.err != null || variant?.err != null || phase?.err != null) {
-      return Column(
-        children: [
-          Text("Variant error: ${variant?.err}"),
-          Text("SVGBundle error: ${svgs.err}"),
-          Text("Phase error: ${phase?.err}"),
-        ],
-      );
-    }
-    return HTMLWidget(
-      source: '''
-<div class="map-element-wrapper" id="map-element-wrapper-$_nextMapID">
-  <div id="map-viewport-$_nextMapID" style="height:100%;background-color:black;overflow:hidden;">
-    <div id="map-container" style="${mapStyle.content}">
-      <div id="map">${svgs.html}</div>
-      <img id="map-snapshot" style="display: none;" />
-    </div>
-  </div>
-  <script>
-    (() => {
-      const mapViewport = document.getElementById('map-viewport-$_nextMapID');
-      const flutter_cb = (m) => { window.flutter_cb_json(JSON.stringify(m)); };
-
-      $_dippyMap
-
-      ${phase != null && variant != null ? renderPhase(phase, variant).join("\n") : ""}
-
+      '''
       getSVGData(svg, 1280).then((data) => {
         snapshot.width = svg.clientWidth;
         snapshot.style.width = svg.clientWidth;
@@ -1092,6 +1046,60 @@ class MapWidget extends StatelessWidget {
           onPanEnd: () => { toggle(svg, snapshot); },
         });
       });
+      '''
+    ];
+  }
+
+  Function(Map<String, dynamic>) jsCallback(
+      BuildContext context, Phase phase, Variant variant, Style? style) {
+    return (msg) {
+      if (msg.containsKey("infoClicked")) {
+        toast(context,
+            provinceInfo(context, phase, variant, "${msg["infoClicked"]}"));
+      } else if (style != null && msg.containsKey("mapTransformStyle")) {
+        style.content = "${msg["mapTransformStyle"]}";
+      } else {
+        debugPrint("$msg");
+      }
+    };
+  }
+
+  @override
+  Widget build(context) {
+    _nextMapID++;
+    final svgs = context.watch<SVGBundle?>();
+    final phase = context.watch<Phase?>();
+    final variant = context.watch<Variant?>();
+    final mapStyle = context.read<Style?>();
+    if (svgs == null) {
+      return const SpinnerWidget();
+    }
+    if (svgs.err != null || variant?.err != null || phase?.err != null) {
+      return Column(
+        children: [
+          Text("Variant error: ${variant?.err}"),
+          Text("SVGBundle error: ${svgs.err}"),
+          Text("Phase error: ${phase?.err}"),
+        ],
+      );
+    }
+    return HTMLWidget(
+      source: '''
+<div class="map-element-wrapper" id="map-element-wrapper-$_nextMapID">
+  <div id="map-viewport-$_nextMapID" style="height:100%;background-color:#${backgroundColor.value.toRadixString(16).substring(2)};overflow:hidden;">
+    <div id="map-container" style="${fixedHeight ? "height:100%;" : ""}${mapStyle?.content}">
+      <div id="map" style="${fixedHeight ? "height:100%;" : ""}">${svgs.html}</div>
+      <img id="map-snapshot" style="display: none;" />
+    </div>
+  </div>
+  <script>
+    (() => {
+      const mapViewport = document.getElementById('map-viewport-$_nextMapID');
+      const flutter_cb = (m) => { window.flutter_cb_json(JSON.stringify(m)); };
+
+      $_dippyMap
+
+      ${phase != null && variant != null ? renderPhase(phase, variant).join("\n") : ""}
     })();
   </script>
 </div>

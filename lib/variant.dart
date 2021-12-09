@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:collection';
 import 'package:brotli/brotli.dart';
 import 'package:async/async.dart';
 import 'package:meta/meta.dart';
+import 'dart:convert';
 
 import 'cache.dart';
 
@@ -18,11 +20,14 @@ class SVGBundle {
   String get html {
     return _html ??= () {
       final res = StringBuffer();
-      res.write('''<div id="map-svg">${String.fromCharCodes(map)}</div>''');
-      units.forEach((key, value) {
+      res.write(
+          '''<div id="map-svg" style="height:100%;">${String.fromCharCodes(map)}</div>''');
+      final sortedUnits = units.entries.toList();
+      sortedUnits.sort((a, b) => a.key.compareTo(b.key));
+      for (var entry in sortedUnits) {
         res.write(
-            '''<div id="unit$key" style="display: none;">${String.fromCharCodes(value)}</div>''');
-      });
+            '''<div id="unit${entry.key}" style="display: none;">${String.fromCharCodes(entry.value)}</div>''');
+      }
       return res.toString();
     }();
   }
@@ -105,17 +110,27 @@ class Variant extends MapView<String, dynamic> {
 
     final variantDoc = FirebaseFirestore.instance.collection("Variant").doc(id);
     yield* StreamGroup.merge([
+      Stream.value(null),
       cacheDocSnapshots(variantDoc.collection("Map").doc("Map"))
           .expand((mapSnapshot) {
-        map = _decode(mapSnapshot);
+        final newMap = _decode(mapSnapshot);
+        if (json.encode(newMap) == json.encode(map)) {
+          return [];
+        }
+        map = newMap;
         return maybeSendBundle();
       }),
       cacheQuerySnapshots(variantDoc.collection("Unit"))
           .expand((unitQuerySnapshot) {
-        units = unitQuerySnapshot.docs.fold({}, (m, documentSnapshot) {
-          m![documentSnapshot.id] = _decode(documentSnapshot);
+        final Map<String, List<int>> newUnits =
+            unitQuerySnapshot.docs.fold({}, (m, documentSnapshot) {
+          m[documentSnapshot.id] = _decode(documentSnapshot);
           return m;
         });
+        if (json.encode(units) == json.encode(newUnits)) {
+          return [];
+        }
+        units = newUnits;
         return maybeSendBundle();
       }),
     ]);
@@ -135,7 +150,13 @@ class Variants {
     final List<StreamSubscription> variantSubscriptions = [];
     void pushVariants(
         DocumentSnapshot<Map<String, dynamic>> newVariantSnapshot) {
-      foundVariants[newVariantSnapshot.id] = Variant(newVariantSnapshot);
+      final newVariant = Variant(newVariantSnapshot);
+      if (foundVariants.containsKey(newVariantSnapshot.id) &&
+          json.encode(foundVariants[newVariantSnapshot.id]) ==
+              json.encode(newVariant)) {
+        return;
+      }
+      foundVariants[newVariantSnapshot.id] = newVariant;
       final List<Variant> orderedVariants = foundVariants.values.toList();
       orderedVariants.sort((a, b) => a.id.compareTo(b.id));
       variantsStreamController.sink
@@ -147,11 +168,16 @@ class Variants {
             .listen((variantsQuerySnapshot) {
       foundVariants.clear();
       for (var variantSnapshot in variantsQuerySnapshot.docs) {
-        pushVariants(variantSnapshot);
+        foundVariants[variantSnapshot.id] = Variant(variantSnapshot);
       }
+      final List<Variant> orderedVariants = foundVariants.values.toList();
+      orderedVariants.sort((a, b) => a.id.compareTo(b.id));
+      variantsStreamController.sink
+          .add(Variants._(foundVariants, orderedVariants, null));
       for (var subscription in variantSubscriptions) {
         subscription.cancel();
       }
+
       variantSubscriptions.clear();
       for (var variantSnapshot in variantsQuerySnapshot.docs) {
         variantSubscriptions.add(cacheDocSnapshots(FirebaseFirestore.instance
