@@ -117,9 +117,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
                               if (svgs == null) {
                                 return const SpinnerWidget();
                               }
-                              return const SizedBox(
+                              return SizedBox(
                                 height: 200,
-                                child: MapWidget(fixedHeight: true),
+                                child: MapWidget(
+                                    fixedHeight: true,
+                                    backgroundColor: Theme.of(context)
+                                        .scaffoldBackgroundColor),
                               );
                             },
                           ),
