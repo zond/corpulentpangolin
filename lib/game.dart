@@ -204,9 +204,6 @@ Widget gameProvider({
             .collection("Phase")
             .doc(phaseQuerySnapshot.docs[0].id))
         .listen((phaseSnapshot) {
-      if (phaseSnapshot == null) {
-        return;
-      }
       final phase = Phase(phaseSnapshot);
       if (phase.ordinal < newestPhaseOrdinal) {
         newestPhaseSubscription?.cancel();

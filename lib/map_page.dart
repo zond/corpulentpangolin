@@ -32,7 +32,7 @@ class MapPage extends StatelessWidget {
       child: Column(
         children: [
           Text("map ${game["Desc"]}"),
-          const Expanded(
+          Expanded(
             child: MapWidget(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor),
           ),

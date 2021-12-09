@@ -120,5 +120,7 @@
   "private": "Private",
   "manageAsGameMaster": "Manage as game master",
   "gameMasterOnlyAllowedInPrivateGames": "Game master only allowed in private games (risk of abuse).",
-  "asGameMasterYouCan": "As game master, you can pause/resume games and control who joins (and as what nation). To play yourself, you need to join as a player after creating your game."
+  "asGameMasterYouCan": "As game master, you can pause/resume games and control who joins (and as what nation). To play yourself, you need to join as a player after creating your game.",
+  "createdBy": "Created by:",
+  "description": "Description:"
 }

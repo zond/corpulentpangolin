@@ -70,10 +70,10 @@ class S {
     );
   }
 
-  /// `Description`
+  /// `Description:`
   String get description {
     return Intl.message(
-      'Description',
+      'Description:',
       name: 'description',
       desc: '',
       args: [],
@@ -634,6 +634,16 @@ class S {
     return Intl.message(
       'As game master, you can pause/resume games and control who joins (and as what nation). To play yourself, you need to join as a player after creating your game.',
       name: 'asGameMasterYouCan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Created by:`
+  String get createdBy {
+    return Intl.message(
+      'Created by:',
+      name: 'createdBy',
       desc: '',
       args: [],
     );

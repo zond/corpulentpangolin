@@ -54,10 +54,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
     if (variants != null && variants.err != null) {
       return Text("Variants error: ${variants.err}");
     }
-    final Stream<SVGBundle?>? svgs =
+    final Variant? variant =
         variants != null && variants.map.containsKey(game.variant)
-            ? variants.map[game.variant]!.svgs
+            ? variants.map[game.variant]
             : null;
+    final Stream<SVGBundle?>? svgs =
+        variant != null ? variants!.map[game.variant]!.svgs : null;
     return Scaffold(
       appBar: AppBar(
         title: const Text("corpulentpangolin"),
@@ -108,24 +110,50 @@ class _CreateGamePageState extends State<CreateGamePage> {
                             ),
                           ),
                         ),
-                        if (svgs != null)
-                          StreamProvider.value(
-                            value: svgs,
-                            initialData: null,
-                            builder: (context, _) {
-                              final svgs = context.watch<SVGBundle?>();
-                              if (svgs == null) {
-                                return const SpinnerWidget();
-                              }
-                              return SizedBox(
-                                height: 200,
-                                child: MapWidget(
-                                    fixedHeight: true,
-                                    backgroundColor: Theme.of(context)
-                                        .scaffoldBackgroundColor),
-                              );
-                            },
-                          ),
+                        if (variant != null)
+                          LayoutBuilder(builder: (context, constraints) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: constraints.maxWidth * 0.5,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 5),
+                                      Text(
+                                          "${l10n.createdBy} ${variant["CreatedBy"]}"),
+                                      SizedBox(height: 5),
+                                      Text(
+                                          "${l10n.description} ${variant["Description"]}"),
+                                    ],
+                                  ),
+                                ),
+                                if (svgs != null)
+                                  StreamProvider.value(
+                                    value: svgs,
+                                    initialData: null,
+                                    builder: (context, _) {
+                                      final svgs = context.watch<SVGBundle?>();
+                                      if (svgs == null) {
+                                        return const SpinnerWidget();
+                                      }
+                                      return SizedBox(
+                                        height: 200,
+                                        width: constraints.maxWidth * 0.5,
+                                        child: MapWidget(
+                                            fixedHeight: true,
+                                            backgroundColor: Theme.of(context)
+                                                .scaffoldBackgroundColor),
+                                      );
+                                    },
+                                  ),
+                              ],
+                            );
+                          }),
                       ],
                     ),
               Row(
