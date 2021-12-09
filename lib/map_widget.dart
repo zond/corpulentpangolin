@@ -956,9 +956,7 @@ var _nextMapID = 0;
 @immutable
 class MapWidget extends StatelessWidget {
   final Color backgroundColor;
-  final bool fixedHeight;
-  const MapWidget(
-      {Key? key, this.backgroundColor = Colors.white, this.fixedHeight = false})
+  const MapWidget({Key? key, this.backgroundColor = Colors.white})
       : super(key: key);
 
   String color(Variant variant, String? nation) {
@@ -1087,9 +1085,9 @@ class MapWidget extends StatelessWidget {
       source: '''
 <div class="map-element-wrapper" id="map-element-wrapper-$_nextMapID">
   <div id="map-viewport-$_nextMapID" style="height:100%;background-color:#${backgroundColor.value.toRadixString(16).substring(2)};overflow:hidden;">
-    <div id="map-container" style="${fixedHeight ? "height:100%;" : ""}${mapStyle?.content}">
+    <div id="map-container" style="height:100%;${mapStyle?.content}">
       <img id="map-snapshot" style="display: none;" />
-      <div id="map" style="${fixedHeight ? "height:100%;" : ""}">${svgs.html}</div>
+      <div id="map" style="height:100%;">${svgs.html}</div>
     </div>
   </div>
   <script>

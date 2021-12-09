@@ -59,7 +59,6 @@ class _VariantMapWidget extends StatelessWidget {
           return _wrap(const SpinnerWidget());
         }
         return _wrap(MapWidget(
-            fixedHeight: true,
             backgroundColor: Theme.of(context).scaffoldBackgroundColor));
       },
     );

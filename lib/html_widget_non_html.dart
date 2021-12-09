@@ -15,10 +15,17 @@ class HTMLWidgetConditional extends StatelessWidget {
     return WebView(
       onWebViewCreated: (controller) {
         controller.loadHtmlString('''
-<script>
-  ${callbacks?.keys.map((name) => "window.$name = (m) => { window.${name}_channel.postMessage(m); };").join("\n")}
-</script>
-$source
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <script>
+      ${callbacks?.keys.map((name) => "window.$name = (m) => { window.${name}_channel.postMessage(m); };").join("\n")}
+    </script>
+    $source
+  </body>
+</html>
 ''');
       },
       javascriptMode: JavascriptMode.unrestricted,
