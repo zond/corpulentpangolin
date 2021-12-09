@@ -619,10 +619,10 @@ class S {
     );
   }
 
-  /// `Game master only allowed in private games (risk of abuse).`
+  /// `Game master only allowed in private games due to risk of abuse.`
   String get gameMasterOnlyAllowedInPrivateGames {
     return Intl.message(
-      'Game master only allowed in private games (risk of abuse).',
+      'Game master only allowed in private games due to risk of abuse.',
       name: 'gameMasterOnlyAllowedInPrivateGames',
       desc: '',
       args: [],
@@ -644,6 +644,26 @@ class S {
     return Intl.message(
       'Created by:',
       name: 'createdBy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Require assignment to join`
+  String get requireAssignmentToJoin {
+    return Intl.message(
+      'Require assignment to join',
+      name: 'requireAssignmentToJoin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Only players assigned by the game master can join.`
+  String get onlyPlayersAssignedByGM {
+    return Intl.message(
+      'Only players assigned by the game master can join.',
+      name: 'onlyPlayersAssignedByGM',
       desc: '',
       args: [],
     );

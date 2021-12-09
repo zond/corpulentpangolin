@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 import 'dart:convert';
@@ -25,6 +24,13 @@ class Game extends MapView<String, dynamic> {
   bool get started {
     if (containsKey("Started")) {
       return this["Started"] as bool;
+    }
+    return false;
+  }
+
+  bool get invitationRequired {
+    if (containsKey("InvitationRequired")) {
+      return this["InvitationRequired"] as bool;
     }
     return false;
   }
@@ -156,6 +162,13 @@ class Game extends MapView<String, dynamic> {
       return this["Finished"] as bool;
     }
     return false;
+  }
+
+  String get ownerUID {
+    if (containsKey("OwnerUID")) {
+      return this["OwnerUID"] as String;
+    }
+    return "";
   }
 
   String get desc {

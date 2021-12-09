@@ -64,7 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gameCreated": MessageLookupByLibrary.simpleMessage("Game created"),
         "gameMasterOnlyAllowedInPrivateGames":
             MessageLookupByLibrary.simpleMessage(
-                "Game master only allowed in private games (risk of abuse)."),
+                "Game master only allowed in private games due to risk of abuse."),
         "gameVariant_Var_": m3,
         "groupChat": MessageLookupByLibrary.simpleMessage("Group chat"),
         "h": MessageLookupByLibrary.simpleMessage("h"),
@@ -93,6 +93,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nationSelection_Type_": m7,
         "noGamesFound": MessageLookupByLibrary.simpleMessage("No games found"),
         "nonMovementPhaseDeadline_Date_": m8,
+        "onlyPlayersAssignedByGM": MessageLookupByLibrary.simpleMessage(
+            "Only players assigned by the game master can join."),
         "openGames": MessageLookupByLibrary.simpleMessage("Open games"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "phaseDeadline_Date_": m9,
@@ -101,6 +103,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "privateChat": MessageLookupByLibrary.simpleMessage("Private chat"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Public chat"),
         "random": MessageLookupByLibrary.simpleMessage("Random"),
+        "requireAssignmentToJoin":
+            MessageLookupByLibrary.simpleMessage("Require assignment to join"),
         "retreat": MessageLookupByLibrary.simpleMessage("Retreat"),
         "source": MessageLookupByLibrary.simpleMessage("Source"),
         "spring": MessageLookupByLibrary.simpleMessage("Spring"),

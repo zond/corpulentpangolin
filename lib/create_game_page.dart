@@ -11,6 +11,7 @@ import 'spinner_widget.dart';
 import 'game.dart';
 import 'toast.dart';
 import 'variant.dart';
+import 'conditional_rebuild.dart';
 
 class CreateGamePage extends StatefulWidget {
   const CreateGamePage({Key? key}) : super(key: key);
@@ -19,10 +20,57 @@ class CreateGamePage extends StatefulWidget {
   _CreateGamePageState createState() => _CreateGamePageState();
 }
 
+@immutable
+class _VariantMapWidget extends StatelessWidget {
+  final String variant;
+  final double? height;
+  final double? width;
+  const _VariantMapWidget(this.variant, {Key? key, this.height, this.width})
+      : super(key: key);
+  @override
+  Widget build(context) {
+    Widget _wrap(Widget w) {
+      if (width != null || height != null) {
+        return SizedBox(
+          height: height,
+          width: width,
+          child: w,
+        );
+      }
+      return w;
+    }
+
+    final variants = context.watch<Variants?>();
+    if (variants == null) {
+      return _wrap(const SpinnerWidget());
+    }
+    if (variants.err != null) {
+      return Text("VariantMapWidget variants: ${variants.err}");
+    }
+    if (!variants.map.containsKey(variant)) {
+      return Text("Variant $variant not recognized!");
+    }
+    return StreamProvider.value(
+      value: variants.map[variant]!.svgs,
+      initialData: null,
+      builder: (context, _) {
+        final svgs = context.watch<SVGBundle?>();
+        if (svgs == null) {
+          return _wrap(const SpinnerWidget());
+        }
+        return _wrap(MapWidget(
+            fixedHeight: true,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor));
+      },
+    );
+  }
+}
+
 class _CreateGamePageState extends State<CreateGamePage> {
   final game = Game.fromMap({
     "CreatorUID": FirebaseAuth.instance.currentUser?.uid,
     "OwnerUID": "",
+    "InvitationRequired": false,
     "MusteringRequired": true,
     "NationSelection": "random",
     "Desc": "",
@@ -58,8 +106,6 @@ class _CreateGamePageState extends State<CreateGamePage> {
         variants != null && variants.map.containsKey(game.variant)
             ? variants.map[game.variant]
             : null;
-    final Stream<SVGBundle?>? svgs =
-        variant != null ? variants!.map[game.variant]!.svgs : null;
     return Scaffold(
       appBar: AppBar(
         title: const Text("corpulentpangolin"),
@@ -132,25 +178,13 @@ class _CreateGamePageState extends State<CreateGamePage> {
                                     ],
                                   ),
                                 ),
-                                if (svgs != null)
-                                  StreamProvider.value(
-                                    value: svgs,
-                                    initialData: null,
-                                    builder: (context, _) {
-                                      final svgs = context.watch<SVGBundle?>();
-                                      if (svgs == null) {
-                                        return const SpinnerWidget();
-                                      }
-                                      return SizedBox(
-                                        height: 200,
-                                        width: constraints.maxWidth * 0.5,
-                                        child: MapWidget(
-                                            fixedHeight: true,
-                                            backgroundColor: Theme.of(context)
-                                                .scaffoldBackgroundColor),
-                                      );
-                                    },
-                                  ),
+                                ConditionalRebuild(
+                                  child: _VariantMapWidget(game.variant,
+                                      height: 200,
+                                      width: constraints.maxWidth * 0.5),
+                                  condition: (_, o, n) =>
+                                      o.variant != n.variant,
+                                ),
                               ],
                             );
                           }),
@@ -161,7 +195,10 @@ class _CreateGamePageState extends State<CreateGamePage> {
                   Switch(
                     value: game.private,
                     onChanged: (newValue) {
-                      setState(() => game["Private"] = newValue);
+                      setState(() {
+                        game["Private"] = newValue;
+                        game["OwnerUID"] = "";
+                      });
                     },
                   ),
                   Text(l10n.private),
@@ -188,6 +225,23 @@ class _CreateGamePageState extends State<CreateGamePage> {
               if (game.private)
                 Text(l10n.asGameMasterYouCan,
                     style: Theme.of(context).textTheme.bodyText2),
+              if (game.private && game.ownerUID != "") ...[
+                Row(
+                  children: [
+                    Switch(
+                      value: game.invitationRequired,
+                      onChanged: (newValue) {
+                        setState(() {
+                          game["InvitationRequired"] = newValue;
+                        });
+                      },
+                    ),
+                    Text(l10n.requireAssignmentToJoin),
+                  ],
+                ),
+                Text(l10n.onlyPlayersAssignedByGM,
+                    style: Theme.of(context).textTheme.bodyText2),
+              ],
               InputDecorator(
                 decoration: InputDecoration(
                   labelText: l10n.nationSelection,

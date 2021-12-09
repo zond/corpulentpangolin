@@ -92,6 +92,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nationSelection_Type_": m7,
         "noGamesFound": MessageLookupByLibrary.simpleMessage("Inga spel funna"),
         "nonMovementPhaseDeadline_Date_": m8,
+        "onlyPlayersAssignedByGM": MessageLookupByLibrary.simpleMessage(
+            "Endast spelare godkända av spelledaren kan delta."),
         "openGames": MessageLookupByLibrary.simpleMessage("Öppna spel"),
         "orders": MessageLookupByLibrary.simpleMessage("Order"),
         "phaseDeadline_Date_": m9,
@@ -100,6 +102,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "privateChat": MessageLookupByLibrary.simpleMessage("Privat chat"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Offentlig chat"),
         "random": MessageLookupByLibrary.simpleMessage("Slumpvis"),
+        "requireAssignmentToJoin":
+            MessageLookupByLibrary.simpleMessage("Godkännande nödvändigt"),
         "retreat": MessageLookupByLibrary.simpleMessage("Reträtt"),
         "source": MessageLookupByLibrary.simpleMessage("Källkod"),
         "spring": MessageLookupByLibrary.simpleMessage("Vår"),
