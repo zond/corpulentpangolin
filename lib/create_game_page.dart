@@ -197,6 +197,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
                       setState(() {
                         game["Private"] = newValue;
                         game["OwnerUID"] = "";
+                        game["InvitationRequired"] = false;
                       });
                     },
                   ),
@@ -210,7 +211,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
                     onChanged: game.private
                         ? (newValue) {
                             setState(() {
-                              game["OwnerUID"] = newValue ? user.uid : "";
+                              if (newValue) {
+                                game["OwnerUID"] = user.uid;
+                              } else {
+                                game["OwnerUID"] = "";
+                                game["InvitationRequired"] = false;
+                              }
                             });
                           }
                         : null,
