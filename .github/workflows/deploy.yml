@@ -25,4 +25,4 @@ jobs:
             - name: Build release
               run: flutter build web
             - name: Sync release to iBrave
-              run: env LC_ALL=C rsync -a --delete build/web/ oort.se@ssh.ibrave.io:public_html/${BRANCH_NAME}-pangolin.diplicity.com/
+              run: env LC_ALL=C rsync -v -a --delete build/web/ oort.se@ssh.ibrave.io:public_html/${BRANCH_NAME}-pangolin.diplicity.com/
