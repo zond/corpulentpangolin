@@ -31,6 +31,13 @@ dependencies:
   url_launcher:
   intl:
 
+dependency_overrides:
+  auto_route:
+    git:
+      url: git@github.com:biklas7/auto_route_library.git
+      ref: chore/update-flutter-beta
+      path: auto_route
+
 dev_dependencies:
   auto_route_generator:
   build_runner:
