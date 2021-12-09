@@ -1088,8 +1088,8 @@ class MapWidget extends StatelessWidget {
 <div class="map-element-wrapper" id="map-element-wrapper-$_nextMapID">
   <div id="map-viewport-$_nextMapID" style="height:100%;background-color:#${backgroundColor.value.toRadixString(16).substring(2)};overflow:hidden;">
     <div id="map-container" style="${fixedHeight ? "height:100%;" : ""}${mapStyle?.content}">
-      <div id="map" style="${fixedHeight ? "height:100%;" : ""}">${svgs.html}</div>
       <img id="map-snapshot" style="display: none;" />
+      <div id="map" style="${fixedHeight ? "height:100%;" : ""}">${svgs.html}</div>
     </div>
   </div>
   <script>
