@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+@immutable
 class HTMLWidgetConditional extends StatelessWidget {
   final String source;
   final Map<String, Function(String)>? callbacks;

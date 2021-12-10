@@ -4,8 +4,6 @@ import 'dart:html' as html;
 import 'package:js/js.dart';
 import 'package:js/js_util.dart';
 
-int _nextKey = 0;
-
 class _Validator implements html.NodeValidator {
   @override
   bool allowsAttribute(
@@ -17,6 +15,7 @@ class _Validator implements html.NodeValidator {
 
 Map<Key, String> _html = {};
 
+@immutable
 class HTMLWidgetConditional extends StatelessWidget {
   final String source;
   final Map<String, Function(String)>? callbacks;
@@ -34,6 +33,7 @@ class HTMLWidgetConditional extends StatelessWidget {
         setProperty(html.window, name, allowInterop(func));
       });
     }
+
     ui.platformViewRegistry.registerViewFactory("html-widget-${key.toString()}",
         (int id) {
       final element = html.Element.html(_html[key], validator: _Validator());
@@ -41,7 +41,6 @@ class HTMLWidgetConditional extends StatelessWidget {
       element.style.height = "100%";
       return element;
     });
-    return HtmlElementView(
-        key: Key("${_nextKey++}"), viewType: "html-widget-${key.toString()}");
+    return HtmlElementView(viewType: "html-widget-${key.toString()}");
   }
 }
