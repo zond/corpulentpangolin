@@ -145,53 +145,16 @@ class Variants {
   const Variants._(this.map, this.list, this.err);
   static Variants error(e) => Variants._(const {}, const [], e);
   static Stream<Variants?> load() {
-    final variantsStreamController = StreamController<Variants?>();
-    final Map<String, Variant> foundVariants = {};
-    final List<StreamSubscription> variantSubscriptions = [];
-    void pushVariants(
-        DocumentSnapshot<Map<String, dynamic>> newVariantSnapshot) {
-      final newVariant = Variant(newVariantSnapshot);
-      if (foundVariants.containsKey(newVariantSnapshot.id) &&
-          json.encode(foundVariants[newVariantSnapshot.id]) ==
-              json.encode(newVariant)) {
-        return;
-      }
-      foundVariants[newVariantSnapshot.id] = newVariant;
+    return cacheQuerySnapshots(FirebaseFirestore.instance.collection("Variant"))
+        .map((variantsQuerySnapshot) {
+      final foundVariants = variantsQuerySnapshot.docs
+          .fold<Map<String, Variant>>({}, (previousValue, variantSnapshot) {
+        previousValue[variantSnapshot.id] = Variant(variantSnapshot);
+        return previousValue;
+      });
       final List<Variant> orderedVariants = foundVariants.values.toList();
       orderedVariants.sort((a, b) => a.id.compareTo(b.id));
-      variantsStreamController.sink
-          .add(Variants._(foundVariants, orderedVariants, null));
-    }
-
-    final variantsSubscription =
-        cacheQuerySnapshots(FirebaseFirestore.instance.collection("Variant"))
-            .listen((variantsQuerySnapshot) {
-      foundVariants.clear();
-      for (var variantSnapshot in variantsQuerySnapshot.docs) {
-        foundVariants[variantSnapshot.id] = Variant(variantSnapshot);
-      }
-      final List<Variant> orderedVariants = foundVariants.values.toList();
-      orderedVariants.sort((a, b) => a.id.compareTo(b.id));
-      variantsStreamController.sink
-          .add(Variants._(foundVariants, orderedVariants, null));
-      for (var subscription in variantSubscriptions) {
-        subscription.cancel();
-      }
-
-      variantSubscriptions.clear();
-      for (var variantSnapshot in variantsQuerySnapshot.docs) {
-        variantSubscriptions.add(cacheDocSnapshots(FirebaseFirestore.instance
-                .collection("Variant")
-                .doc(variantSnapshot.id))
-            .listen((variantSnapshot) => pushVariants(variantSnapshot)));
-      }
+      return Variants._(foundVariants, orderedVariants, null);
     });
-    variantsStreamController.onCancel = () {
-      variantsSubscription.cancel();
-      for (var subscription in variantSubscriptions) {
-        subscription.cancel();
-      }
-    };
-    return variantsStreamController.stream;
   }
 }

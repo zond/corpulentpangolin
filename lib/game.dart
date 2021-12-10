@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:provider/provider.dart';
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
-import 'dart:convert';
 
 import 'phase.dart';
 import 'variant.dart';
@@ -191,49 +188,6 @@ Widget gameProvider({
   required Widget child,
   Game? initialData,
 }) {
-  final lastPhaseStreamController = StreamController<Phase?>();
-  var newestPhaseOrdinal = -1;
-  StreamSubscription? newestPhaseSubscription;
-  final lastPhaseSubscription = cacheQuerySnapshots(FirebaseFirestore.instance
-          .collection("Game")
-          .doc(gameID)
-          .collection("Phase")
-          .orderBy("Ordinal", descending: true)
-          .limit(1))
-      .listen((phaseQuerySnapshot) {
-    if (phaseQuerySnapshot.docs.isEmpty) {
-      return;
-    }
-    final phase = Phase(phaseQuerySnapshot.docs[0]);
-    if (phase.ordinal < newestPhaseOrdinal) {
-      return;
-    }
-    lastPhaseStreamController.sink.add(phase);
-    newestPhaseOrdinal = phase.ordinal;
-    Phase? newestPhase;
-    newestPhaseSubscription = cacheDocSnapshots(FirebaseFirestore.instance
-            .collection("Game")
-            .doc(gameID)
-            .collection("Phase")
-            .doc(phaseQuerySnapshot.docs[0].id))
-        .listen((phaseSnapshot) {
-      final phase = Phase(phaseSnapshot);
-      if (phase.ordinal < newestPhaseOrdinal) {
-        newestPhaseSubscription?.cancel();
-        return;
-      }
-      if (newestPhase != null &&
-          json.encode(newestPhase) == json.encode(phase)) {
-        return;
-      }
-      newestPhase = phase;
-      lastPhaseStreamController.sink.add(phase);
-    });
-  });
-  lastPhaseStreamController.onCancel = () {
-    lastPhaseSubscription.cancel();
-    newestPhaseSubscription?.cancel();
-  };
   return MultiProvider(
     providers: [
       StreamProvider<Game?>.value(
@@ -250,7 +204,18 @@ Widget gameProvider({
         initialData: initialData,
       ),
       StreamProvider<Phase?>.value(
-        value: lastPhaseStreamController.stream,
+        value: cacheQuerySnapshots(FirebaseFirestore.instance
+                .collection("Game")
+                .doc(gameID)
+                .collection("Phase")
+                .orderBy("Ordinal", descending: true)
+                .limit(1))
+            .map((snapshot) {
+          if (snapshot.size == 0) {
+            return null;
+          }
+          return Phase(snapshot.docs[0]);
+        }),
         catchError: (context, e) =>
             Phase.fromMap({"Error": "gameProvider Phase: $e"}),
         initialData: null,
