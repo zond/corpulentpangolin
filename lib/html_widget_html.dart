@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
-import 'dart:html' as html;
+import 'package:universal_html/html.dart' as html;
 import 'package:js/js.dart';
 import 'package:js/js_util.dart';
 
@@ -34,6 +34,7 @@ class HTMLWidgetConditional extends StatelessWidget {
       });
     }
 
+    // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory("html-widget-${key.toString()}",
         (int id) {
       final element = html.Element.html(_html[key], validator: _Validator());

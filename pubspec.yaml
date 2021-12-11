@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons:
   url_launcher:
   intl:
+  universal_html:
 
 dependency_overrides:
   auto_route:
