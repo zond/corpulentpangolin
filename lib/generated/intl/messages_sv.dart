@@ -45,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "adjustment": MessageLookupByLibrary.simpleMessage("Justering"),
+        "anonymous": MessageLookupByLibrary.simpleMessage("Anonym"),
         "army": MessageLookupByLibrary.simpleMessage("Armé"),
         "asGameMasterYouCan": MessageLookupByLibrary.simpleMessage(
             "Som spelledare kan du pausa/starta spel samt kontrollera vilka som deltar (och som vilket land). För att själva spela måste du delta som spelare efter att ha skapat spelet."),
@@ -97,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "openGames": MessageLookupByLibrary.simpleMessage("Öppna spel"),
         "orders": MessageLookupByLibrary.simpleMessage("Order"),
         "phaseDeadline_Date_": m9,
+        "players": MessageLookupByLibrary.simpleMessage("Spelare"),
         "preferences": MessageLookupByLibrary.simpleMessage("Prioritetslista"),
         "private": MessageLookupByLibrary.simpleMessage("Privat"),
         "privateChat": MessageLookupByLibrary.simpleMessage("Privat chat"),
@@ -109,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "spring": MessageLookupByLibrary.simpleMessage("Vår"),
         "started_Date_": m10,
         "unnamed": MessageLookupByLibrary.simpleMessage("namnlöst"),
+        "username": MessageLookupByLibrary.simpleMessage("Användarnamn:"),
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("Se"),
         "w": MessageLookupByLibrary.simpleMessage("v")

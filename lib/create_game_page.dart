@@ -12,6 +12,7 @@ import 'game.dart';
 import 'toast.dart';
 import 'variant.dart';
 import 'conditional_rebuild.dart';
+import 'layout.dart';
 
 class CreateGamePage extends StatefulWidget {
   const CreateGamePage({Key? key}) : super(key: key);
@@ -113,197 +114,188 @@ class _CreateGamePageState extends State<CreateGamePage> {
           onPressed: () => appRouter.replace(const HomePageRoute()),
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: ListView(
-            children: [
-              ListTile(
-                title: Text(l10n.createGame),
-              ),
-              TextFormField(
-                initialValue: game.desc,
-                decoration: InputDecoration(
-                  labelText: l10n.description,
-                ),
-                onChanged: (newValue) {
-                  setState(() => game["Desc"] = newValue);
-                },
-              ),
-              variants == null
-                  ? const SpinnerWidget()
-                  : Column(
-                      children: [
-                        InputDecorator(
-                          decoration: InputDecoration(
-                            labelText: l10n.variant,
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton(
-                              value: game["Variant"],
-                              items: variants.list.map((variant) {
-                                return DropdownMenuItem(
-                                  child: Text(variant.id),
-                                  value: variant.id,
-                                );
-                              }).toList(),
-                              onChanged: (newValue) {
-                                setState(() {
-                                  game["Variant"] = newValue.toString();
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                        if (variant != null)
-                          LayoutBuilder(builder: (context, constraints) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: constraints.maxWidth * 0.5,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(height: 5),
-                                      Text(
-                                          "${l10n.createdBy} ${variant["CreatedBy"]}"),
-                                      const SizedBox(height: 5),
-                                      Text(
-                                          "${l10n.description} ${variant["Description"]}"),
-                                    ],
-                                  ),
-                                ),
-                                ConditionalRebuild(
-                                  child: _VariantMapWidget(game.variant,
-                                      height: 200,
-                                      width: constraints.maxWidth * 0.5),
-                                  condition: (_, o, n) =>
-                                      o.variant != n.variant,
-                                ),
-                              ],
-                            );
-                          }),
-                      ],
-                    ),
-              Row(
-                children: [
-                  Switch(
-                    value: game.private,
-                    onChanged: (newValue) {
-                      setState(() {
-                        game["Private"] = newValue;
-                        game["OwnerUID"] = "";
-                        game["InvitationRequired"] = false;
-                      });
-                    },
-                  ),
-                  Text(l10n.private),
-                ],
-              ),
-              Row(
-                children: [
-                  Switch(
-                    value: (game["OwnerUID"] as String) == user.uid,
-                    onChanged: game.private
-                        ? (newValue) {
-                            setState(() {
-                              if (newValue) {
-                                game["OwnerUID"] = user.uid;
-                              } else {
-                                game["OwnerUID"] = "";
-                                game["InvitationRequired"] = false;
-                              }
-                            });
-                          }
-                        : null,
-                  ),
-                  Text(l10n.manageAsGameMaster),
-                ],
-              ),
-              if (!game.private)
-                Text(l10n.gameMasterOnlyAllowedInPrivateGames,
-                    style: Theme.of(context).textTheme.bodyText2),
-              if (game.private)
-                Text(l10n.asGameMasterYouCan,
-                    style: Theme.of(context).textTheme.bodyText2),
-              if (game.private && game.ownerUID != "") ...[
-                Row(
+      body: smallPadding(ListView(
+        children: [
+          ListTile(
+            title: Text(l10n.createGame),
+          ),
+          TextFormField(
+            initialValue: game.desc,
+            decoration: InputDecoration(
+              labelText: l10n.description,
+            ),
+            onChanged: (newValue) {
+              setState(() => game["Desc"] = newValue);
+            },
+          ),
+          variants == null
+              ? const SpinnerWidget()
+              : Column(
                   children: [
-                    Switch(
-                      value: game.invitationRequired,
-                      onChanged: (newValue) {
-                        setState(() {
-                          game["InvitationRequired"] = newValue;
-                        });
-                      },
+                    InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: l10n.variant,
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          value: game["Variant"],
+                          items: variants.list.map((variant) {
+                            return DropdownMenuItem(
+                              child: Text(variant.id),
+                              value: variant.id,
+                            );
+                          }).toList(),
+                          onChanged: (newValue) {
+                            setState(() {
+                              game["Variant"] = newValue.toString();
+                            });
+                          },
+                        ),
+                      ),
                     ),
-                    Text(l10n.requireAssignmentToJoin),
+                    if (variant != null)
+                      LayoutBuilder(builder: (context, constraints) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: constraints.maxWidth * 0.5,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 5),
+                                  Text(
+                                      "${l10n.createdBy} ${variant["CreatedBy"]}"),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                      "${l10n.description} ${variant["Description"]}"),
+                                ],
+                              ),
+                            ),
+                            ConditionalRebuild(
+                              child: _VariantMapWidget(game.variant,
+                                  height: 200,
+                                  width: constraints.maxWidth * 0.5),
+                              condition: (_, o, n) => o.variant != n.variant,
+                            ),
+                          ],
+                        );
+                      }),
                   ],
                 ),
-                Text(l10n.onlyPlayersAssignedByGM,
-                    style: Theme.of(context).textTheme.bodyText2),
-              ],
-              InputDecorator(
-                decoration: InputDecoration(
-                  labelText: l10n.nationSelection,
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                    value: game["NationSelection"],
-                    items: [
-                      DropdownMenuItem(
-                          child: Text(l10n.random), value: "random"),
-                      DropdownMenuItem(
-                          child: Text(l10n.preferences), value: "preferences"),
-                    ],
-                    onChanged: (newValue) {
-                      setState(
-                          () => game["NationSelection"] = newValue.toString());
-                    },
-                  ),
-                ),
+          Row(
+            children: [
+              Switch(
+                value: game.private,
+                onChanged: (newValue) {
+                  setState(() {
+                    game["Private"] = newValue;
+                    game["OwnerUID"] = "";
+                    game["InvitationRequired"] = false;
+                  });
+                },
               ),
-              Row(
-                children: [
-                  Switch(
-                    value: !(game["DisablePrivateChat"] as bool),
-                    onChanged: (newValue) {
-                      setState(() => game["DisablePrivateChat"] = !newValue);
-                    },
-                  ),
-                  Text(l10n.privateChat),
-                ],
-              ),
-              Row(
-                children: [
-                  Switch(
-                    value: !(game["DisableGroupChat"] as bool),
-                    onChanged: (newValue) {
-                      setState(() => game["DisableGroupChat"] = !newValue);
-                    },
-                  ),
-                  Text(l10n.groupChat),
-                ],
-              ),
-              Row(
-                children: [
-                  Switch(
-                    value: !(game["DisableConferenceChat"] as bool),
-                    onChanged: (newValue) {
-                      setState(() => game["DisableConferenceChat"] = !newValue);
-                    },
-                  ),
-                  Text(l10n.publicChat),
-                ],
-              ),
+              Text(l10n.private),
             ],
           ),
-        ),
-      ),
+          Row(
+            children: [
+              Switch(
+                value: (game["OwnerUID"] as String) == user.uid,
+                onChanged: game.private
+                    ? (newValue) {
+                        setState(() {
+                          if (newValue) {
+                            game["OwnerUID"] = user.uid;
+                          } else {
+                            game["OwnerUID"] = "";
+                            game["InvitationRequired"] = false;
+                          }
+                        });
+                      }
+                    : null,
+              ),
+              Text(l10n.manageAsGameMaster),
+            ],
+          ),
+          if (!game.private)
+            Text(l10n.gameMasterOnlyAllowedInPrivateGames,
+                style: Theme.of(context).textTheme.bodyText2),
+          if (game.private)
+            Text(l10n.asGameMasterYouCan,
+                style: Theme.of(context).textTheme.bodyText2),
+          if (game.private && game.ownerUID != "") ...[
+            Row(
+              children: [
+                Switch(
+                  value: game.invitationRequired,
+                  onChanged: (newValue) {
+                    setState(() {
+                      game["InvitationRequired"] = newValue;
+                    });
+                  },
+                ),
+                Text(l10n.requireAssignmentToJoin),
+              ],
+            ),
+            Text(l10n.onlyPlayersAssignedByGM,
+                style: Theme.of(context).textTheme.bodyText2),
+          ],
+          InputDecorator(
+            decoration: InputDecoration(
+              labelText: l10n.nationSelection,
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                value: game["NationSelection"],
+                items: [
+                  DropdownMenuItem(child: Text(l10n.random), value: "random"),
+                  DropdownMenuItem(
+                      child: Text(l10n.preferences), value: "preferences"),
+                ],
+                onChanged: (newValue) {
+                  setState(() => game["NationSelection"] = newValue.toString());
+                },
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              Switch(
+                value: !(game["DisablePrivateChat"] as bool),
+                onChanged: (newValue) {
+                  setState(() => game["DisablePrivateChat"] = !newValue);
+                },
+              ),
+              Text(l10n.privateChat),
+            ],
+          ),
+          Row(
+            children: [
+              Switch(
+                value: !(game["DisableGroupChat"] as bool),
+                onChanged: (newValue) {
+                  setState(() => game["DisableGroupChat"] = !newValue);
+                },
+              ),
+              Text(l10n.groupChat),
+            ],
+          ),
+          Row(
+            children: [
+              Switch(
+                value: !(game["DisableConferenceChat"] as bool),
+                onChanged: (newValue) {
+                  setState(() => game["DisableConferenceChat"] = !newValue);
+                },
+              ),
+              Text(l10n.publicChat),
+            ],
+          ),
+        ],
+      )),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {

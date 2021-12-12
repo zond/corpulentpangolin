@@ -45,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "adjustment": MessageLookupByLibrary.simpleMessage("Adjustment"),
+        "anonymous": MessageLookupByLibrary.simpleMessage("Anonymous"),
         "army": MessageLookupByLibrary.simpleMessage("Army"),
         "asGameMasterYouCan": MessageLookupByLibrary.simpleMessage(
             "As game master, you can pause/resume games and control who joins (and as what nation). To play yourself, you need to join as a player after creating your game."),
@@ -98,6 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "openGames": MessageLookupByLibrary.simpleMessage("Open games"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "phaseDeadline_Date_": m9,
+        "players": MessageLookupByLibrary.simpleMessage("Players"),
         "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
         "private": MessageLookupByLibrary.simpleMessage("Private"),
         "privateChat": MessageLookupByLibrary.simpleMessage("Private chat"),
@@ -110,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "spring": MessageLookupByLibrary.simpleMessage("Spring"),
         "started_Date_": m10,
         "unnamed": MessageLookupByLibrary.simpleMessage("unnamed"),
+        "username": MessageLookupByLibrary.simpleMessage("Username:"),
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("View"),
         "w": MessageLookupByLibrary.simpleMessage("w")

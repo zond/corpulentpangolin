@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'layout.dart';
+
 class SpinnerWidget extends StatefulWidget {
   const SpinnerWidget({Key? key}) : super(key: key);
   @override
@@ -34,13 +36,10 @@ class _SpinnerWidgetState extends State<SpinnerWidget>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: CircularProgressIndicator(
-              value: controller.value,
-              semanticsLabel: 'Linear progress indicator',
-            ),
-          ),
+          smallPadding(CircularProgressIndicator(
+            value: controller.value,
+            semanticsLabel: 'Linear progress indicator',
+          )),
         ],
       ),
     );

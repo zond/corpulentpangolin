@@ -124,5 +124,8 @@
   "createdBy": "Created by:",
   "description": "Description:",
   "requireAssignmentToJoin": "Require assignment to join",
-  "onlyPlayersAssignedByGM": "Only players assigned by the game master can join."
+  "onlyPlayersAssignedByGM": "Only players assigned by the game master can join.",
+  "players": "Players",
+  "anonymous": "Anonymous",
+  "username": "Username:"
 }

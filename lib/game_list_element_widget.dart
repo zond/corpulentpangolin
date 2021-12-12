@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'game.dart';
 import 'variant.dart';
@@ -9,6 +10,7 @@ import 'spinner_widget.dart';
 import 'phase.dart';
 import 'router.gr.dart';
 import 'game_metadata_widget.dart';
+import 'layout.dart';
 
 class GameListElementWidget extends StatefulWidget {
   const GameListElementWidget({Key? key}) : super(key: key);
@@ -25,10 +27,15 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
     final game = context.watch<Game?>();
     final lastPhase = context.watch<Phase?>();
     final variant = context.watch<Variant?>();
+    final user = context.watch<User?>();
     final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
     if (game == null || variant == null) {
       return const SpinnerWidget();
     }
+    // TODO(zond): When we have replacement support, this needs more logic.
+    final isJoinable = user != null &&
+        !game.players.contains(user.uid) &&
+        game.players.length < variant.nations.length;
     if (game.err != null ||
         (lastPhase != null && lastPhase.err != null) ||
         variant.err != null) {
@@ -87,29 +94,34 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
           ),
           if (isExpanded)
             Card(
-              child: Column(
+              child: smallPadding(Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   ButtonBar(
                     alignment: MainAxisAlignment.start,
                     children: [
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: isJoinable
+                            ? () {
+                                debugPrint("join!");
+                              }
+                            : null,
                         child: Text(l10n.join),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: null,
                         child: Text(l10n.invite),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () =>
+                            appRouter.push(GamePageRoute(gameID: game.id)),
                         child: Text(l10n.view),
                       ),
                     ],
                   ),
                   const GameMetadataWidget(),
                 ],
-              ),
+              )),
             ),
         ],
       ),

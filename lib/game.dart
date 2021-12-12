@@ -168,6 +168,13 @@ class Game extends MapView<String, dynamic> {
     return "";
   }
 
+  List<String> get players {
+    if (containsKey("Players")) {
+      return (this["Players"] as List<dynamic>).map((p) => "$p").toList();
+    }
+    return [];
+  }
+
   String get desc {
     if (containsKey("Decs")) {
       return this["Desc"] as String;
@@ -194,8 +201,8 @@ Widget gameProvider({
         value: cacheDocSnapshots(
                 FirebaseFirestore.instance.collection("Game").doc(gameID))
             .map((snapshot) {
-          if (snapshot.data() == null) {
-            return null;
+          if (!snapshot.exists) {
+            return Game.fromMap({"Error": "No game with id $gameID found!"});
           }
           return Game(snapshot);
         }),

@@ -60,5 +60,8 @@
   "createdBy": "Skapad av:",
   "description": "Beskrivning:",
   "requireAssignmentToJoin": "Godkännande nödvändigt",
-  "onlyPlayersAssignedByGM": "Endast spelare godkända av spelledaren kan delta."
+  "onlyPlayersAssignedByGM": "Endast spelare godkända av spelledaren kan delta.",
+  "players": "Spelare",
+  "anonymous": "Anonym",
+  "username": "Användarnamn:"
 }

@@ -668,6 +668,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Players`
+  String get players {
+    return Intl.message(
+      'Players',
+      name: 'players',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Anonymous`
+  String get anonymous {
+    return Intl.message(
+      'Anonymous',
+      name: 'anonymous',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username:`
+  String get username {
+    return Intl.message(
+      'Username:',
+      name: 'username',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
