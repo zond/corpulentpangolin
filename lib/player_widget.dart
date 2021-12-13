@@ -37,7 +37,7 @@ class PlayerWidget extends StatelessWidget {
               SizedBox(
                 child: user.exists
                     ? Image.network(user.pictureURL)
-                    : Image.asset("images/anon.png"),
+                    : Image.asset("assets/images/anon.png"),
                 width: avatarIconWidth,
                 height: avatarIconWidth,
               ),
