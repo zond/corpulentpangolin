@@ -4,7 +4,7 @@ Widget withBackground(Widget widget) {
   return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: AssetImage("images/diplicity_background.jpg"),
+            image: AssetImage("assets/images/diplicity_background.jpg"),
             fit: BoxFit.cover),
       ),
       child: widget);
