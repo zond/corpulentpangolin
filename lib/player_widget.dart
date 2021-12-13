@@ -20,7 +20,7 @@ class PlayerWidget extends StatelessWidget {
                 FirebaseFirestore.instance.collection("User").doc(uid))
             .map((snap) {
           if (!snap.exists) {
-            return AppUser.anon(context);
+            return AppUser.missing(context);
           }
           return AppUser(snap);
         }),

@@ -42,13 +42,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m10(date) => "Started: ${date}";
 
+  static String m11(err) => "Unable to load URL: ${err}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "adjustment": MessageLookupByLibrary.simpleMessage("Adjustment"),
         "anonymous": MessageLookupByLibrary.simpleMessage("Anonymous"),
+        "appName": MessageLookupByLibrary.simpleMessage("corpulentpangolin"),
         "army": MessageLookupByLibrary.simpleMessage("Army"),
         "asGameMasterYouCan": MessageLookupByLibrary.simpleMessage(
             "As game master, you can pause/resume games and control who joins (and as what nation). To play yourself, you need to join as a player after creating your game."),
+        "changeProfilePicture":
+            MessageLookupByLibrary.simpleMessage("Change profile picture"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "createGame": MessageLookupByLibrary.simpleMessage("Create game"),
         "createdBy": MessageLookupByLibrary.simpleMessage("Created by:"),
@@ -76,6 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
         "logInToSeeYourGames":
             MessageLookupByLibrary.simpleMessage("Log in to see your games"),
+        "logInToSeeYourProfile":
+            MessageLookupByLibrary.simpleMessage("Log in to see your profile."),
         "loggedIn": MessageLookupByLibrary.simpleMessage("Logged in"),
         "loggedOut": MessageLookupByLibrary.simpleMessage("Logged out"),
         "login": MessageLookupByLibrary.simpleMessage("Log in"),
@@ -92,6 +99,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nationSelection":
             MessageLookupByLibrary.simpleMessage("Nation selection"),
         "nationSelection_Type_": m7,
+        "newProfilePictureURL":
+            MessageLookupByLibrary.simpleMessage("New profile picture URL"),
         "noGamesFound": MessageLookupByLibrary.simpleMessage("No games found"),
         "nonMovementPhaseDeadline_Date_": m8,
         "onlyPlayersAssignedByGM": MessageLookupByLibrary.simpleMessage(
@@ -103,6 +112,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
         "private": MessageLookupByLibrary.simpleMessage("Private"),
         "privateChat": MessageLookupByLibrary.simpleMessage("Private chat"),
+        "profile": MessageLookupByLibrary.simpleMessage("Profile"),
+        "profilePictureUpdated":
+            MessageLookupByLibrary.simpleMessage("Profile picture updated"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Public chat"),
         "random": MessageLookupByLibrary.simpleMessage("Random"),
         "requireAssignmentToJoin":
@@ -111,6 +123,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "source": MessageLookupByLibrary.simpleMessage("Source"),
         "spring": MessageLookupByLibrary.simpleMessage("Spring"),
         "started_Date_": m10,
+        "unableToLoadURL": m11,
         "unnamed": MessageLookupByLibrary.simpleMessage("unnamed"),
         "username": MessageLookupByLibrary.simpleMessage("Username:"),
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),

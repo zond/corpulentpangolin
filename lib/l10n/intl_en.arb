@@ -127,5 +127,17 @@
   "onlyPlayersAssignedByGM": "Only players assigned by the game master can join.",
   "players": "Players",
   "anonymous": "Anonymous",
-  "username": "Username:"
+  "username": "Username:",
+  "profile": "Profile",
+  "appName": "corpulentpangolin",
+  "changeProfilePicture": "Change profile picture",
+  "newProfilePictureURL": "New profile picture URL",
+  "logInToSeeYourProfile": "Log in to see your profile.",
+  "unableToLoadURL": "Unable to load URL: {err}",
+  "@unableToLoadURL": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "profilePictureUpdated": "Profile picture updated"
 }

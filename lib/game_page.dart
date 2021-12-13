@@ -35,11 +35,11 @@ class GamePage extends StatelessWidget {
             appBarBuilder: (context, tabsRouter) {
               if (context.router.canPopSelfOrChildren) {
                 return AppBar(
-                  title: const Text("corpulentpangolin"),
+                  title: Text(l10n.appName),
                 );
               } else {
                 return AppBar(
-                  title: const Text("corpulentpangolin"),
+                  title: Text(l10n.appName),
                   leading: BackButton(
                     onPressed: () => appRouter.replace(const HomePageRoute()),
                   ),

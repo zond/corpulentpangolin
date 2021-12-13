@@ -117,13 +117,15 @@ class GameMetadataWidget extends StatelessWidget {
               ),
             if (game.players.isNotEmpty)
               Card(
-                child: smallPadding(Column(
-                  children: [
-                    Text(l10n.players,
-                        style: Theme.of(context).textTheme.subtitle1),
-                    ...game.players.map((p) => PlayerWidget(uid: p)),
-                  ],
-                )),
+                child: SmallPadding(
+                  child: Column(
+                    children: [
+                      Text(l10n.players,
+                          style: Theme.of(context).textTheme.subtitle1),
+                      ...game.players.map((p) => PlayerWidget(uid: p)),
+                    ],
+                  ),
+                ),
               )
           ],
         )

@@ -63,5 +63,12 @@
   "onlyPlayersAssignedByGM": "Endast spelare godkända av spelledaren kan delta.",
   "players": "Spelare",
   "anonymous": "Anonym",
-  "username": "Användarnamn:"
+  "username": "Användarnamn:",
+  "profile": "Profil",
+  "appName": "corpulentpangolin",
+  "newProfilePictureURL": "URL till ny profilbild",
+  "changeProfilePicture": "Ändra profilbil",
+  "logInToSeeYourProfile": "Logga in för att se din profil.",
+  "unableToLoadURL": "Kunde ej ladda URL: {err}",
+  "profilePictureUpdated": "Profilbild uppdaterad"
 }

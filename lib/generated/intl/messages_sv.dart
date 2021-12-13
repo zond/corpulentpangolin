@@ -42,13 +42,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m10(date) => "Started: ${date}";
 
+  static String m11(err) => "Kunde ej ladda URL: ${err}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "adjustment": MessageLookupByLibrary.simpleMessage("Justering"),
         "anonymous": MessageLookupByLibrary.simpleMessage("Anonym"),
+        "appName": MessageLookupByLibrary.simpleMessage("corpulentpangolin"),
         "army": MessageLookupByLibrary.simpleMessage("Armé"),
         "asGameMasterYouCan": MessageLookupByLibrary.simpleMessage(
             "Som spelledare kan du pausa/starta spel samt kontrollera vilka som deltar (och som vilket land). För att själva spela måste du delta som spelare efter att ha skapat spelet."),
+        "changeProfilePicture":
+            MessageLookupByLibrary.simpleMessage("Ändra profilbil"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "createGame": MessageLookupByLibrary.simpleMessage("Skapa spel"),
         "createdBy": MessageLookupByLibrary.simpleMessage("Skapad av:"),
@@ -76,6 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "loading": MessageLookupByLibrary.simpleMessage("Laddar..."),
         "logInToSeeYourGames": MessageLookupByLibrary.simpleMessage(
             "Logga in för att se dina spel"),
+        "logInToSeeYourProfile": MessageLookupByLibrary.simpleMessage(
+            "Logga in för att se din profil."),
         "loggedIn": MessageLookupByLibrary.simpleMessage("Loggade in"),
         "loggedOut": MessageLookupByLibrary.simpleMessage("Loggade ut"),
         "login": MessageLookupByLibrary.simpleMessage("Logga in"),
@@ -91,6 +98,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "myGames": MessageLookupByLibrary.simpleMessage("Mina spel"),
         "nationSelection": MessageLookupByLibrary.simpleMessage("Val av land"),
         "nationSelection_Type_": m7,
+        "newProfilePictureURL":
+            MessageLookupByLibrary.simpleMessage("URL till ny profilbild"),
         "noGamesFound": MessageLookupByLibrary.simpleMessage("Inga spel funna"),
         "nonMovementPhaseDeadline_Date_": m8,
         "onlyPlayersAssignedByGM": MessageLookupByLibrary.simpleMessage(
@@ -102,6 +111,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferences": MessageLookupByLibrary.simpleMessage("Prioritetslista"),
         "private": MessageLookupByLibrary.simpleMessage("Privat"),
         "privateChat": MessageLookupByLibrary.simpleMessage("Privat chat"),
+        "profile": MessageLookupByLibrary.simpleMessage("Profil"),
+        "profilePictureUpdated":
+            MessageLookupByLibrary.simpleMessage("Profilbild uppdaterad"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Offentlig chat"),
         "random": MessageLookupByLibrary.simpleMessage("Slumpvis"),
         "requireAssignmentToJoin":
@@ -110,6 +122,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "source": MessageLookupByLibrary.simpleMessage("Källkod"),
         "spring": MessageLookupByLibrary.simpleMessage("Vår"),
         "started_Date_": m10,
+        "unableToLoadURL": m11,
         "unnamed": MessageLookupByLibrary.simpleMessage("namnlöst"),
         "username": MessageLookupByLibrary.simpleMessage("Användarnamn:"),
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),

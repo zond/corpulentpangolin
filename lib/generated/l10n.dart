@@ -698,6 +698,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Profile`
+  String get profile {
+    return Intl.message(
+      'Profile',
+      name: 'profile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `corpulentpangolin`
+  String get appName {
+    return Intl.message(
+      'corpulentpangolin',
+      name: 'appName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change profile picture`
+  String get changeProfilePicture {
+    return Intl.message(
+      'Change profile picture',
+      name: 'changeProfilePicture',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New profile picture URL`
+  String get newProfilePictureURL {
+    return Intl.message(
+      'New profile picture URL',
+      name: 'newProfilePictureURL',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in to see your profile.`
+  String get logInToSeeYourProfile {
+    return Intl.message(
+      'Log in to see your profile.',
+      name: 'logInToSeeYourProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unable to load URL: {err}`
+  String unableToLoadURL(Object err) {
+    return Intl.message(
+      'Unable to load URL: $err',
+      name: 'unableToLoadURL',
+      desc: '',
+      args: [err],
+    );
+  }
+
+  /// `Profile picture updated`
+  String get profilePictureUpdated {
+    return Intl.message(
+      'Profile picture updated',
+      name: 'profilePictureUpdated',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

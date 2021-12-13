@@ -94,34 +94,36 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
           ),
           if (isExpanded)
             Card(
-              child: smallPadding(Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ButtonBar(
-                    alignment: MainAxisAlignment.start,
-                    children: [
-                      ElevatedButton(
-                        onPressed: isJoinable
-                            ? () {
-                                debugPrint("join!");
-                              }
-                            : null,
-                        child: Text(l10n.join),
-                      ),
-                      ElevatedButton(
-                        onPressed: null,
-                        child: Text(l10n.invite),
-                      ),
-                      ElevatedButton(
-                        onPressed: () =>
-                            appRouter.push(GamePageRoute(gameID: game.id)),
-                        child: Text(l10n.view),
-                      ),
-                    ],
-                  ),
-                  const GameMetadataWidget(),
-                ],
-              )),
+              child: SmallPadding(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ButtonBar(
+                      alignment: MainAxisAlignment.start,
+                      children: [
+                        ElevatedButton(
+                          onPressed: isJoinable
+                              ? () {
+                                  debugPrint("join!");
+                                }
+                              : null,
+                          child: Text(l10n.join),
+                        ),
+                        ElevatedButton(
+                          onPressed: null,
+                          child: Text(l10n.invite),
+                        ),
+                        ElevatedButton(
+                          onPressed: () =>
+                              appRouter.push(GamePageRoute(gameID: game.id)),
+                          child: Text(l10n.view),
+                        ),
+                      ],
+                    ),
+                    const GameMetadataWidget(),
+                  ],
+                ),
+              ),
             ),
         ],
       ),

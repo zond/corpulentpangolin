@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 import 'toast.dart';
 import 'auth.dart';
+import 'router.gr.dart';
 
 class _MenuItem {
   final Widget child;
@@ -29,8 +30,9 @@ PopupMenuButton _createMenu(BuildContext context, List<_MenuItem> items) {
 AppBar mainAppBar(BuildContext context) {
   final user = context.watch<User?>();
   final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+  final appRouter = context.read<AppRouter>();
   return AppBar(
-    title: const Text("corpulentpangolin"),
+    title: Text(l10n.appName),
     actions: <Widget>[
       _createMenu(context, [
         if (user == null)
@@ -38,12 +40,17 @@ AppBar mainAppBar(BuildContext context) {
               Text(l10n.login),
               (_) => signInWithGoogle()
                   .then((_) => toast(context, l10n.loggedIn))),
-        if (user != null)
+        if (user != null) ...[
           _MenuItem(
               Text(l10n.logout),
               (_) => FirebaseAuth.instance
                   .signOut()
                   .then((_) => toast(context, l10n.loggedOut))),
+          _MenuItem(
+            Text(l10n.profile),
+            (_) => appRouter.push(const ProfilePageRoute()),
+          ),
+        ]
       ]),
     ],
   );

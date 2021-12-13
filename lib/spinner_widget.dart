@@ -36,10 +36,12 @@ class _SpinnerWidgetState extends State<SpinnerWidget>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          smallPadding(CircularProgressIndicator(
-            value: controller.value,
-            semanticsLabel: 'Linear progress indicator',
-          )),
+          SmallPadding(
+            child: CircularProgressIndicator(
+              value: controller.value,
+              semanticsLabel: 'Linear progress indicator',
+            ),
+          ),
         ],
       ),
     );

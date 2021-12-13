@@ -48,7 +48,13 @@ class _App extends StatelessWidget {
           return StreamProvider<AppUser?>.value(
             value: cacheDocSnapshots(
                     FirebaseFirestore.instance.collection("User").doc(user.uid))
-                .map((userSnapshot) => AppUser(userSnapshot)),
+                .map((userSnapshot) {
+              if (!userSnapshot.exists) {
+                return AppUser.missing(context);
+              }
+              return AppUser(userSnapshot);
+            }),
+            catchError: (context, err) => AppUser.fromMap({"Error": err}),
             initialData: null,
             child: child,
           );
