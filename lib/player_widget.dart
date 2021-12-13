@@ -1,4 +1,5 @@
 import 'package:corpulentpangolin/cache.dart';
+import 'package:corpulentpangolin/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,7 @@ class PlayerWidget extends StatelessWidget {
                 FirebaseFirestore.instance.collection("User").doc(uid))
             .map((snap) {
           if (!snap.exists) {
-            return AppUser.missing(context);
+            return AppUser.missing();
           }
           return AppUser(snap);
         }),
@@ -33,12 +34,16 @@ class PlayerWidget extends StatelessWidget {
           }
           return Row(
             children: [
-              Text(l10n.username),
-              const SizedBox(
-                width: 8,
+              SizedBox(
+                child: user.exists
+                    ? Image.network(user.pictureURL)
+                    : Image.asset("images/anon.png"),
+                width: avatarIconWidth,
+                height: avatarIconWidth,
               ),
+              smallHorizSpace,
               Expanded(
-                child: Text(user.username),
+                child: Text(user.exists ? user.username : l10n.anonymous),
               )
             ],
           );

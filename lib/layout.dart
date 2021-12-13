@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 const smallSpace = 5.0;
 
+const avatarIconWidth = 24.0;
+
 const smallHorizSpace = SizedBox(width: smallSpace);
 
 const smallVertSpace = SizedBox(height: smallSpace);

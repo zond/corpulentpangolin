@@ -50,7 +50,7 @@ class _App extends StatelessWidget {
                     FirebaseFirestore.instance.collection("User").doc(user.uid))
                 .map((userSnapshot) {
               if (!userSnapshot.exists) {
-                return AppUser.missing(context);
+                return AppUser.missing();
               }
               return AppUser(userSnapshot);
             }),

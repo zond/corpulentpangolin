@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 class AppUser extends MapView<String, dynamic> {
   AppUser(DocumentSnapshot<Map<String, dynamic>> snapshot)
@@ -12,9 +9,7 @@ class AppUser extends MapView<String, dynamic> {
 
   AppUser.fromMap(Map<String, dynamic> base) : super(base);
 
-  AppUser.missing(BuildContext context) : super({}) {
-    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
-    this["Username"] = l10n.anonymous;
+  AppUser.missing() : super({}) {
     this["Exists"] = false;
   }
 
