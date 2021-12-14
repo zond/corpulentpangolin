@@ -1,16 +1,20 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:corpulentpangolin/cache.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+
+// Package imports:
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-import 'router.gr.dart';
-import 'configure.dart';
-import 'variant.dart';
-import 'firebase_options.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// Project imports:
+import 'package:corpulentpangolin/cache.dart';
 import 'app_user.dart';
+import 'configure.dart';
+import 'firebase_options.dart';
+import 'router.gr.dart';
+import 'variant.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

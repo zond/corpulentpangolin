@@ -1,11 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
+// Project imports:
 import 'game.dart';
-import 'spinner_widget.dart';
 import 'game_list_element_widget.dart';
+import 'spinner_widget.dart';
 
 class GameListWidget extends StatelessWidget {
   final Stream<QuerySnapshot<Map<String, dynamic>>> gamesStream;

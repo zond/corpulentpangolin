@@ -1,8 +1,13 @@
-import 'package:flutter/material.dart';
+// Dart imports:
 import 'dart:ui' as ui;
-import 'package:universal_html/html.dart' as html;
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:js/js.dart';
 import 'package:js/js_util.dart';
+import 'package:universal_html/html.dart' as html;
 
 class _Validator implements html.NodeValidator {
   @override

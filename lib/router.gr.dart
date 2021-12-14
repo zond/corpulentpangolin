@@ -8,9 +8,13 @@
 // AutoRouteGenerator
 // **************************************************************************
 
-import 'package:auto_route/auto_route.dart' as _i11;
+// Flutter imports:
 import 'package:flutter/material.dart' as _i12;
 
+// Package imports:
+import 'package:auto_route/auto_route.dart' as _i11;
+
+// Project imports:
 import 'chat_page.dart' as _i9;
 import 'create_game_page.dart' as _i2;
 import 'finished_games_page.dart' as _i5;

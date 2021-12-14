@@ -1,13 +1,18 @@
+// Dart imports:
 import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:brotli/brotli.dart';
-import 'package:async/async.dart';
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:async/async.dart';
+import 'package:brotli/brotli.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:meta/meta.dart';
+
+// Project imports:
 import 'cache.dart';
 import 'json_map_view.dart';
 

@@ -1,3 +1,4 @@
+// Dart imports:
 import 'dart:collection';
 
 class JSONMapView extends MapView<String, dynamic> {
@@ -10,9 +11,16 @@ class JSONMapView extends MapView<String, dynamic> {
     return "";
   }
 
-  Map<String, dynamic> getMap(String key) {
+  List<T> getList<T>(String key) {
     if (containsKey(key)) {
-      return this[key] as Map<String, dynamic>;
+      return this[key] as List<T>;
+    }
+    return [];
+  }
+
+  Map<String, T> getMap<T>(String key) {
+    if (containsKey(key)) {
+      return this[key] as Map<String, T>;
     }
     return {};
   }

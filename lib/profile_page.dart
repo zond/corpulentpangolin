@@ -1,19 +1,23 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:corpulentpangolin/cache.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:auto_route/auto_route.dart';
-import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 
-import 'router.gr.dart';
+// Project imports:
+import 'package:corpulentpangolin/cache.dart';
 import 'app_user.dart';
-import 'spinner_widget.dart';
 import 'layout.dart';
-import 'toast.dart';
 import 'onblur_text_form_field.dart';
+import 'router.gr.dart';
+import 'spinner_widget.dart';
+import 'toast.dart';
 
 @immutable
 class ProfilePage extends StatelessWidget {

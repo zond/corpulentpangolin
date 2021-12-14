@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// Project imports:
 import 'json_map_view.dart';
 
 class AppUser extends JSONMapView {
@@ -13,6 +15,10 @@ class AppUser extends JSONMapView {
   AppUser.missing() : super({}) {
     this["Exists"] = false;
   }
+
+  Set<String> get bannedUsers => getList<String>("BannedUsers").toSet();
+
+  Set<String> get bannedByUsers => getList<String>("BannedByUsers").toSet();
 
   String get id => getString("ID");
 

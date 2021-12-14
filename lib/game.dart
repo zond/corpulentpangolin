@@ -1,14 +1,18 @@
-import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
+import 'package:provider/provider.dart';
 
-import 'phase.dart';
-import 'variant.dart';
+// Project imports:
 import 'cache.dart';
-import 'time.dart';
 import 'json_map_view.dart';
+import 'phase.dart';
+import 'time.dart';
+import 'variant.dart';
 
 @immutable
 class Game extends JSONMapView {

@@ -1,13 +1,17 @@
-import 'package:corpulentpangolin/layout.dart';
-import 'package:corpulentpangolin/player_widget.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+// Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
+import 'package:provider/provider.dart';
 
-import 'spinner_widget.dart';
+// Project imports:
+import 'package:corpulentpangolin/layout.dart';
+import 'package:corpulentpangolin/player_widget.dart';
 import 'game.dart';
 import 'player_widget.dart';
+import 'spinner_widget.dart';
 
 class GameMetadataWidget extends StatelessWidget {
   const GameMetadataWidget({Key? key}) : super(key: key);

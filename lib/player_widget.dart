@@ -1,14 +1,18 @@
-import 'package:corpulentpangolin/cache.dart';
-import 'package:corpulentpangolin/layout.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
+import 'package:provider/provider.dart';
 
+// Project imports:
+import 'package:corpulentpangolin/cache.dart';
+import 'package:corpulentpangolin/layout.dart';
 import 'app_user.dart';
-import 'spinner_widget.dart';
 import 'router.gr.dart';
+import 'spinner_widget.dart';
 
 @immutable
 class PlayerWidget extends StatelessWidget {

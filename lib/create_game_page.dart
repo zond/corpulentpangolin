@@ -1,18 +1,22 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:corpulentpangolin/map_widget.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+// Package imports:
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
+import 'package:provider/provider.dart';
 
+// Project imports:
+import 'package:corpulentpangolin/map_widget.dart';
+import 'conditional_rebuild.dart';
+import 'game.dart';
+import 'layout.dart';
 import 'router.gr.dart';
 import 'spinner_widget.dart';
-import 'game.dart';
 import 'toast.dart';
 import 'variant.dart';
-import 'conditional_rebuild.dart';
-import 'layout.dart';
 
 class CreateGamePage extends StatefulWidget {
   const CreateGamePage({Key? key}) : super(key: key);

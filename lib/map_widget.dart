@@ -1,15 +1,21 @@
-import 'package:corpulentpangolin/spinner_widget.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// Dart imports:
 import 'dart:convert';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
+import 'package:provider/provider.dart';
 
+// Project imports:
+import 'package:corpulentpangolin/spinner_widget.dart';
+import 'game_page.dart';
 import 'html_widget.dart';
 import 'phase.dart';
 import 'toast.dart';
 import 'variant.dart';
-import 'game_page.dart';
 
 // Based on http://godsnotwheregodsnot.blogspot.se/2012/09/color-distribution-methodology.html.
 const _contrastColors = [

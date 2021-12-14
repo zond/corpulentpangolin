@@ -1,10 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:provider/provider.dart';
 
+// Project imports:
 import 'game.dart';
-import 'variant.dart';
-import 'spinner_widget.dart';
 import 'map_widget.dart';
+import 'spinner_widget.dart';
+import 'variant.dart';
 
 class MapPage extends StatelessWidget {
   const MapPage({Key? key}) : super(key: key);
