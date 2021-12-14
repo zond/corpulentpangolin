@@ -1,8 +1,9 @@
-import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
+
+import 'json_map_view.dart';
 
 @immutable
 class Unit {
@@ -11,43 +12,58 @@ class Unit {
   const Unit({required this.type, required this.nation});
 }
 
-class Phase extends MapView<String, dynamic> {
+class PhaseMeta extends JSONMapView {
+  PhaseMeta(Map<String, dynamic> base) : super(base);
+
+  String get season => getString("Season");
+
+  String get type => getString("Type");
+
+  String desc(BuildContext context) {
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    String _season = season;
+    switch (_season) {
+      case "Spring":
+        _season = l10n.spring;
+        break;
+      case "Fall":
+        _season = l10n.fall;
+    }
+    String _type = type;
+    switch (_type) {
+      case "Adjustment":
+        _type = l10n.adjustment;
+        break;
+      case "Movement":
+        _type = l10n.movement;
+        break;
+      case "Retreat":
+        _type = l10n.retreat;
+        break;
+    }
+    return "$_season $year, $_type";
+  }
+
+  int get ordinal => getInt("Ordinal");
+
+  int get year => getInt("Year");
+}
+
+class Phase extends JSONMapView {
   Phase(DocumentSnapshot<Map<String, dynamic>> snapshot)
       : super(snapshot.data()!) {
     this["ID"] = snapshot.id;
   }
   Phase.fromMap(Map<String, dynamic> base) : super(base);
 
+  PhaseMeta get meta => PhaseMeta(getMap("Meta"));
+
   String desc(BuildContext context) {
-    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
-    var season = this["Season"] as String;
-    switch (season) {
-      case "Spring":
-        season = l10n.spring;
-        break;
-      case "Fall":
-        season = l10n.fall;
-    }
-    var type = this["Type"] as String;
-    switch (type) {
-      case "Adjustment":
-        type = l10n.adjustment;
-        break;
-      case "Movement":
-        type = l10n.movement;
-        break;
-      case "Retreat":
-        type = l10n.retreat;
-        break;
-    }
-    return "$season ${this["Year"]}, $type";
+    return meta.desc(context);
   }
 
   int get ordinal {
-    if (!containsKey("Ordinal")) {
-      return -1;
-    }
-    return this["Ordinal"] as int;
+    return meta.ordinal;
   }
 
   Map<String, String> get supplyCenters {
@@ -70,10 +86,5 @@ class Phase extends MapView<String, dynamic> {
     });
   }
 
-  Object? get err {
-    if (containsKey("Error")) {
-      return this["Error"];
-    }
-    return null;
-  }
+  Object? get err => this["Error"];
 }

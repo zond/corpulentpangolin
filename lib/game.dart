@@ -1,5 +1,4 @@
 import 'package:provider/provider.dart';
-import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -9,67 +8,35 @@ import 'phase.dart';
 import 'variant.dart';
 import 'cache.dart';
 import 'time.dart';
+import 'json_map_view.dart';
 
 @immutable
-class Game extends MapView<String, dynamic> {
+class Game extends JSONMapView {
   Game(DocumentSnapshot<Map<String, dynamic>> snapshot)
       : super(snapshot.data()!) {
     this["ID"] = snapshot.id;
   }
   const Game.fromMap(base) : super(base);
 
-  bool get started {
-    if (containsKey("Started")) {
-      return this["Started"] as bool;
-    }
-    return false;
-  }
+  PhaseMeta get phaseMeta => PhaseMeta(getMap("PhaseMeta"));
 
-  bool get invitationRequired {
-    if (containsKey("InvitationRequired")) {
-      return this["InvitationRequired"] as bool;
-    }
-    return false;
-  }
+  bool get started => getBool("Started");
 
-  String get variant {
-    if (containsKey("Variant")) {
-      return this["Variant"] as String;
-    }
-    return "";
-  }
+  bool get invitationRequired => getBool("InvitationRequired");
+
+  String get variant => getString("Variant");
 
   String phaseLengthDuration(BuildContext context, {bool short = true}) {
     return nanosToDuration(context, phaseLengthMinutes * (1e9 * 60));
   }
 
-  num get minimumReliability {
-    if (containsKey("MinimumReliability")) {
-      return this["MinimumReliability"] as num;
-    }
-    return 0;
-  }
+  num get minimumReliability => getFloat("MinimumReliability");
 
-  bool get private {
-    if (containsKey("Private")) {
-      return this["Private"] as bool;
-    }
-    return false;
-  }
+  bool get private => getBool("Private");
 
-  num get minimumQuickness {
-    if (containsKey("MinimumQuickness")) {
-      return this["MinimumQuickness"] as num;
-    }
-    return 0;
-  }
+  num get minimumQuickness => getFloat("MinimumQuickness");
 
-  num get minimumRating {
-    if (containsKey("MinimumRating")) {
-      return this["MinimumRating"] as num;
-    }
-    return 0;
-  }
+  num get minimumRating => getFloat("MinimumRating");
 
   String nationSelection(BuildContext context) {
     final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();

@@ -1,7 +1,8 @@
-import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class AppUser extends MapView<String, dynamic> {
+import 'json_map_view.dart';
+
+class AppUser extends JSONMapView {
   AppUser(DocumentSnapshot<Map<String, dynamic>> snapshot)
       : super(snapshot.data()!) {
     this["ID"] = snapshot.id;
@@ -13,12 +14,7 @@ class AppUser extends MapView<String, dynamic> {
     this["Exists"] = false;
   }
 
-  String get id {
-    if (containsKey("ID")) {
-      return this["ID"] as String;
-    }
-    return "";
-  }
+  String get id => getString("ID");
 
   Future<AppUser> save() async {
     remove("Error");
@@ -37,24 +33,9 @@ class AppUser extends MapView<String, dynamic> {
     return true;
   }
 
-  String get pictureURL {
-    if (containsKey("PictureURL")) {
-      return this["PictureURL"] as String;
-    }
-    return "";
-  }
+  String get pictureURL => getString("PictureURL");
 
-  String get username {
-    if (containsKey("Username")) {
-      return this["Username"] as String;
-    }
-    return "";
-  }
+  String get username => getString("Username");
 
-  Object? get err {
-    if (containsKey("Error")) {
-      return this["Error"];
-    }
-    return null;
-  }
+  Object? get err => this["Error"];
 }

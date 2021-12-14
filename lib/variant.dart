@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:collection';
 import 'package:brotli/brotli.dart';
 import 'package:async/async.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
 import 'cache.dart';
+import 'json_map_view.dart';
 
 class SVGBundle {
   final List<int> map;
@@ -34,7 +34,7 @@ class SVGBundle {
 }
 
 @immutable
-class Graph extends MapView<String, dynamic> {
+class Graph extends JSONMapView {
   const Graph(base) : super(base);
   Map<String, dynamic> get nodes {
     if (!containsKey("Nodes")) {
@@ -44,7 +44,7 @@ class Graph extends MapView<String, dynamic> {
   }
 }
 
-class Variant extends MapView<String, dynamic> {
+class Variant extends JSONMapView {
   Variant(DocumentSnapshot<Map<String, dynamic>> snapshot)
       : super(snapshot.data()!) {
     this["ID"] = snapshot.id;
@@ -55,19 +55,9 @@ class Variant extends MapView<String, dynamic> {
     return brotliDecode((doc.data()!["Bytes"] as Blob).bytes);
   }
 
-  String get id {
-    if (containsKey("ID")) {
-      return this["ID"] as String;
-    }
-    return "";
-  }
+  String get id => getString("ID");
 
-  Object? get err {
-    if (containsKey("Error")) {
-      return this["Error"];
-    }
-    return null;
-  }
+  Object? get err => this["Error"];
 
   Map<String, String>? _provinceLongNames;
   Map<String, String> get provinceLongNames {
@@ -90,12 +80,7 @@ class Variant extends MapView<String, dynamic> {
     }();
   }
 
-  Graph get graph {
-    if (!containsKey("Graph")) {
-      return Graph(const {});
-    }
-    return Graph(this["Graph"] as Map<String, dynamic>);
-  }
+  Graph get graph => Graph(getMap("Graph"));
 
   Stream<SVGBundle?> get svgs async* {
     List<int>? map;

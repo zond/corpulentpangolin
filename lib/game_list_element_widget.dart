@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'game.dart';
 import 'variant.dart';
 import 'spinner_widget.dart';
-import 'phase.dart';
 import 'router.gr.dart';
 import 'game_metadata_widget.dart';
 import 'layout.dart';
@@ -25,7 +24,6 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
   Widget build(context) {
     final appRouter = context.read<AppRouter>();
     final game = context.watch<Game?>();
-    final lastPhase = context.watch<Phase?>();
     final variant = context.watch<Variant?>();
     final user = context.watch<User?>();
     final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
@@ -36,13 +34,10 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
     final isJoinable = user != null &&
         !game.players.contains(user.uid) &&
         game.players.length < variant.nations.length;
-    if (game.err != null ||
-        (lastPhase != null && lastPhase.err != null) ||
-        variant.err != null) {
+    if (game.err != null || variant.err != null) {
       return Column(
         children: [
           Text("${game.err}"),
-          if (lastPhase != null) Text("${lastPhase.err}"),
           Text("${variant.err}"),
         ],
       );
@@ -77,9 +72,7 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
                       Expanded(
                         child: Text("${game["Variant"]}"),
                       ),
-                      Text(lastPhase == null
-                          ? "(${l10n.loading})"
-                          : " ${lastPhase.desc(context)}"),
+                      Text(game.phaseMeta.desc(context)),
                     ],
                   ),
                 ),
