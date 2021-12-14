@@ -67,7 +67,7 @@ class ProfilePage extends StatelessWidget {
                                       Image.network(appUser.pictureURL),
                                     if (!appUser.exists ||
                                         appUser.pictureURL == "")
-                                      Image.asset("images/anon.png"),
+                                      Image.asset("assets/images/anon.png"),
                                     if (user != null && user.uid == uid)
                                       Positioned(
                                         right: 0.0,
