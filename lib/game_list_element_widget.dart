@@ -57,14 +57,42 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
                       Expanded(
                           child: Text(
                               "${game["Desc"] == "" ? "[${l10n.unnamed}]" : game["Desc"]}")),
-                      game.started
-                          ? const Text("<1h")
-                          : Row(
-                              children: [
-                                const Icon(Icons.people),
-                                Text("$nMembers/$nVariantNations"),
-                              ],
-                            ),
+                      Row(
+                        children: [
+                          Row(
+                            children: [
+                              if (game.minimumReliability > 0 ||
+                                  game.minimumQuickness > 0)
+                                _MetadataIcon(Icons.timer,
+                                    l10n.hasEitherMinRelOrMinQuick),
+                              if (game.minimumRating > 0)
+                                _MetadataIcon(
+                                    Icons.star, l10n.hasMinimumRating),
+                              if (game.musteringRequired)
+                                _MetadataIcon(
+                                    Icons.pan_tool, l10n.hasMustering),
+                              if (game.nmrsBeforeReplaceable > 0)
+                                _MetadataIcon(Icons.content_cut,
+                                    l10n.hasAutoReplacements),
+                              if (game.hasGrace || game.hasExtensions)
+                                _MetadataIcon(Icons.pause, l10n.hasGraceOrExt),
+                              if (game.private)
+                                _MetadataIcon(Icons.lock, l10n.private),
+                              if (game.disablePrivateChat ||
+                                  game.disableGroupChat ||
+                                  game.disableConferenceChat)
+                                _MetadataIcon(
+                                    Icons.phone_locked, l10n.someChatsDisabled),
+                            ],
+                          ),
+                          Tooltip(
+                              message: l10n.c_of_p_playersJoined(
+                                  "$nMembers", "$nVariantNations"),
+                              child: const Icon(Icons.people,
+                                  size: metadataIconSize)),
+                          Text("$nMembers/$nVariantNations"),
+                        ],
+                      ),
                     ],
                   ),
                   subtitle: Row(
@@ -99,6 +127,20 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
             ),
         ],
       ),
+    );
+  }
+}
+
+@immutable
+class _MetadataIcon extends StatelessWidget {
+  final IconData icon;
+  final String tooltip;
+  const _MetadataIcon(this.icon, this.tooltip, {Key? key}) : super(key: key);
+  @override
+  Widget build(context) {
+    return Tooltip(
+      message: tooltip,
+      child: Icon(icon, size: metadataIconSize),
     );
   }
 }

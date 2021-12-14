@@ -4,8 +4,11 @@
   "description": "Description",
   "variant": "Variant",
   "privateChat": "Private chat",
+  "privateChatDisabled": "Private chat disabled",
   "groupChat": "Group chat",
+  "groupChatDisabled": "Group chat disabled",
   "publicChat": "Public chat",
+  "publicChatDisabled": "Public chat disabled",
   "gameCreated": "Game created",
   "failedCreatingGame_Err_": "Failed creating game: {err}",
   "@failedCreatingGame_Err_": {
@@ -169,5 +172,32 @@
   "quickness_": "Quickness:",
   "committedPhases_": "Committed phases:",
   "nonCommittedPhases_": "Non committed phases:",
-  "rating_": "Rating:"
+  "rating_": "Rating:",
+  "c_of_p_playersJoined": "{c} of {p} players joined",
+  "@c_of_p_playersJoined": {
+    "placeholders": {
+      "c": {},
+      "p": {}
+    }
+  },
+  "hasEitherMinRelOrMinQuick": "Has either minimum reliability or minimum quickness",
+  "hasMinimumRating": "Has minimum rating",
+  "hasMustering": "Start with roll call",
+  "hasAutoReplacements": "NMR players can be replaced",
+  "hasGracePeriods": "Has grace periods",
+  "hasExtensions": "Has extensions",
+  "hasGraceOrExt": "Has grace periods or extensions",
+  "votesRequiredForExtension_V_": "Votes required for extension: {v}",
+  "@votesRequiredForExtension_V_": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "someChatsDisabled": "Some chats disabled",
+  "someoneYouBanned": "Someone you banned, or someone banned by you, is already in the game",
+  "youDonMatchRequirements": "Your reliability, quickness, or rating doesn't match the requirements for the game",
+  "youAreAlreadyInGame": "You have already joined this game",
+  "gameFullNoReplacements": "Game is already full and has no replaceable players",
+  "youAreNotLoggedIn": "You aren't logged in",
+  "gameJoined": "Game joined"
 }

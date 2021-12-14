@@ -29,96 +29,52 @@ class GameMetadataWidget extends StatelessWidget {
       children: [
         Column(
           children: [
-            Row(
-              children: [
-                const Icon(Icons.map),
-                smallHorizSpace,
-                Text(l10n.gameVariant_Var_(game.variant),
-                    style: Theme.of(context).textTheme.bodyText1),
-              ],
-            ),
-            Row(
-              children: [
-                const Icon(Icons.av_timer),
-                smallHorizSpace,
-                Text(
-                    l10n.phaseDeadline_Date_(game.phaseLengthDuration(context)),
-                    style: Theme.of(context).textTheme.bodyText1),
-              ],
-            ),
+            _MetadataRow(Icons.map, l10n.gameVariant_Var_(game.variant)),
+            if (game.private) _MetadataRow(Icons.lock, l10n.private),
+            _MetadataRow(Icons.av_timer,
+                l10n.phaseDeadline_Date_(game.phaseLengthDuration(context))),
             if (game.nonMovementPhaseLengthMinutes != 0 &&
                 game.nonMovementPhaseLengthMinutes != game.phaseLengthMinutes)
-              Row(
-                children: [
-                  const Icon(Icons.av_timer),
-                  smallHorizSpace,
-                  Text(
-                      l10n.nonMovementPhaseDeadline_Date_(
-                          game.nonMovementPhaseLengthDuration(context)),
-                      style: Theme.of(context).textTheme.bodyText1),
-                ],
-              ),
-            Row(
-              children: [
-                const Icon(Icons.cake),
-                smallHorizSpace,
-                Text(l10n.created_Date_(game.createdAt),
-                    style: Theme.of(context).textTheme.bodyText1),
-              ],
-            ),
+              _MetadataRow(
+                  Icons.av_timer,
+                  l10n.nonMovementPhaseDeadline_Date_(
+                      game.nonMovementPhaseLengthDuration(context))),
+            _MetadataRow(Icons.cake, l10n.created_Date_(game.createdAt)),
             if (game.isStarted)
-              Row(
-                children: [
-                  const Icon(Icons.cake),
-                  smallHorizSpace,
-                  Text(l10n.started_Date_(game.startedAt),
-                      style: Theme.of(context).textTheme.bodyText1),
-                ],
-              ),
+              _MetadataRow(Icons.flag, l10n.started_Date_(game.startedAt)),
             if (game.isFinished)
-              Row(
-                children: [
-                  const Icon(Icons.cake),
-                  smallHorizSpace,
-                  Text(l10n.finished_Date_(game.finishedAt),
-                      style: Theme.of(context).textTheme.bodyText1),
-                ],
-              ),
-            Row(
-              children: [
-                const Icon(Icons.sort),
-                smallHorizSpace,
-                Text(l10n.nationSelection_Type_(game.nationSelection(context)),
-                    style: Theme.of(context).textTheme.bodyText1),
-              ],
-            ),
+              _MetadataRow(
+                  Icons.play_arrow, l10n.finished_Date_(game.finishedAt)),
+            _MetadataRow(Icons.sort,
+                l10n.nationSelection_Type_(game.nationSelection(context))),
             if (game.minimumReliability != 0)
-              Row(
-                children: [
-                  const Icon(Icons.timer),
-                  smallHorizSpace,
-                  Text(l10n.minimumReliability_V_("${game.minimumReliability}"),
-                      style: Theme.of(context).textTheme.bodyText1),
-                ],
-              ),
+              _MetadataRow(Icons.timer,
+                  l10n.minimumReliability_V_("${game.minimumReliability}")),
             if (game.minimumQuickness != 0)
-              Row(
-                children: [
-                  const Icon(Icons.timer),
-                  smallHorizSpace,
-                  Text(l10n.minimumQuickness_V_("${game.minimumQuickness}"),
-                      style: Theme.of(context).textTheme.bodyText1),
-                ],
-              ),
+              _MetadataRow(Icons.timer,
+                  l10n.minimumQuickness_V_("${game.minimumQuickness}")),
             if (game.minimumRating != 0)
-              Row(
-                children: [
-                  const Icon(Icons.timer),
-                  smallHorizSpace,
-                  Text(l10n.minimumRating_V_("${game.minimumRating}"),
-                      style: Theme.of(context).textTheme.bodyText1),
-                ],
-              ),
+              _MetadataRow(
+                  Icons.star, l10n.minimumRating_V_("${game.minimumRating}")),
+            if (game.disableConferenceChat)
+              _MetadataRow(Icons.phone_locked, l10n.publicChatDisabled),
+            if (game.disableGroupChat)
+              _MetadataRow(Icons.phone_locked, l10n.groupChatDisabled),
+            if (game.disablePrivateChat)
+              _MetadataRow(Icons.phone_locked, l10n.privateChatDisabled),
+            if (game.musteringRequired)
+              _MetadataRow(Icons.pan_tool, l10n.hasMustering),
+            if (game.nmrsBeforeReplaceable > 0)
+              _MetadataRow(Icons.content_cut, l10n.hasAutoReplacements),
+            if (game.hasGrace) _MetadataRow(Icons.pause, l10n.hasGracePeriods),
+            if (game.extensionsPerPlayer > 0 &&
+                game.maxExtensionLengthMinutes > 0)
+              _MetadataRow(Icons.pause, l10n.hasExtensions),
+            if (game.maxExtensionLengthMinutes > 0)
+              _MetadataRow(
+                  Icons.pause,
+                  l10n.votesRequiredForExtension_V_(
+                      "${(game.playerRatioForExtraExtensionVote * 100).round()}%")),
             if (game.players.isNotEmpty)
               Card(
                 child: SmallPadding(
@@ -133,6 +89,23 @@ class GameMetadataWidget extends StatelessWidget {
               )
           ],
         )
+      ],
+    );
+  }
+}
+
+@immutable
+class _MetadataRow extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  const _MetadataRow(this.icon, this.text, {Key? key}) : super(key: key);
+  @override
+  Widget build(context) {
+    return Row(
+      children: [
+        Icon(icon),
+        smallHorizSpace,
+        Text(text, style: Theme.of(context).textTheme.bodyText1),
       ],
     );
   }

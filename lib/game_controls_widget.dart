@@ -13,6 +13,7 @@ import 'app_user.dart';
 import 'game.dart';
 import 'router.gr.dart';
 import 'spinner_widget.dart';
+import 'toast.dart';
 
 @immutable
 class GameControlsWidget extends StatelessWidget {
@@ -50,18 +51,32 @@ class GameControlsWidget extends StatelessWidget {
             appUser.rating >= game.minimumRating);
     // TODO(zond): When we have replacement support, this needs more logic.
     final isJoinable = user != null &&
+        !isBanned &&
+        matchesRequirements &&
         !game.players.contains(user.uid) &&
         game.players.length < variant.nations.length;
+    List<String> joinTooltips = [
+      if (user == null) l10n.youAreNotLoggedIn,
+      if (game.players.contains(user?.uid)) l10n.youAreAlreadyInGame,
+      if (game.players.length >= variant.nations.length)
+        l10n.gameFullNoReplacements,
+      if (isBanned) l10n.someoneYouBanned,
+      if (!matchesRequirements) l10n.youDonMatchRequirements,
+    ];
     return ButtonBar(
       alignment: MainAxisAlignment.start,
       children: [
-        ElevatedButton(
-          onPressed: isJoinable
-              ? () {
-                  debugPrint("join!");
-                }
-              : null,
-          child: Text(l10n.join),
+        Tooltip(
+          message: joinTooltips.join("\n"),
+          child: ElevatedButton(
+            onPressed: isJoinable
+                ? () {
+                    game["Players"] = [...game.players, user!.uid];
+                    game.save().then((_) => toast(context, l10n.gameJoined));
+                  }
+                : null,
+            child: Text(l10n.join),
+          ),
         ),
         ElevatedButton(
           onPressed: null,

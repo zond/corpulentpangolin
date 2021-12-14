@@ -9,6 +9,8 @@ const smallHorizSpace = SizedBox(width: smallSpace);
 
 const smallVertSpace = SizedBox(height: smallSpace);
 
+const metadataIconSize = 20.0;
+
 @immutable
 class SmallPadding extends StatelessWidget {
   final Widget child;

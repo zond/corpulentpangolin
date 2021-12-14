@@ -26,7 +26,44 @@ class Game extends JSONMapView {
 
   bool get started => getBool("Started");
 
+  int get nmrsBeforeReplaceable => getInt("NMRsBeforeReplaceable");
+
+  bool get hasGrace =>
+      gracesPerPlayer > 0 && gracesPerPhase > 0 && graceLengtMinutes > 0;
+
+  bool get hasExtensions => maxExtensionLengthMinutes > 0;
+
+  int get graceLengtMinutes => getInt("GraceLengthMinutes");
+
+  int get maxExtensionLengthMinutes => getInt("MaxExtensionLengthMinutes");
+
+  bool get disableConferenceChat => getBool("DisableConferenceChat");
+
+  Future<Game> save() async {
+    remove("Error");
+    final _id = id;
+    remove("ID");
+    await FirebaseFirestore.instance.collection("Game").doc(_id).set(this);
+    this["ID"] = _id;
+    return this;
+  }
+
+  bool get disableGroupChat => getBool("DisableGroupChat");
+
+  bool get disablePrivateChat => getBool("DisablePrivateChat");
+
   bool get invitationRequired => getBool("InvitationRequired");
+
+  bool get musteringRequired => getBool("MusteringRequired");
+
+  int get gracesPerPlayer => getInt("GracesPerPlayer");
+
+  int get gracesPerPhase => getInt("GracesPerPhase");
+
+  int get extensionsPerPlayer => getInt("ExtensionsPerPlayer");
+
+  num get playerRatioForExtraExtensionVote =>
+      getFloat("PlayerRatioForExtraExtensionVote");
 
   String get variant => getString("Variant");
 

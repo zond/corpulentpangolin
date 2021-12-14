@@ -1,12 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-
-// Flutter imports:
 import 'package:flutter/material.dart';
-
-// Package imports:
 import 'package:intl/intl.dart';
-
-// Project imports:
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -106,6 +100,16 @@ class S {
     );
   }
 
+  /// `Private chat disabled`
+  String get privateChatDisabled {
+    return Intl.message(
+      'Private chat disabled',
+      name: 'privateChatDisabled',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Group chat`
   String get groupChat {
     return Intl.message(
@@ -116,11 +120,31 @@ class S {
     );
   }
 
+  /// `Group chat disabled`
+  String get groupChatDisabled {
+    return Intl.message(
+      'Group chat disabled',
+      name: 'groupChatDisabled',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Public chat`
   String get publicChat {
     return Intl.message(
       'Public chat',
       name: 'publicChat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Public chat disabled`
+  String get publicChatDisabled {
+    return Intl.message(
+      'Public chat disabled',
+      name: 'publicChatDisabled',
       desc: '',
       args: [],
     );
@@ -880,6 +904,166 @@ class S {
     return Intl.message(
       'Rating:',
       name: 'rating_',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{c} of {p} players joined`
+  String c_of_p_playersJoined(Object c, Object p) {
+    return Intl.message(
+      '$c of $p players joined',
+      name: 'c_of_p_playersJoined',
+      desc: '',
+      args: [c, p],
+    );
+  }
+
+  /// `Has either minimum reliability or minimum quickness`
+  String get hasEitherMinRelOrMinQuick {
+    return Intl.message(
+      'Has either minimum reliability or minimum quickness',
+      name: 'hasEitherMinRelOrMinQuick',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Has minimum rating`
+  String get hasMinimumRating {
+    return Intl.message(
+      'Has minimum rating',
+      name: 'hasMinimumRating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start with roll call`
+  String get hasMustering {
+    return Intl.message(
+      'Start with roll call',
+      name: 'hasMustering',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `NMR players can be replaced`
+  String get hasAutoReplacements {
+    return Intl.message(
+      'NMR players can be replaced',
+      name: 'hasAutoReplacements',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Has grace periods`
+  String get hasGracePeriods {
+    return Intl.message(
+      'Has grace periods',
+      name: 'hasGracePeriods',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Has extensions`
+  String get hasExtensions {
+    return Intl.message(
+      'Has extensions',
+      name: 'hasExtensions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Has grace periods or extensions`
+  String get hasGraceOrExt {
+    return Intl.message(
+      'Has grace periods or extensions',
+      name: 'hasGraceOrExt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Votes required for extension: {v}`
+  String votesRequiredForExtension_V_(Object v) {
+    return Intl.message(
+      'Votes required for extension: $v',
+      name: 'votesRequiredForExtension_V_',
+      desc: '',
+      args: [v],
+    );
+  }
+
+  /// `Some chats disabled`
+  String get someChatsDisabled {
+    return Intl.message(
+      'Some chats disabled',
+      name: 'someChatsDisabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Someone you banned, or someone banned by you, is already in the game`
+  String get someoneYouBanned {
+    return Intl.message(
+      'Someone you banned, or someone banned by you, is already in the game',
+      name: 'someoneYouBanned',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your reliability, quickness, or rating doesn't match the requirements for the game`
+  String get youDonMatchRequirements {
+    return Intl.message(
+      'Your reliability, quickness, or rating doesn\'t match the requirements for the game',
+      name: 'youDonMatchRequirements',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have already joined this game`
+  String get youAreAlreadyInGame {
+    return Intl.message(
+      'You have already joined this game',
+      name: 'youAreAlreadyInGame',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Game is already full and has no replaceable players`
+  String get gameFullNoReplacements {
+    return Intl.message(
+      'Game is already full and has no replaceable players',
+      name: 'gameFullNoReplacements',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You aren't logged in`
+  String get youAreNotLoggedIn {
+    return Intl.message(
+      'You aren\'t logged in',
+      name: 'youAreNotLoggedIn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Game joined`
+  String get gameJoined {
+    return Intl.message(
+      'Game joined',
+      name: 'gameJoined',
       desc: '',
       args: [],
     );
