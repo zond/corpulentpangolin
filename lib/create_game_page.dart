@@ -167,11 +167,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const SizedBox(height: 5),
-                                    Text(
-                                        "${l10n.createdBy} ${variant["CreatedBy"]}"),
+                                    Text(l10n.createdBy_V_(variant.createdBy)),
                                     const SizedBox(height: 5),
-                                    Text(
-                                        "${l10n.description} ${variant["Description"]}"),
+                                    Text(l10n
+                                        .description_V_(variant.description)),
+                                    const SizedBox(height: 5),
+                                    Text(l10n.rules_V_(variant.rules)),
                                   ],
                                 ),
                               ),

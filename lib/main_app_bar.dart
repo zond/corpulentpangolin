@@ -48,7 +48,7 @@ AppBar mainAppBar(BuildContext context) {
                   .then((_) => toast(context, l10n.loggedOut))),
           _MenuItem(
             Text(l10n.profile),
-            (_) => appRouter.push(const ProfilePageRoute()),
+            (_) => appRouter.push(ProfilePageRoute(uid: user.uid)),
           ),
         ]
       ]),

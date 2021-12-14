@@ -49,8 +49,12 @@ class AppRouter extends _i11.RootStackRouter {
           routeData: routeData, child: const _i5.FinishedGamesPage());
     },
     ProfilePageRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<ProfilePageRouteArgs>(
+          orElse: () => ProfilePageRouteArgs(uid: pathParams.getString('uid')));
       return _i11.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i6.ProfilePage());
+          routeData: routeData,
+          child: _i6.ProfilePage(key: args.key, uid: args.uid));
     },
     GamePageRoute.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
@@ -82,7 +86,7 @@ class AppRouter extends _i11.RootStackRouter {
         _i11.RouteConfig(OpenGamesPageRoute.name, path: '/OpenGames'),
         _i11.RouteConfig(LiveGamesPageRoute.name, path: '/LiveGames'),
         _i11.RouteConfig(FinishedGamesPageRoute.name, path: '/FinishedGames'),
-        _i11.RouteConfig(ProfilePageRoute.name, path: '/Profile'),
+        _i11.RouteConfig(ProfilePageRoute.name, path: '/Profile/:uid'),
         _i11.RouteConfig(GamePageRoute.name, path: '/Game/:gameID', children: [
           _i11.RouteConfig(MapPageRoute.name,
               path: '', parent: GamePageRoute.name),
@@ -130,10 +134,27 @@ class FinishedGamesPageRoute extends _i11.PageRouteInfo<void> {
 }
 
 /// generated route for [_i6.ProfilePage]
-class ProfilePageRoute extends _i11.PageRouteInfo<void> {
-  const ProfilePageRoute() : super(name, path: '/Profile');
+class ProfilePageRoute extends _i11.PageRouteInfo<ProfilePageRouteArgs> {
+  ProfilePageRoute({_i12.Key? key, required String uid})
+      : super(name,
+            path: '/Profile/:uid',
+            args: ProfilePageRouteArgs(key: key, uid: uid),
+            rawPathParams: {'uid': uid});
 
   static const String name = 'ProfilePageRoute';
+}
+
+class ProfilePageRouteArgs {
+  const ProfilePageRouteArgs({this.key, required this.uid});
+
+  final _i12.Key? key;
+
+  final String uid;
+
+  @override
+  String toString() {
+    return 'ProfilePageRouteArgs{key: $key, uid: $uid}';
+  }
 }
 
 /// generated route for [_i7.GamePage]

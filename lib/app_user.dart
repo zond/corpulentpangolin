@@ -26,6 +26,20 @@ class AppUser extends JSONMapView {
     return this;
   }
 
+  num get reliability => getFloat("Reliability");
+
+  int get nmrPhases => getInt("NMRPhases");
+
+  int get nonNMRPhases => getInt("NonNMRPhases");
+
+  num get quickness => getFloat("Quickness");
+
+  num get committedPhases => getInt("CommittedPhases");
+
+  num get nonCommittedPhases => getInt("NonCommittedPhases");
+
+  num get rating => getFloat("Rating");
+
   bool get exists {
     if (containsKey("Exists")) {
       return this["Exists"] as bool;

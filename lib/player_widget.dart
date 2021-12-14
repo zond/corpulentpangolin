@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 
 import 'app_user.dart';
 import 'spinner_widget.dart';
+import 'router.gr.dart';
 
 @immutable
 class PlayerWidget extends StatelessWidget {
@@ -15,6 +16,7 @@ class PlayerWidget extends StatelessWidget {
   const PlayerWidget({Key? key, required this.uid}) : super(key: key);
   @override
   Widget build(context) {
+    final appRouter = context.read<AppRouter>();
     final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
     return StreamProvider<AppUser?>.value(
         value: cacheDocSnapshots(
@@ -32,20 +34,23 @@ class PlayerWidget extends StatelessWidget {
           if (user == null) {
             return const SpinnerWidget();
           }
-          return Row(
-            children: [
-              SizedBox(
-                child: user.exists
-                    ? Image.network(user.pictureURL)
-                    : Image.asset("assets/images/anon.png"),
-                width: avatarIconWidth,
-                height: avatarIconWidth,
-              ),
-              smallHorizSpace,
-              Expanded(
-                child: Text(user.exists ? user.username : l10n.anonymous),
-              )
-            ],
+          return InkWell(
+            onTap: () => appRouter.push(ProfilePageRoute(uid: uid)),
+            child: Row(
+              children: [
+                SizedBox(
+                  child: user.exists && user.pictureURL != ""
+                      ? Image.network(user.pictureURL)
+                      : Image.asset("images/anon.png"),
+                  width: avatarIconWidth,
+                  height: avatarIconWidth,
+                ),
+                smallHorizSpace,
+                Expanded(
+                  child: Text(user.exists ? user.username : l10n.anonymous),
+                )
+              ],
+            ),
           );
         });
   }

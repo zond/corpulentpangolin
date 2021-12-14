@@ -70,10 +70,10 @@ class S {
     );
   }
 
-  /// `Description:`
+  /// `Description`
   String get description {
     return Intl.message(
-      'Description:',
+      'Description',
       name: 'description',
       desc: '',
       args: [],
@@ -639,13 +639,33 @@ class S {
     );
   }
 
-  /// `Created by:`
-  String get createdBy {
+  /// `Created by: {v}`
+  String createdBy_V_(Object v) {
     return Intl.message(
-      'Created by:',
-      name: 'createdBy',
+      'Created by: $v',
+      name: 'createdBy_V_',
       desc: '',
-      args: [],
+      args: [v],
+    );
+  }
+
+  /// `Description: {v}`
+  String description_V_(Object v) {
+    return Intl.message(
+      'Description: $v',
+      name: 'description_V_',
+      desc: '',
+      args: [v],
+    );
+  }
+
+  /// `Rules: {v}`
+  String rules_V_(Object v) {
+    return Intl.message(
+      'Rules: $v',
+      name: 'rules_V_',
+      desc: '',
+      args: [v],
     );
   }
 
@@ -689,13 +709,23 @@ class S {
     );
   }
 
-  /// `Username:`
+  /// `Username`
   String get username {
     return Intl.message(
-      'Username:',
+      'Username',
       name: 'username',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Username: {v}`
+  String username_V_(Object v) {
+    return Intl.message(
+      'Username: $v',
+      name: 'username_V_',
+      desc: '',
+      args: [v],
     );
   }
 
@@ -764,6 +794,86 @@ class S {
     return Intl.message(
       'Profile picture updated',
       name: 'profilePictureUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username updated`
+  String get usernameUpdated {
+    return Intl.message(
+      'Username updated',
+      name: 'usernameUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reliability:`
+  String get reliability_ {
+    return Intl.message(
+      'Reliability:',
+      name: 'reliability_',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `NMR phases:`
+  String get nmrPhases_ {
+    return Intl.message(
+      'NMR phases:',
+      name: 'nmrPhases_',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Non NMR phases:`
+  String get nonNMRPhases_ {
+    return Intl.message(
+      'Non NMR phases:',
+      name: 'nonNMRPhases_',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quickness:`
+  String get quickness_ {
+    return Intl.message(
+      'Quickness:',
+      name: 'quickness_',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Committed phases:`
+  String get committedPhases_ {
+    return Intl.message(
+      'Committed phases:',
+      name: 'committedPhases_',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Non committed phases:`
+  String get nonCommittedPhases_ {
+    return Intl.message(
+      'Non committed phases:',
+      name: 'nonCommittedPhases_',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rating:`
+  String get rating_ {
+    return Intl.message(
+      'Rating:',
+      name: 'rating_',
       desc: '',
       args: [],
     );

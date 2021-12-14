@@ -121,13 +121,35 @@
   "manageAsGameMaster": "Manage as game master",
   "gameMasterOnlyAllowedInPrivateGames": "Game master only allowed in private games due to risk of abuse.",
   "asGameMasterYouCan": "As game master, you can pause/resume games and control who joins (and as what nation). To play yourself, you need to join as a player after creating your game.",
-  "createdBy": "Created by:",
-  "description": "Description:",
+  "createdBy_V_": "Created by: {v}",
+  "@createdBy_V_": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "description_V_": "Description: {v}",
+  "@description_V_": {
+    "placeholders": {
+      "v": {}
+    }
+  },
+  "rules_V_": "Rules: {v}",
+  "@rules_V_": {
+    "placeholders": {
+      "v": {}
+    }
+  },
   "requireAssignmentToJoin": "Require assignment to join",
   "onlyPlayersAssignedByGM": "Only players assigned by the game master can join.",
   "players": "Players",
   "anonymous": "Anonymous",
-  "username": "Username:",
+  "username": "Username",
+  "username_V_": "Username: {v}",
+  "@username_V_": {
+    "placeholders": {
+      "v": {}
+    }
+  },
   "profile": "Profile",
   "appName": "corpulentpangolin",
   "changeProfilePicture": "Change profile picture",
@@ -139,5 +161,13 @@
       "err": {}
     }
   },
-  "profilePictureUpdated": "Profile picture updated"
+  "profilePictureUpdated": "Profile picture updated",
+  "usernameUpdated": "Username updated",
+  "reliability_": "Reliability:",
+  "nmrPhases_": "NMR phases:",
+  "nonNMRPhases_": "Non NMR phases:",
+  "quickness_": "Quickness:",
+  "committedPhases_": "Committed phases:",
+  "nonCommittedPhases_": "Non committed phases:",
+  "rating_": "Rating:"
 }

@@ -20,7 +20,7 @@ import 'finished_games_page.dart';
     AutoRoute(page: OpenGamesPage, path: '/OpenGames'),
     AutoRoute(page: LiveGamesPage, path: '/LiveGames'),
     AutoRoute(page: FinishedGamesPage, path: '/FinishedGames'),
-    AutoRoute(page: ProfilePage, path: '/Profile'),
+    AutoRoute(page: ProfilePage, path: '/Profile/:uid'),
     AutoRoute(
       page: GamePage,
       path: "/Game/:gameID",

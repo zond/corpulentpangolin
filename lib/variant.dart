@@ -55,6 +55,12 @@ class Variant extends JSONMapView {
     return brotliDecode((doc.data()!["Bytes"] as Blob).bytes);
   }
 
+  String get createdBy => getString("CreatedBy");
+
+  String get rules => getString("Rules");
+
+  String get description => getString("Description");
+
   String get id => getString("ID");
 
   Object? get err => this["Error"];
