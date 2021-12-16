@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -66,14 +67,38 @@ class EditGameWidget extends StatefulWidget {
   _EditGameWidgetState createState() => _EditGameWidgetState();
 }
 
+class _SplitTime {
+  late int days;
+  late int hours;
+  late int minutes;
+  _SplitTime(int m) {
+    days = m ~/ (60 * 24);
+    m -= days * 60 * 24;
+    hours = m ~/ 60;
+    m -= hours * 60;
+    minutes = m;
+  }
+  int toMinutes() {
+    return days * 60 * 24 + hours * 60 + minutes;
+  }
+}
+
 class _EditGameWidgetState extends State<EditGameWidget> {
   late Game game;
+  late _SplitTime phaseLength;
+  late _SplitTime nonMovementPhaseLength;
+  bool displayNonMovementPhaseLength = false;
   final gameCollection = FirebaseFirestore.instance.collection("Game");
 
   @override
   void initState() {
     super.initState();
     game = widget.game;
+    phaseLength = _SplitTime(game.phaseLengthMinutes.toInt());
+    nonMovementPhaseLength =
+        _SplitTime(game.nonMovementPhaseLengthMinutes.toInt());
+    displayNonMovementPhaseLength = game.nonMovementPhaseLengthMinutes != 0 &&
+        game.nonMovementPhaseLengthMinutes != game.phaseLengthMinutes;
   }
 
   @override
@@ -172,6 +197,144 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                         }),
                     ],
                   ),
+            Row(
+              children: [
+                Expanded(child: Text(l10n.phaseLength)),
+                SizedBox(
+                  width: 50,
+                  child: TextFormField(
+                    initialValue: "${phaseLength.days}",
+                    decoration: InputDecoration(
+                      labelText: l10n.days,
+                    ),
+                    keyboardType: const TextInputType.numberWithOptions(
+                        signed: false, decimal: false),
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    onChanged: (newValue) {
+                      setState(() {
+                        phaseLength.days = int.parse(newValue);
+                        game["PhaseLengthMinutes"] = phaseLength.toMinutes();
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 50,
+                  child: TextFormField(
+                    initialValue: "${phaseLength.hours}",
+                    decoration: InputDecoration(
+                      labelText: l10n.hours,
+                    ),
+                    keyboardType: const TextInputType.numberWithOptions(
+                        signed: false, decimal: false),
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    onChanged: (newValue) {
+                      setState(() {
+                        phaseLength.hours = int.parse(newValue);
+                        game["PhaseLengthMinutes"] = phaseLength.toMinutes();
+                      });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  width: 50,
+                  child: TextFormField(
+                    initialValue: "${phaseLength.minutes}",
+                    decoration: InputDecoration(
+                      labelText: l10n.minutes,
+                    ),
+                    keyboardType: const TextInputType.numberWithOptions(
+                        signed: false, decimal: false),
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    onChanged: (newValue) {
+                      setState(() {
+                        phaseLength.minutes = int.parse(newValue);
+                        game["PhaseLengthMinutes"] = phaseLength.toMinutes();
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Switch(
+                  value: displayNonMovementPhaseLength,
+                  onChanged: (newValue) {
+                    setState(() {
+                      displayNonMovementPhaseLength = newValue;
+                      if (!newValue) {
+                        game["NonMovementPhaseLengthMinutes"] = 0;
+                      }
+                    });
+                  },
+                ),
+                Text(l10n.differentPhaseForNonMovement),
+              ],
+            ),
+            if (displayNonMovementPhaseLength)
+              Row(
+                children: [
+                  Expanded(child: Text(l10n.nonMovementPhaseLength)),
+                  SizedBox(
+                    width: 50,
+                    child: TextFormField(
+                      initialValue: "${nonMovementPhaseLength.days}",
+                      decoration: InputDecoration(
+                        labelText: l10n.days,
+                      ),
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: false, decimal: false),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onChanged: (newValue) {
+                        setState(() {
+                          nonMovementPhaseLength.days = int.parse(newValue);
+                          game["NonMovementPhaseLengthMinutes"] =
+                              nonMovementPhaseLength.toMinutes();
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 50,
+                    child: TextFormField(
+                      initialValue: "${nonMovementPhaseLength.hours}",
+                      decoration: InputDecoration(
+                        labelText: l10n.hours,
+                      ),
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: false, decimal: false),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onChanged: (newValue) {
+                        setState(() {
+                          nonMovementPhaseLength.hours = int.parse(newValue);
+                          game["NonMovementPhaseLengthMinutes"] =
+                              nonMovementPhaseLength.toMinutes();
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 50,
+                    child: TextFormField(
+                      initialValue: "${nonMovementPhaseLength.minutes}",
+                      decoration: InputDecoration(
+                        labelText: l10n.minutes,
+                      ),
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: false, decimal: false),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onChanged: (newValue) {
+                        setState(() {
+                          nonMovementPhaseLength.minutes = int.parse(newValue);
+                          game["NonMovementPhaseLengthMinutes"] =
+                              nonMovementPhaseLength.toMinutes();
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
             Row(
               children: [
                 Switch(

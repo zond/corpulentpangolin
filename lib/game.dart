@@ -61,7 +61,8 @@ class Game extends JSONMapView {
   String get variant => getString("Variant");
 
   String phaseLengthDuration(BuildContext context, {bool short = true}) {
-    return nanosToDuration(context, phaseLengthMinutes * (1e9 * 60));
+    return nanosToDuration(context, phaseLengthMinutes * (1e9 * 60),
+        short: short);
   }
 
   num get minimumReliability => getFloat("MinimumReliability");
@@ -84,19 +85,32 @@ class Game extends JSONMapView {
     return selection;
   }
 
-  String combinedPhaseLengthDuration(BuildContext context,
+  Widget combinedPhaseLengthDuration(BuildContext context,
       {bool short = true}) {
-    String res = phaseLengthDuration(context, short: short);
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    final res = Row(
+      children: [
+        Tooltip(
+          message: l10n.phaseLength,
+          child: Text(phaseLengthDuration(context, short: short)),
+        ),
+      ],
+    );
     if (nonMovementPhaseLengthMinutes != 0 &&
         nonMovementPhaseLengthMinutes != phaseLengthMinutes) {
-      res += "/${nonMovementPhaseLengthDuration(context, short: short)}";
+      res.children.add(const Text("/"));
+      res.children.add(Tooltip(
+        message: l10n.nonMovementPhaseLength,
+        child: Text(nonMovementPhaseLengthDuration(context, short: short)),
+      ));
     }
     return res;
   }
 
   String nonMovementPhaseLengthDuration(BuildContext context,
       {bool short = true}) {
-    return nanosToDuration(context, nonMovementPhaseLengthMinutes * (1e9 * 60));
+    return nanosToDuration(context, nonMovementPhaseLengthMinutes * (1e9 * 60),
+        short: short);
   }
 
   DateTime get startedAt {

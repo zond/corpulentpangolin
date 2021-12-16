@@ -180,6 +180,76 @@ class S {
     );
   }
 
+  /// `Current phase`
+  String get currentPhase {
+    return Intl.message(
+      'Current phase',
+      name: 'currentPhase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phase length`
+  String get phaseLength {
+    return Intl.message(
+      'Phase length',
+      name: 'phaseLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Different length for non movement phases`
+  String get differentPhaseForNonMovement {
+    return Intl.message(
+      'Different length for non movement phases',
+      name: 'differentPhaseForNonMovement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Non movement phase length`
+  String get nonMovementPhaseLength {
+    return Intl.message(
+      'Non movement phase length',
+      name: 'nonMovementPhaseLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Days`
+  String get days {
+    return Intl.message(
+      'Days',
+      name: 'days',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hours`
+  String get hours {
+    return Intl.message(
+      'Hours',
+      name: 'hours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minutes`
+  String get minutes {
+    return Intl.message(
+      'Minutes',
+      name: 'minutes',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Has game master`
   String get hasGameMaster {
     return Intl.message(

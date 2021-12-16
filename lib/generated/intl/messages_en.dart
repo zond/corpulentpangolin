@@ -79,9 +79,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "createGame": MessageLookupByLibrary.simpleMessage("Create game"),
         "createdBy_V_": m1,
         "created_Date_": m2,
+        "currentPhase": MessageLookupByLibrary.simpleMessage("Current phase"),
         "d": MessageLookupByLibrary.simpleMessage("d"),
+        "days": MessageLookupByLibrary.simpleMessage("Days"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "description_V_": m3,
+        "differentPhaseForNonMovement": MessageLookupByLibrary.simpleMessage(
+            "Different length for non movement phases"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "editGame": MessageLookupByLibrary.simpleMessage("Edit game"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
@@ -122,6 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hasMustering":
             MessageLookupByLibrary.simpleMessage("Start with roll call"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "hours": MessageLookupByLibrary.simpleMessage("Hours"),
         "join": MessageLookupByLibrary.simpleMessage("Join"),
         "leave": MessageLookupByLibrary.simpleMessage("Leave"),
         "leftGame": MessageLookupByLibrary.simpleMessage("Left game"),
@@ -142,6 +147,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "minimumQuickness_V_": m9,
         "minimumRating_V_": m10,
         "minimumReliability_V_": m11,
+        "minutes": MessageLookupByLibrary.simpleMessage("Minutes"),
         "movement": MessageLookupByLibrary.simpleMessage("Movement"),
         "myGames": MessageLookupByLibrary.simpleMessage("My games"),
         "nationSelection":
@@ -154,6 +160,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nonCommittedPhases_":
             MessageLookupByLibrary.simpleMessage("Non committed phases:"),
         "nonMovementPhaseDeadline_Date_": m13,
+        "nonMovementPhaseLength":
+            MessageLookupByLibrary.simpleMessage("Non movement phase length"),
         "nonNMRPhases_":
             MessageLookupByLibrary.simpleMessage("Non NMR phases:"),
         "onlyPlayersAssignedByGM": MessageLookupByLibrary.simpleMessage(
@@ -161,6 +169,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "openGames": MessageLookupByLibrary.simpleMessage("Open games"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "phaseDeadline_Date_": m14,
+        "phaseLength": MessageLookupByLibrary.simpleMessage("Phase length"),
         "players": MessageLookupByLibrary.simpleMessage("Players"),
         "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
         "private": MessageLookupByLibrary.simpleMessage("Private"),

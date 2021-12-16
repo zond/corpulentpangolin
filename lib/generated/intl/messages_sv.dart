@@ -79,9 +79,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "createGame": MessageLookupByLibrary.simpleMessage("Skapa spel"),
         "createdBy_V_": m1,
         "created_Date_": m2,
+        "currentPhase": MessageLookupByLibrary.simpleMessage("Nuvarande fas"),
         "d": MessageLookupByLibrary.simpleMessage("d"),
+        "days": MessageLookupByLibrary.simpleMessage("Dagar"),
         "description": MessageLookupByLibrary.simpleMessage("Beskrivning"),
         "description_V_": m3,
+        "differentPhaseForNonMovement": MessageLookupByLibrary.simpleMessage(
+            "Annan längd för icke-förlyttningsfaser"),
         "edit": MessageLookupByLibrary.simpleMessage("Redigera"),
         "editGame": MessageLookupByLibrary.simpleMessage("Redigera spel"),
         "error": MessageLookupByLibrary.simpleMessage("Fel"),
@@ -122,6 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "hasMustering":
             MessageLookupByLibrary.simpleMessage("Börjar med upprop"),
         "home": MessageLookupByLibrary.simpleMessage("Hem"),
+        "hours": MessageLookupByLibrary.simpleMessage("Timmar"),
         "join": MessageLookupByLibrary.simpleMessage("Delta"),
         "leave": MessageLookupByLibrary.simpleMessage("Lämna"),
         "leftGame": MessageLookupByLibrary.simpleMessage("Lämnade spelet"),
@@ -142,6 +147,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "minimumQuickness_V_": m9,
         "minimumRating_V_": m10,
         "minimumReliability_V_": m11,
+        "minutes": MessageLookupByLibrary.simpleMessage("Minuter"),
         "movement": MessageLookupByLibrary.simpleMessage("Förflyttning"),
         "myGames": MessageLookupByLibrary.simpleMessage("Mina spel"),
         "nationSelection": MessageLookupByLibrary.simpleMessage("Val av land"),
@@ -154,6 +160,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nonCommittedPhases_": MessageLookupByLibrary.simpleMessage(
             "Faser utan redo för resolution:"),
         "nonMovementPhaseDeadline_Date_": m13,
+        "nonMovementPhaseLength": MessageLookupByLibrary.simpleMessage(
+            "Faslängd för icke-förflyttningsfaser"),
         "nonNMRPhases_":
             MessageLookupByLibrary.simpleMessage("Faser med order:"),
         "onlyPlayersAssignedByGM": MessageLookupByLibrary.simpleMessage(
@@ -161,6 +169,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "openGames": MessageLookupByLibrary.simpleMessage("Öppna spel"),
         "orders": MessageLookupByLibrary.simpleMessage("Order"),
         "phaseDeadline_Date_": m14,
+        "phaseLength": MessageLookupByLibrary.simpleMessage("Faslängd"),
         "players": MessageLookupByLibrary.simpleMessage("Spelare"),
         "preferences": MessageLookupByLibrary.simpleMessage("Prioritetslista"),
         "private": MessageLookupByLibrary.simpleMessage("Privat"),

@@ -90,9 +90,13 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
                           Tooltip(
                               message: l10n.c_of_p_playersJoined(
                                   "$nMembers", "$nVariantNations"),
-                              child: const Icon(Icons.people,
-                                  size: metadataIconSize)),
-                          Text("$nMembers/$nVariantNations"),
+                              child: Row(
+                                children: [
+                                  const Icon(Icons.people,
+                                      size: metadataIconSize),
+                                  Text("$nMembers/$nVariantNations"),
+                                ],
+                              )),
                         ],
                       ),
                     ],
@@ -100,10 +104,22 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
                   subtitle: Row(
                     children: [
                       Expanded(
-                        child: Text(
-                            "${game["Variant"]}, ${game.combinedPhaseLengthDuration(context)}"),
+                        child: Row(
+                          children: [
+                            Tooltip(
+                              message: l10n.variant,
+                              child: Text(game["Variant"]),
+                            ),
+                            const Text(", "),
+                            game.combinedPhaseLengthDuration(context,
+                                short: false),
+                          ],
+                        ),
                       ),
-                      Text(game.phaseMeta.desc(context)),
+                      Tooltip(
+                        message: l10n.currentPhase,
+                        child: Text(game.phaseMeta.desc(context)),
+                      ),
                     ],
                   ),
                 ),
