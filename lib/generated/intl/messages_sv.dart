@@ -28,33 +28,37 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(v) => "Beskrivning: ${v}";
 
-  static String m4(err) => "Misslyckades med att skapa spel: \$err";
+  static String m4(err) => "Misslyckades med att skapa spel: ${err}";
 
-  static String m5(date) => "Avslutat: ${date}";
+  static String m5(err) => "Misslyckades med att spara spel: ${err}";
 
-  static String m6(variant) => "Spelvariant: ${variant}";
+  static String m6(err) => "Misslyckades med att spara profil: ${err}";
 
-  static String m7(v) => "Nödvändig snabbhet: ${v}";
+  static String m7(date) => "Avslutat: ${date}";
 
-  static String m8(v) => "Nödvändig rang: ${v}";
+  static String m8(variant) => "Spelvariant: ${variant}";
 
-  static String m9(v) => "Nödvändig pålitlighet: ${v}";
+  static String m9(v) => "Nödvändig snabbhet: ${v}";
 
-  static String m10(type) => "Val av land: ${type}";
+  static String m10(v) => "Nödvändig rang: ${v}";
 
-  static String m11(deadline) => "Faslängd ej förflyttning: ${deadline}";
+  static String m11(v) => "Nödvändig pålitlighet: ${v}";
 
-  static String m12(deadline) => "Faslängd: ${deadline}";
+  static String m12(type) => "Val av land: ${type}";
 
-  static String m13(v) => "Regler: ${v}";
+  static String m13(deadline) => "Faslängd ej förflyttning: ${deadline}";
 
-  static String m14(date) => "Started: ${date}";
+  static String m14(deadline) => "Faslängd: ${deadline}";
 
-  static String m15(err) => "Kunde ej ladda URL: ${err}";
+  static String m15(v) => "Regler: ${v}";
 
-  static String m16(v) => "Användarnamn: ${v}";
+  static String m16(date) => "Started: ${date}";
 
-  static String m17(v) => "Röster nödvändiga för förlängning: ${v}";
+  static String m17(err) => "Kunde ej ladda URL: ${err}";
+
+  static String m18(v) => "Användarnamn: ${v}";
+
+  static String m19(v) => "Röster nödvändiga för förlängning: ${v}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -78,9 +82,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "description_V_": m3,
         "error": MessageLookupByLibrary.simpleMessage("Fel"),
         "failedCreatingGame_Err_": m4,
+        "failedSavingGame_Err_": m5,
+        "failedSavingProfile_Err_": m6,
         "fall": MessageLookupByLibrary.simpleMessage("Höst"),
         "finishedGames": MessageLookupByLibrary.simpleMessage("Avslutade spel"),
-        "finished_Date_": m5,
+        "finished_Date_": m7,
         "fleet": MessageLookupByLibrary.simpleMessage("Flotta"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Spel skapat"),
@@ -90,7 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gameMasterOnlyAllowedInPrivateGames":
             MessageLookupByLibrary.simpleMessage(
                 "Spelledare endast möjligt i privata spel (risk för missbruk)."),
-        "gameVariant_Var_": m6,
+        "gameVariant_Var_": m8,
         "groupChat": MessageLookupByLibrary.simpleMessage("Gruppchat"),
         "groupChatDisabled":
             MessageLookupByLibrary.simpleMessage("Gruppchat avstängd"),
@@ -110,8 +116,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "hasMustering":
             MessageLookupByLibrary.simpleMessage("Börjar med upprop"),
         "home": MessageLookupByLibrary.simpleMessage("Hem"),
-        "invite": MessageLookupByLibrary.simpleMessage("Inbjud"),
         "join": MessageLookupByLibrary.simpleMessage("Delta"),
+        "leave": MessageLookupByLibrary.simpleMessage("Lämna"),
+        "leftGame": MessageLookupByLibrary.simpleMessage("Lämnade spelet"),
         "liveGames": MessageLookupByLibrary.simpleMessage("Pågående spel"),
         "loading": MessageLookupByLibrary.simpleMessage("Laddar..."),
         "logInToSeeYourGames": MessageLookupByLibrary.simpleMessage(
@@ -126,13 +133,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "manageAsGameMaster":
             MessageLookupByLibrary.simpleMessage("Administrera som spelledare"),
         "map": MessageLookupByLibrary.simpleMessage("Karta"),
-        "minimumQuickness_V_": m7,
-        "minimumRating_V_": m8,
-        "minimumReliability_V_": m9,
+        "minimumQuickness_V_": m9,
+        "minimumRating_V_": m10,
+        "minimumReliability_V_": m11,
         "movement": MessageLookupByLibrary.simpleMessage("Förflyttning"),
         "myGames": MessageLookupByLibrary.simpleMessage("Mina spel"),
         "nationSelection": MessageLookupByLibrary.simpleMessage("Val av land"),
-        "nationSelection_Type_": m10,
+        "nationSelection_Type_": m12,
         "newProfilePictureURL":
             MessageLookupByLibrary.simpleMessage("URL till ny profilbild"),
         "nmrPhases_":
@@ -140,14 +147,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "noGamesFound": MessageLookupByLibrary.simpleMessage("Inga spel funna"),
         "nonCommittedPhases_": MessageLookupByLibrary.simpleMessage(
             "Faser utan redo för resolution:"),
-        "nonMovementPhaseDeadline_Date_": m11,
+        "nonMovementPhaseDeadline_Date_": m13,
         "nonNMRPhases_":
             MessageLookupByLibrary.simpleMessage("Faser med order:"),
         "onlyPlayersAssignedByGM": MessageLookupByLibrary.simpleMessage(
             "Endast spelare godkända av spelledaren kan delta."),
         "openGames": MessageLookupByLibrary.simpleMessage("Öppna spel"),
         "orders": MessageLookupByLibrary.simpleMessage("Order"),
-        "phaseDeadline_Date_": m12,
+        "phaseDeadline_Date_": m14,
         "players": MessageLookupByLibrary.simpleMessage("Spelare"),
         "preferences": MessageLookupByLibrary.simpleMessage("Prioritetslista"),
         "private": MessageLookupByLibrary.simpleMessage("Privat"),
@@ -155,8 +162,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "privateChatDisabled":
             MessageLookupByLibrary.simpleMessage("Privat chat avstängd"),
         "profile": MessageLookupByLibrary.simpleMessage("Profil"),
-        "profilePictureUpdated":
-            MessageLookupByLibrary.simpleMessage("Profilbild uppdaterad"),
+        "profileUpdated":
+            MessageLookupByLibrary.simpleMessage("Profil updaterad"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Offentlig chat"),
         "publicChatDisabled":
             MessageLookupByLibrary.simpleMessage("Offentlig chat avstängd"),
@@ -167,28 +174,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "requireAssignmentToJoin":
             MessageLookupByLibrary.simpleMessage("Godkännande nödvändigt"),
         "retreat": MessageLookupByLibrary.simpleMessage("Reträtt"),
-        "rules_V_": m13,
+        "rules_V_": m15,
+        "share": MessageLookupByLibrary.simpleMessage("Dela"),
         "someChatsDisabled":
             MessageLookupByLibrary.simpleMessage("Vissa chattar avstängda"),
         "someoneYouBanned": MessageLookupByLibrary.simpleMessage(
             "Någon du svartlistat, eller någon som svartlistat dig, är redan i spelet"),
         "source": MessageLookupByLibrary.simpleMessage("Källkod"),
         "spring": MessageLookupByLibrary.simpleMessage("Vår"),
-        "started_Date_": m14,
-        "unableToLoadURL": m15,
+        "started_Date_": m16,
+        "unableToLoadURL": m17,
         "unnamed": MessageLookupByLibrary.simpleMessage("namnlöst"),
         "username": MessageLookupByLibrary.simpleMessage("Användarnamn"),
-        "usernameUpdated":
-            MessageLookupByLibrary.simpleMessage("Användarnamn uppdaterat"),
-        "username_V_": m16,
+        "username_V_": m18,
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("Se"),
-        "votesRequiredForExtension_V_": m17,
+        "votesRequiredForExtension_V_": m19,
         "w": MessageLookupByLibrary.simpleMessage("v"),
         "youAreAlreadyInGame": MessageLookupByLibrary.simpleMessage(
             "Du deltar redan i det här spelet"),
         "youAreNotLoggedIn":
             MessageLookupByLibrary.simpleMessage("Du är inte inloggad"),
+        "youCantLeaveStartedGames": MessageLookupByLibrary.simpleMessage(
+            "Du kan inte lämna startade spel"),
         "youDonMatchRequirements": MessageLookupByLibrary.simpleMessage(
             "Din pålitlighet, snabbhet, eller rang motsvarar inte kraven för spelet")
       };

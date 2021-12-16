@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -29,6 +30,7 @@ class GameControlsWidget extends StatelessWidget {
     if (game == null || variant == null) {
       return const SpinnerWidget();
     }
+    debugPrint("game is $game");
     if (game.err != null || variant.err != null) {
       return Column(
         children: [
@@ -37,56 +39,102 @@ class GameControlsWidget extends StatelessWidget {
         ],
       );
     }
-    final isBanned = appUser != null &&
-        (appUser.bannedUsers.intersection(game.players.toSet()).isNotEmpty ||
-            appUser.bannedByUsers
-                .intersection(game.players.toSet())
-                .isNotEmpty);
-    final matchesRequirements = (game.minimumReliability == 0 &&
-            game.minimumQuickness == 0 &&
-            game.minimumRating == 0) ||
-        (appUser != null &&
-            appUser.reliability >= game.minimumReliability &&
-            appUser.quickness >= game.minimumQuickness &&
-            appUser.rating >= game.minimumRating);
-    // TODO(zond): When we have replacement support, this needs more logic.
-    final isJoinable = user != null &&
-        !isBanned &&
-        matchesRequirements &&
-        !game.players.contains(user.uid) &&
-        game.players.length < variant.nations.length;
-    List<String> joinTooltips = [
-      if (user == null) l10n.youAreNotLoggedIn,
-      if (game.players.contains(user?.uid)) l10n.youAreAlreadyInGame,
-      if (game.players.length >= variant.nations.length)
-        l10n.gameFullNoReplacements,
-      if (isBanned) l10n.someoneYouBanned,
-      if (!matchesRequirements) l10n.youDonMatchRequirements,
-    ];
-    return ButtonBar(
-      alignment: MainAxisAlignment.start,
-      children: [
-        Tooltip(
+    List<Widget> buttons = [];
+    if (user != null) {
+      if (game.players.contains(user.uid)) {
+        buttons.add(Tooltip(
+            message: game.started ? l10n.youCantLeaveStartedGames : "",
+            child: ElevatedButton(
+              onPressed: game.started
+                  ? null
+                  : () {
+                      debugPrint("leaving $game");
+                      FirebaseFirestore.instance
+                          .collection("Game")
+                          .doc(game.id)
+                          .update({
+                            "Players": game.players
+                                .where((id) => id != user.uid)
+                                .toList(),
+                          })
+                          .then((_) => toast(context, l10n.leftGame))
+                          .catchError((err) {
+                            debugPrint("$err");
+                            toast(context, l10n.failedSavingGame_Err_(err));
+                          });
+                    },
+              child: Text(l10n.leave),
+            )));
+      } else {
+        final isBanned = appUser != null &&
+            (appUser.bannedUsers
+                    .intersection(game.players.toSet())
+                    .isNotEmpty ||
+                appUser.bannedByUsers
+                    .intersection(game.players.toSet())
+                    .isNotEmpty);
+        final matchesRequirements = (game.minimumReliability == 0 &&
+                game.minimumQuickness == 0 &&
+                game.minimumRating == 0) ||
+            (appUser != null &&
+                appUser.reliability >= game.minimumReliability &&
+                appUser.quickness >= game.minimumQuickness &&
+                appUser.rating >= game.minimumRating);
+        // TODO(zond): When we have replacement support, this needs more logic.
+        final isJoinable = !isBanned &&
+            matchesRequirements &&
+            !game.players.contains(user.uid) &&
+            game.players.length < variant.nations.length;
+        List<String> joinTooltips = [
+          if (game.players.contains(user.uid)) l10n.youAreAlreadyInGame,
+          if (game.players.length >= variant.nations.length)
+            l10n.gameFullNoReplacements,
+          if (isBanned) l10n.someoneYouBanned,
+          if (!matchesRequirements) l10n.youDonMatchRequirements,
+        ];
+        buttons.add(Tooltip(
           message: joinTooltips.join("\n"),
           child: ElevatedButton(
             onPressed: isJoinable
                 ? () {
-                    game["Players"] = [...game.players, user!.uid];
-                    game.save().then((_) => toast(context, l10n.gameJoined));
+                    debugPrint(
+                        "joining $game with ${game["SeededAt"].runtimeType}");
+                    FirebaseFirestore.instance
+                        .collection("Game")
+                        .doc(game.id)
+                        .update({
+                          "Players": [...game.players, user.uid],
+                        })
+                        .then((_) => toast(context, l10n.gameJoined))
+                        .catchError((err) {
+                          debugPrint("$err");
+                          toast(context, l10n.failedSavingGame_Err_(err));
+                        });
                   }
                 : null,
             child: Text(l10n.join),
           ),
-        ),
-        ElevatedButton(
-          onPressed: null,
-          child: Text(l10n.invite),
-        ),
-        ElevatedButton(
-          onPressed: () => appRouter.push(GamePageRoute(gameID: game.id)),
-          child: Text(l10n.view),
-        ),
-      ],
+        ));
+      }
+    } else {
+      buttons.add(Tooltip(
+          message: l10n.youAreNotLoggedIn,
+          child: ElevatedButton(
+            onPressed: null,
+            child: Text(l10n.join),
+          )));
+    }
+    buttons.add(ElevatedButton(
+      onPressed: null,
+      child: Text(l10n.share),
+    ));
+    buttons.add(ElevatedButton(
+      onPressed: () => appRouter.push(GamePageRoute(gameID: game.id)),
+      child: Text(l10n.view),
+    ));
+    return ButtonBar(
+      alignment: MainAxisAlignment.start,
+      children: buttons,
     );
   }
 }

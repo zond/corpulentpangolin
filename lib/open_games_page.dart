@@ -33,8 +33,7 @@ class OpenGamesPage extends StatelessWidget {
               .collection("Game")
               .where("Private", isEqualTo: false)
               .where("Seeded", isEqualTo: true)
-              .where("Started", isEqualTo: false)
-              .orderBy("TimeSortKey"))),
+              .where("Started", isEqualTo: false))),
         ]),
       ),
     );

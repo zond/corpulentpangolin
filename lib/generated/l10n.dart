@@ -160,6 +160,26 @@ class S {
     );
   }
 
+  /// `Failed saving game: {err}`
+  String failedSavingGame_Err_(Object err) {
+    return Intl.message(
+      'Failed saving game: $err',
+      name: 'failedSavingGame_Err_',
+      desc: '',
+      args: [err],
+    );
+  }
+
+  /// `Failed saving profile: {err}`
+  String failedSavingProfile_Err_(Object err) {
+    return Intl.message(
+      'Failed saving profile: $err',
+      name: 'failedSavingProfile_Err_',
+      desc: '',
+      args: [err],
+    );
+  }
+
   /// `Failed creating game: {err}`
   String failedCreatingGame_Err_(Object err) {
     return Intl.message(
@@ -539,11 +559,11 @@ class S {
     );
   }
 
-  /// `Invite`
-  String get invite {
+  /// `Share`
+  String get share {
     return Intl.message(
-      'Invite',
-      name: 'invite',
+      'Share',
+      name: 'share',
       desc: '',
       args: [],
     );
@@ -819,21 +839,11 @@ class S {
     );
   }
 
-  /// `Profile picture updated`
-  String get profilePictureUpdated {
+  /// `Profile updated`
+  String get profileUpdated {
     return Intl.message(
-      'Profile picture updated',
-      name: 'profilePictureUpdated',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Username updated`
-  String get usernameUpdated {
-    return Intl.message(
-      'Username updated',
-      name: 'usernameUpdated',
+      'Profile updated',
+      name: 'profileUpdated',
       desc: '',
       args: [],
     );
@@ -1064,6 +1074,36 @@ class S {
     return Intl.message(
       'Game joined',
       name: 'gameJoined',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leave`
+  String get leave {
+    return Intl.message(
+      'Leave',
+      name: 'leave',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can't leave started games`
+  String get youCantLeaveStartedGames {
+    return Intl.message(
+      'You can\'t leave started games',
+      name: 'youCantLeaveStartedGames',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Left game`
+  String get leftGame {
+    return Intl.message(
+      'Left game',
+      name: 'leftGame',
       desc: '',
       args: [],
     );

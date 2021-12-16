@@ -100,10 +100,30 @@ class ProfilePage extends StatelessWidget {
                                       label: l10n.username,
                                       initialValue: appUser.username,
                                       onBlur: (newValue, toastFunc) async {
-                                        appUser["ID"] = user.uid;
-                                        appUser["Username"] = newValue;
-                                        appUser.save().then((_) {
-                                          toastFunc(l10n.usernameUpdated);
+                                        Future<Object?>? updater;
+                                        if (appUser.exists) {
+                                          updater = FirebaseFirestore.instance
+                                              .collection("User")
+                                              .doc(user.uid)
+                                              .update({
+                                            "Username": newValue,
+                                          });
+                                        } else {
+                                          updater = FirebaseFirestore.instance
+                                              .collection("User")
+                                              .doc(user.uid)
+                                              .set({
+                                            "Username": newValue,
+                                          });
+                                        }
+                                        updater.then((_) {
+                                          toastFunc(l10n.profileUpdated);
+                                        }).catchError((err) {
+                                          debugPrint("$err");
+                                          toast(
+                                              context,
+                                              l10n.failedSavingProfile_Err_(
+                                                  "$err"));
                                         });
                                       },
                                     )
@@ -241,11 +261,28 @@ class _ChangePictureURLDialogState extends State<_ChangePictureURLDialog> {
                   child: FloatingActionButton(
                     child: const Icon(Icons.check),
                     onPressed: () {
-                      widget.appUser["PictureURL"] = url;
-                      widget.appUser["ID"] = widget.user.uid;
-                      widget.appUser.save().then((_) {
-                        toast(context, l10n.profilePictureUpdated);
+                      Future<Object?>? updater;
+                      if (widget.appUser.exists) {
+                        updater = FirebaseFirestore.instance
+                            .collection("User")
+                            .doc(widget.user.uid)
+                            .update({
+                          "PictureURL": url,
+                        });
+                      } else {
+                        updater = FirebaseFirestore.instance
+                            .collection("User")
+                            .doc(widget.user.uid)
+                            .set({
+                          "PictureURL": url,
+                        });
+                      }
+                      updater.then((_) {
+                        toast(context, l10n.profileUpdated);
                         Navigator.of(context).pop();
+                      }).catchError((err) {
+                        debugPrint("$err");
+                        toast(context, l10n.failedSavingProfile_Err_("$err"));
                       });
                     },
                   ),

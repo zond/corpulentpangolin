@@ -3,7 +3,6 @@ import 'dart:async';
 
 // Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 Stream<DocumentSnapshot<T>> cacheDocSnapshots<T>(DocumentReference<T> doc) {
   final streamController = StreamController<DocumentSnapshot<T>>();

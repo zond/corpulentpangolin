@@ -22,16 +22,6 @@ class AppUser extends JSONMapView {
 
   String get id => getString("ID");
 
-  Future<AppUser> save() async {
-    remove("Error");
-    remove("Exists");
-    final _id = id;
-    remove("ID");
-    await FirebaseFirestore.instance.collection("User").doc(_id).set(this);
-    this["ID"] = _id;
-    return this;
-  }
-
   num get reliability => getFloat("Reliability");
 
   int get nmrPhases => getInt("NMRPhases");

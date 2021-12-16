@@ -90,7 +90,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
     "Variant": "Classical",
     "Players": [FirebaseAuth.instance.currentUser?.uid],
     "CategorySortKey": 1000,
-    "TimeSortKey": 0,
+    "Seeded": false,
   });
   final gameCollection = FirebaseFirestore.instance.collection("Game");
 
@@ -305,11 +305,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.check),
         onPressed: () {
           gameCollection.add(game).then((_) {
             appRouter.pop().then((_) => toast(context, l10n.gameCreated));
           }).catchError((err) {
+            debugPrint("$err");
             toast(context, l10n.failedCreatingGame_Err_("$err"));
           });
         },

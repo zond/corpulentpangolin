@@ -30,31 +30,35 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m4(err) => "Failed creating game: ${err}";
 
-  static String m5(date) => "Finished: ${date}";
+  static String m5(err) => "Failed saving game: ${err}";
 
-  static String m6(variant) => "Game variant: ${variant}";
+  static String m6(err) => "Failed saving profile: ${err}";
 
-  static String m7(v) => "Minimum quickness: ${v}";
+  static String m7(date) => "Finished: ${date}";
 
-  static String m8(v) => "Minimum rating: ${v}";
+  static String m8(variant) => "Game variant: ${variant}";
 
-  static String m9(v) => "Minimum reliability: ${v}";
+  static String m9(v) => "Minimum quickness: ${v}";
 
-  static String m10(type) => "Nation selection: ${type}";
+  static String m10(v) => "Minimum rating: ${v}";
 
-  static String m11(deadline) => "Non movement phase deadline: ${deadline}";
+  static String m11(v) => "Minimum reliability: ${v}";
 
-  static String m12(deadline) => "Phase deadline: ${deadline}";
+  static String m12(type) => "Nation selection: ${type}";
 
-  static String m13(v) => "Rules: ${v}";
+  static String m13(deadline) => "Non movement phase deadline: ${deadline}";
 
-  static String m14(date) => "Started: ${date}";
+  static String m14(deadline) => "Phase deadline: ${deadline}";
 
-  static String m15(err) => "Unable to load URL: ${err}";
+  static String m15(v) => "Rules: ${v}";
 
-  static String m16(v) => "Username: ${v}";
+  static String m16(date) => "Started: ${date}";
 
-  static String m17(v) => "Votes required for extension: ${v}";
+  static String m17(err) => "Unable to load URL: ${err}";
+
+  static String m18(v) => "Username: ${v}";
+
+  static String m19(v) => "Votes required for extension: ${v}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -78,9 +82,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "description_V_": m3,
         "error": MessageLookupByLibrary.simpleMessage("Error"),
         "failedCreatingGame_Err_": m4,
+        "failedSavingGame_Err_": m5,
+        "failedSavingProfile_Err_": m6,
         "fall": MessageLookupByLibrary.simpleMessage("Fall"),
         "finishedGames": MessageLookupByLibrary.simpleMessage("Finished games"),
-        "finished_Date_": m5,
+        "finished_Date_": m7,
         "fleet": MessageLookupByLibrary.simpleMessage("Fleet"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Game created"),
@@ -90,7 +96,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gameMasterOnlyAllowedInPrivateGames":
             MessageLookupByLibrary.simpleMessage(
                 "Game master only allowed in private games due to risk of abuse."),
-        "gameVariant_Var_": m6,
+        "gameVariant_Var_": m8,
         "groupChat": MessageLookupByLibrary.simpleMessage("Group chat"),
         "groupChatDisabled":
             MessageLookupByLibrary.simpleMessage("Group chat disabled"),
@@ -109,8 +115,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "hasMustering":
             MessageLookupByLibrary.simpleMessage("Start with roll call"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
-        "invite": MessageLookupByLibrary.simpleMessage("Invite"),
         "join": MessageLookupByLibrary.simpleMessage("Join"),
+        "leave": MessageLookupByLibrary.simpleMessage("Leave"),
+        "leftGame": MessageLookupByLibrary.simpleMessage("Left game"),
         "liveGames": MessageLookupByLibrary.simpleMessage("Live games"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
         "logInToSeeYourGames":
@@ -125,28 +132,28 @@ class MessageLookup extends MessageLookupByLibrary {
         "manageAsGameMaster":
             MessageLookupByLibrary.simpleMessage("Manage as game master"),
         "map": MessageLookupByLibrary.simpleMessage("Map"),
-        "minimumQuickness_V_": m7,
-        "minimumRating_V_": m8,
-        "minimumReliability_V_": m9,
+        "minimumQuickness_V_": m9,
+        "minimumRating_V_": m10,
+        "minimumReliability_V_": m11,
         "movement": MessageLookupByLibrary.simpleMessage("Movement"),
         "myGames": MessageLookupByLibrary.simpleMessage("My games"),
         "nationSelection":
             MessageLookupByLibrary.simpleMessage("Nation selection"),
-        "nationSelection_Type_": m10,
+        "nationSelection_Type_": m12,
         "newProfilePictureURL":
             MessageLookupByLibrary.simpleMessage("New profile picture URL"),
         "nmrPhases_": MessageLookupByLibrary.simpleMessage("NMR phases:"),
         "noGamesFound": MessageLookupByLibrary.simpleMessage("No games found"),
         "nonCommittedPhases_":
             MessageLookupByLibrary.simpleMessage("Non committed phases:"),
-        "nonMovementPhaseDeadline_Date_": m11,
+        "nonMovementPhaseDeadline_Date_": m13,
         "nonNMRPhases_":
             MessageLookupByLibrary.simpleMessage("Non NMR phases:"),
         "onlyPlayersAssignedByGM": MessageLookupByLibrary.simpleMessage(
             "Only players assigned by the game master can join."),
         "openGames": MessageLookupByLibrary.simpleMessage("Open games"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
-        "phaseDeadline_Date_": m12,
+        "phaseDeadline_Date_": m14,
         "players": MessageLookupByLibrary.simpleMessage("Players"),
         "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
         "private": MessageLookupByLibrary.simpleMessage("Private"),
@@ -154,8 +161,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "privateChatDisabled":
             MessageLookupByLibrary.simpleMessage("Private chat disabled"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
-        "profilePictureUpdated":
-            MessageLookupByLibrary.simpleMessage("Profile picture updated"),
+        "profileUpdated":
+            MessageLookupByLibrary.simpleMessage("Profile updated"),
         "publicChat": MessageLookupByLibrary.simpleMessage("Public chat"),
         "publicChatDisabled":
             MessageLookupByLibrary.simpleMessage("Public chat disabled"),
@@ -166,28 +173,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "requireAssignmentToJoin":
             MessageLookupByLibrary.simpleMessage("Require assignment to join"),
         "retreat": MessageLookupByLibrary.simpleMessage("Retreat"),
-        "rules_V_": m13,
+        "rules_V_": m15,
+        "share": MessageLookupByLibrary.simpleMessage("Share"),
         "someChatsDisabled":
             MessageLookupByLibrary.simpleMessage("Some chats disabled"),
         "someoneYouBanned": MessageLookupByLibrary.simpleMessage(
             "Someone you banned, or someone banned by you, is already in the game"),
         "source": MessageLookupByLibrary.simpleMessage("Source"),
         "spring": MessageLookupByLibrary.simpleMessage("Spring"),
-        "started_Date_": m14,
-        "unableToLoadURL": m15,
+        "started_Date_": m16,
+        "unableToLoadURL": m17,
         "unnamed": MessageLookupByLibrary.simpleMessage("unnamed"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
-        "usernameUpdated":
-            MessageLookupByLibrary.simpleMessage("Username updated"),
-        "username_V_": m16,
+        "username_V_": m18,
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("View"),
-        "votesRequiredForExtension_V_": m17,
+        "votesRequiredForExtension_V_": m19,
         "w": MessageLookupByLibrary.simpleMessage("w"),
         "youAreAlreadyInGame": MessageLookupByLibrary.simpleMessage(
             "You have already joined this game"),
         "youAreNotLoggedIn":
             MessageLookupByLibrary.simpleMessage("You aren\'t logged in"),
+        "youCantLeaveStartedGames": MessageLookupByLibrary.simpleMessage(
+            "You can\'t leave started games"),
         "youDonMatchRequirements": MessageLookupByLibrary.simpleMessage(
             "Your reliability, quickness, or rating doesn\'t match the requirements for the game")
       };

@@ -39,15 +39,6 @@ class Game extends JSONMapView {
 
   bool get disableConferenceChat => getBool("DisableConferenceChat");
 
-  Future<Game> save() async {
-    remove("Error");
-    final _id = id;
-    remove("ID");
-    await FirebaseFirestore.instance.collection("Game").doc(_id).set(this);
-    this["ID"] = _id;
-    return this;
-  }
-
   bool get disableGroupChat => getBool("DisableGroupChat");
 
   bool get disablePrivateChat => getBool("DisablePrivateChat");
@@ -98,24 +89,21 @@ class Game extends JSONMapView {
 
   DateTime get startedAt {
     if (containsKey("StartedAt")) {
-      return DateTime.fromMicrosecondsSinceEpoch(
-          (this["StartedAt"] as num) ~/ 1000);
+      return (this["StartedAt"] as Timestamp).toDate();
     }
     return DateTime.fromMicrosecondsSinceEpoch(0);
   }
 
   DateTime get finishedAt {
     if (containsKey("FinishedAt")) {
-      return DateTime.fromMicrosecondsSinceEpoch(
-          (this["FinishedAt"] as num) ~/ 1000);
+      return (this["FinishedAt"] as Timestamp).toDate();
     }
     return DateTime.fromMicrosecondsSinceEpoch(0);
   }
 
   DateTime get createdAt {
     if (containsKey("CreatedAt")) {
-      return DateTime.fromMicrosecondsSinceEpoch(
-          (this["CreatedAt"] as num) ~/ 1000);
+      return (this["CreatedAt"] as Timestamp).toDate();
     }
     return DateTime.fromMicrosecondsSinceEpoch(0);
   }

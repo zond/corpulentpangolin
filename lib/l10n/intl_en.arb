@@ -10,6 +10,18 @@
   "publicChat": "Public chat",
   "publicChatDisabled": "Public chat disabled",
   "gameCreated": "Game created",
+  "failedSavingGame_Err_": "Failed saving game: {err}",
+  "@failedSavingGame_Err_": {
+    "placeholders": {
+      "err": {}
+    }
+  },
+  "failedSavingProfile_Err_": "Failed saving profile: {err}",
+  "@failedSavingProfile_Err_": {
+    "placeholders": {
+      "err": {}
+    }
+  },
   "failedCreatingGame_Err_": "Failed creating game: {err}",
   "@failedCreatingGame_Err_": {
     "placeholders": {
@@ -111,7 +123,7 @@
   "myGames": "My games",
   "error": "Error",
   "join": "Join",
-  "invite": "Invite",
+  "share": "Share",
   "view": "View",
   "w": "w",
   "d": "d",
@@ -164,8 +176,7 @@
       "err": {}
     }
   },
-  "profilePictureUpdated": "Profile picture updated",
-  "usernameUpdated": "Username updated",
+  "profileUpdated": "Profile updated",
   "reliability_": "Reliability:",
   "nmrPhases_": "NMR phases:",
   "nonNMRPhases_": "Non NMR phases:",
@@ -199,5 +210,8 @@
   "youAreAlreadyInGame": "You have already joined this game",
   "gameFullNoReplacements": "Game is already full and has no replaceable players",
   "youAreNotLoggedIn": "You aren't logged in",
-  "gameJoined": "Game joined"
+  "gameJoined": "Game joined",
+  "leave": "Leave",
+  "youCantLeaveStartedGames": "You can't leave started games",
+  "leftGame": "Left game"
 }
