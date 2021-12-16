@@ -16,13 +16,17 @@ import 'firebase_options.dart';
 import 'router.gr.dart';
 import 'variant.dart';
 
+const bool isProd = bool.fromEnvironment("dart.vm.product");
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
-  FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
+  if (!isProd) {
+    FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
+    FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
+  }
   await configure();
   runApp(_App());
 }
