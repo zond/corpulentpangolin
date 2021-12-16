@@ -132,6 +132,18 @@ class GameControlsWidget extends StatelessWidget {
       onPressed: () => appRouter.push(GamePageRoute(gameID: game.id)),
       child: Text(l10n.view),
     ));
+    buttons.add(Tooltip(
+      message:
+          user?.uid == game.ownerUID ? "" : l10n.youCantEditGamesYouDontOwn,
+      child: ElevatedButton(
+        onPressed: user?.uid == game.ownerUID
+            ? () {
+                appRouter.push(EditGamePageRoute(gameID: game.id));
+              }
+            : null,
+        child: Text(l10n.edit),
+      ),
+    ));
     return ButtonBar(
       alignment: MainAxisAlignment.start,
       children: buttons,

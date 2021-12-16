@@ -69,6 +69,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "asGameMasterYouCan": MessageLookupByLibrary.simpleMessage(
             "Som spelledare kan du pausa/starta spel samt kontrollera vilka som deltar (och som vilket land). För att själva spela måste du delta som spelare efter att ha skapat spelet."),
         "c_of_p_playersJoined": m0,
+        "cantChangeVariant": MessageLookupByLibrary.simpleMessage(
+            "Du kan inte byta variant på ett existerande spel"),
         "changeProfilePicture":
             MessageLookupByLibrary.simpleMessage("Ändra profilbil"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
@@ -80,6 +82,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "d": MessageLookupByLibrary.simpleMessage("d"),
         "description": MessageLookupByLibrary.simpleMessage("Beskrivning"),
         "description_V_": m3,
+        "edit": MessageLookupByLibrary.simpleMessage("Redigera"),
+        "editGame": MessageLookupByLibrary.simpleMessage("Redigera spel"),
         "error": MessageLookupByLibrary.simpleMessage("Fel"),
         "failedCreatingGame_Err_": m4,
         "failedSavingGame_Err_": m5,
@@ -195,6 +199,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Du deltar redan i det här spelet"),
         "youAreNotLoggedIn":
             MessageLookupByLibrary.simpleMessage("Du är inte inloggad"),
+        "youCantEditGamesYouDontOwn": MessageLookupByLibrary.simpleMessage(
+            "Du kan inte redigera spel du inte är spelledare för"),
         "youCantLeaveStartedGames": MessageLookupByLibrary.simpleMessage(
             "Du kan inte lämna startade spel"),
         "youDonMatchRequirements": MessageLookupByLibrary.simpleMessage(

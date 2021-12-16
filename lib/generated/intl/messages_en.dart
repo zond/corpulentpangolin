@@ -69,6 +69,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "asGameMasterYouCan": MessageLookupByLibrary.simpleMessage(
             "As game master, you can pause/resume games and control who joins (and as what nation). To play yourself, you need to join as a player after creating your game."),
         "c_of_p_playersJoined": m0,
+        "cantChangeVariant": MessageLookupByLibrary.simpleMessage(
+            "You can\'t change variant of an existing game"),
         "changeProfilePicture":
             MessageLookupByLibrary.simpleMessage("Change profile picture"),
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
@@ -80,6 +82,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "d": MessageLookupByLibrary.simpleMessage("d"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "description_V_": m3,
+        "edit": MessageLookupByLibrary.simpleMessage("Edit"),
+        "editGame": MessageLookupByLibrary.simpleMessage("Edit game"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
         "failedCreatingGame_Err_": m4,
         "failedSavingGame_Err_": m5,
@@ -194,6 +198,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You have already joined this game"),
         "youAreNotLoggedIn":
             MessageLookupByLibrary.simpleMessage("You aren\'t logged in"),
+        "youCantEditGamesYouDontOwn": MessageLookupByLibrary.simpleMessage(
+            "You can\'t edit games you aren\'t game master for"),
         "youCantLeaveStartedGames": MessageLookupByLibrary.simpleMessage(
             "You can\'t leave started games"),
         "youDonMatchRequirements": MessageLookupByLibrary.simpleMessage(

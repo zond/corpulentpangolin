@@ -25,7 +25,11 @@ void main() async {
   );
   if (!isProd) {
     FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
-    FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
+    try {
+      FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
+    } catch (e) {
+      debugPrint("Failed to connect to Firestore emulator: $e");
+    }
   }
   await configure();
   runApp(_App());

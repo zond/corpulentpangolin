@@ -70,6 +70,26 @@ class S {
     );
   }
 
+  /// `Edit game`
+  String get editGame {
+    return Intl.message(
+      'Edit game',
+      name: 'editGame',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get edit {
+    return Intl.message(
+      'Edit',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Description`
   String get description {
     return Intl.message(
@@ -155,6 +175,26 @@ class S {
     return Intl.message(
       'Game created',
       name: 'gameCreated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can't edit games you aren't game master for`
+  String get youCantEditGamesYouDontOwn {
+    return Intl.message(
+      'You can\'t edit games you aren\'t game master for',
+      name: 'youCantEditGamesYouDontOwn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can't change variant of an existing game`
+  String get cantChangeVariant {
+    return Intl.message(
+      'You can\'t change variant of an existing game',
+      name: 'cantChangeVariant',
       desc: '',
       args: [],
     );

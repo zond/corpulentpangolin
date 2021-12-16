@@ -24,6 +24,8 @@ class Game extends JSONMapView {
 
   PhaseMeta get phaseMeta => PhaseMeta(getMap("PhaseMeta"));
 
+  bool get exists => containsKey("ID");
+
   bool get started => getBool("Started");
 
   int get nmrsBeforeReplaceable => getInt("NMRsBeforeReplaceable");
