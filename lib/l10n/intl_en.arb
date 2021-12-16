@@ -12,6 +12,7 @@
   "publicChat": "Public chat",
   "publicChatDisabled": "Public chat disabled",
   "gameCreated": "Game created",
+  "hasGameMaster": "Has game master",
   "gameUpdated": "Game updated",
   "youCantEditGamesYouDontOwn": "You can't edit games you aren't game master for",
   "cantChangeVariant": "You can't change variant of an existing game",

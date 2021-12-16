@@ -11,6 +11,7 @@
   "publicChatDisabled": "Offentlig chat avstängd",
   "gameCreated": "Spel skapat",
   "gameUpdated": "Spel uppdaterat",
+  "hasGameMaster": "Har spelledare",
   "failedCreatingGame_Err_": "Misslyckades med att skapa spel: {err}",
   "failedSavingGame_Err_": "Misslyckades med att spara spel: {err}",
   "failedSavingProfile_Err_": "Misslyckades med att spara profil: {err}",

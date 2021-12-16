@@ -111,6 +111,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "hasEitherMinRelOrMinQuick": MessageLookupByLibrary.simpleMessage(
             "Has either minimum reliability or minimum quickness"),
         "hasExtensions": MessageLookupByLibrary.simpleMessage("Has extensions"),
+        "hasGameMaster":
+            MessageLookupByLibrary.simpleMessage("Has game master"),
         "hasGraceOrExt": MessageLookupByLibrary.simpleMessage(
             "Has grace periods or extensions"),
         "hasGracePeriods":

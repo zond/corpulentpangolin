@@ -31,6 +31,8 @@ class GameMetadataWidget extends StatelessWidget {
           children: [
             _MetadataRow(Icons.map, l10n.gameVariant_Var_(game.variant)),
             if (game.private) _MetadataRow(Icons.lock, l10n.private),
+            if (game.ownerUID != "")
+              _MetadataRow(Icons.gavel, l10n.hasGameMaster),
             _MetadataRow(Icons.av_timer,
                 l10n.phaseDeadline_Date_(game.phaseLengthDuration(context))),
             if (game.nonMovementPhaseLengthMinutes != 0 &&

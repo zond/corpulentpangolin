@@ -112,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Har krav på antingen pålitlighet eller snabbhet"),
         "hasExtensions":
             MessageLookupByLibrary.simpleMessage("Har beställda förlängningar"),
+        "hasGameMaster": MessageLookupByLibrary.simpleMessage("Har spelledare"),
         "hasGraceOrExt":
             MessageLookupByLibrary.simpleMessage("Har förlängningar"),
         "hasGracePeriods": MessageLookupByLibrary.simpleMessage(

@@ -78,6 +78,8 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
                                 _MetadataIcon(Icons.pause, l10n.hasGraceOrExt),
                               if (game.private)
                                 _MetadataIcon(Icons.lock, l10n.private),
+                              if (game.ownerUID != "")
+                                _MetadataIcon(Icons.gavel, l10n.hasGameMaster),
                               if (game.disablePrivateChat ||
                                   game.disableGroupChat ||
                                   game.disableConferenceChat)
@@ -98,7 +100,8 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
                   subtitle: Row(
                     children: [
                       Expanded(
-                        child: Text("${game["Variant"]}"),
+                        child: Text(
+                            "${game["Variant"]}, ${game.combinedPhaseLengthDuration(context)}"),
                       ),
                       Text(game.phaseMeta.desc(context)),
                     ],

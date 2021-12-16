@@ -84,6 +84,16 @@ class Game extends JSONMapView {
     return selection;
   }
 
+  String combinedPhaseLengthDuration(BuildContext context,
+      {bool short = true}) {
+    String res = phaseLengthDuration(context, short: short);
+    if (nonMovementPhaseLengthMinutes != 0 &&
+        nonMovementPhaseLengthMinutes != phaseLengthMinutes) {
+      res += "/${nonMovementPhaseLengthDuration(context, short: short)}";
+    }
+    return res;
+  }
+
   String nonMovementPhaseLengthDuration(BuildContext context,
       {bool short = true}) {
     return nanosToDuration(context, nonMovementPhaseLengthMinutes * (1e9 * 60));

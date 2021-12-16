@@ -180,6 +180,16 @@ class S {
     );
   }
 
+  /// `Has game master`
+  String get hasGameMaster {
+    return Intl.message(
+      'Has game master',
+      name: 'hasGameMaster',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Game updated`
   String get gameUpdated {
     return Intl.message(
