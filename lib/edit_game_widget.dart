@@ -73,7 +73,7 @@ class _EditGameWidgetState extends State<EditGameWidget> {
   @override
   void initState() {
     super.initState();
-    game = Game.fromMap(Map<String, dynamic>.from(widget.game));
+    game = widget.game;
   }
 
   @override
@@ -292,15 +292,19 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                     child: const Icon(Icons.check),
                     onPressed: () {
                       Future<Object?>? updater;
-                      if (game.exists) {
-                        updater = gameCollection.doc(game.id).set(game);
+                      final existed = game.exists;
+                      if (existed) {
+                        final _id = game.id;
+                        game.remove("ID");
+                        updater = gameCollection.doc(_id).update(game);
                       } else {
                         updater = gameCollection.add(game);
                       }
                       updater.then((_) {
-                        appRouter
-                            .pop()
-                            .then((_) => toast(context, l10n.gameCreated));
+                        appRouter.pop().then((_) {
+                          toast(context,
+                              existed ? l10n.gameUpdated : l10n.gameCreated);
+                        });
                       }).catchError((err) {
                         debugPrint("$err");
                         toast(context, l10n.failedCreatingGame_Err_("$err"));

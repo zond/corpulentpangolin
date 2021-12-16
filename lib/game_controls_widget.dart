@@ -30,7 +30,6 @@ class GameControlsWidget extends StatelessWidget {
     if (game == null || variant == null) {
       return const SpinnerWidget();
     }
-    debugPrint("game is $game");
     if (game.err != null || variant.err != null) {
       return Column(
         children: [
@@ -48,7 +47,6 @@ class GameControlsWidget extends StatelessWidget {
               onPressed: game.started
                   ? null
                   : () {
-                      debugPrint("leaving $game");
                       FirebaseFirestore.instance
                           .collection("Game")
                           .doc(game.id)
@@ -97,8 +95,6 @@ class GameControlsWidget extends StatelessWidget {
           child: ElevatedButton(
             onPressed: isJoinable
                 ? () {
-                    debugPrint(
-                        "joining $game with ${game["SeededAt"].runtimeType}");
                     FirebaseFirestore.instance
                         .collection("Game")
                         .doc(game.id)

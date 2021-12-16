@@ -174,7 +174,7 @@ class Game extends JSONMapView {
   }
 
   String get desc {
-    if (containsKey("Decs")) {
+    if (containsKey("Desc")) {
       return this["Desc"] as String;
     }
     return "";

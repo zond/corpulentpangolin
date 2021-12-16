@@ -100,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gameMasterOnlyAllowedInPrivateGames":
             MessageLookupByLibrary.simpleMessage(
                 "Spelledare endast möjligt i privata spel (risk för missbruk)."),
+        "gameUpdated": MessageLookupByLibrary.simpleMessage("Spel uppdaterat"),
         "gameVariant_Var_": m8,
         "groupChat": MessageLookupByLibrary.simpleMessage("Gruppchat"),
         "groupChatDisabled":

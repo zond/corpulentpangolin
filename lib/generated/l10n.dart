@@ -180,6 +180,16 @@ class S {
     );
   }
 
+  /// `Game updated`
+  String get gameUpdated {
+    return Intl.message(
+      'Game updated',
+      name: 'gameUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `You can't edit games you aren't game master for`
   String get youCantEditGamesYouDontOwn {
     return Intl.message(
