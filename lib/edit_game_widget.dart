@@ -44,13 +44,20 @@ class _VariantMapWidget extends StatelessWidget {
     if (!variants.map.containsKey(variant)) {
       return Text("Variant $variant not recognized!");
     }
-    return StreamProvider.value(
+    return StreamProvider<SVGBundle?>.value(
       value: variants.map[variant]!.svgs,
       initialData: null,
+      catchError: (context, err) {
+        debugPrint("_VariantMapWidget SVGBundle: $err");
+        SVGBundle(map: const [], units: const {}, err: err);
+      },
       builder: (context, _) {
         final svgs = context.watch<SVGBundle?>();
         if (svgs == null) {
           return _wrap(const SpinnerWidget());
+        }
+        if (svgs.err != null) {
+          return Text("_VariantMapWidget SVGBundle error: ${svgs.err}");
         }
         return _wrap(MapWidget(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor));
@@ -466,7 +473,7 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                   toast(context, existed ? l10n.gameUpdated : l10n.gameCreated);
                 });
               }).catchError((err) {
-                debugPrint("$err");
+                debugPrint("Failed creating game: $err");
                 toast(context, l10n.failedCreatingGame_Err_("$err"));
               });
             },

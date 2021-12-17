@@ -31,7 +31,10 @@ class PlayerWidget extends StatelessWidget {
           }
           return AppUser(snap);
         }),
-        catchError: (context, err) => AppUser.fromMap({"Error": err}),
+        catchError: (context, err) {
+          debugPrint("PlayerWidget User: $err");
+          AppUser.fromMap({"Error": err});
+        },
         initialData: null,
         builder: (context, _) {
           final user = context.watch<AppUser?>();

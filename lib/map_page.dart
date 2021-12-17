@@ -30,8 +30,10 @@ class MapPage extends StatelessWidget {
     }
     return StreamProvider.value(
       value: variant.svgs,
-      catchError: (context, e) =>
-          SVGBundle(map: const [], units: const {}, err: e),
+      catchError: (context, e) {
+        debugPrint("MapPage SVGBundle: $e");
+        SVGBundle(map: const [], units: const {}, err: e);
+      },
       initialData: null,
       child: Column(
         children: [

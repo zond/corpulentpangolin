@@ -52,7 +52,10 @@ class _App extends StatelessWidget {
         StreamProvider<Variants?>.value(
           value: variants,
           initialData: null,
-          catchError: (context, e) => Variants.error(e),
+          catchError: (context, e) {
+            debugPrint("App Variants error: $e");
+            Variants.error(e);
+          },
         ),
       ],
       builder: (context, child) {
@@ -69,7 +72,10 @@ class _App extends StatelessWidget {
               }
               return AppUser(userSnapshot);
             }),
-            catchError: (context, err) => AppUser.fromMap({"Error": err}),
+            catchError: (context, err) {
+              debugPrint("App AppUser error: $err");
+              AppUser.fromMap({"Error": err});
+            },
             initialData: null,
             child: child,
           );

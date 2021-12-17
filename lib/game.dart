@@ -228,8 +228,10 @@ Widget gameProvider({
           }
           return Game(snapshot);
         }),
-        catchError: (context, e) =>
-            Game.fromMap({"Error": "gameProvider Game: $e"}),
+        catchError: (context, e) {
+          debugPrint("gameProvider Game: $e");
+          return Game.fromMap({"Error": "gameProvider Game: $e"});
+        },
         initialData: initialData,
       ),
       StreamProvider<Phase?>.value(
@@ -245,8 +247,10 @@ Widget gameProvider({
           }
           return Phase(snapshot.docs[0]);
         }),
-        catchError: (context, e) =>
-            Phase.fromMap({"Error": "gameProvider Phase: $e"}),
+        catchError: (context, e) {
+          debugPrint("gameProvider Phase: $e");
+          return Phase.fromMap({"Error": "gameProvider Phase: $e"});
+        },
         initialData: null,
       ),
       ProxyProvider<Game?, Variant?>(

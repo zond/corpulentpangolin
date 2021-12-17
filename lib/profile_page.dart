@@ -119,7 +119,8 @@ class ProfilePage extends StatelessWidget {
                                         updater.then((_) {
                                           toastFunc(l10n.profileUpdated);
                                         }).catchError((err) {
-                                          debugPrint("$err");
+                                          debugPrint(
+                                              "Failed saving profile: $err");
                                           toast(
                                               context,
                                               l10n.failedSavingProfile_Err_(
@@ -281,7 +282,7 @@ class _ChangePictureURLDialogState extends State<_ChangePictureURLDialog> {
                         toast(context, l10n.profileUpdated);
                         Navigator.of(context).pop();
                       }).catchError((err) {
-                        debugPrint("$err");
+                        debugPrint("Failed saving profile: $err");
                         toast(context, l10n.failedSavingProfile_Err_("$err"));
                       });
                     },

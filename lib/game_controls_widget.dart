@@ -57,7 +57,7 @@ class GameControlsWidget extends StatelessWidget {
                           })
                           .then((_) => toast(context, l10n.leftGame))
                           .catchError((err) {
-                            debugPrint("$err");
+                            debugPrint("Failed saving game: $err");
                             toast(context, l10n.failedSavingGame_Err_(err));
                           });
                     },
@@ -103,7 +103,7 @@ class GameControlsWidget extends StatelessWidget {
                         })
                         .then((_) => toast(context, l10n.gameJoined))
                         .catchError((err) {
-                          debugPrint("$err");
+                          debugPrint("Failed saving game: $err");
                           toast(context, l10n.failedSavingGame_Err_(err));
                         });
                   }
