@@ -24,6 +24,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   if (!isProd) {
+    debugPrint("Connecting to emulator!");
     FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
     try {
       FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
