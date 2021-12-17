@@ -164,7 +164,7 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                                   ? null
                                   : (newValue) {
                                       setState(() {
-                                        game["Variant"] = newValue.toString();
+                                        game["Variant"] = "$newValue";
                                       });
                                     },
                             ),
