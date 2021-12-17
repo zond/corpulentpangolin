@@ -399,15 +399,14 @@ class _EditGameWidgetState extends State<EditGameWidget> {
               ),
               child: DropdownButtonHideUnderline(
                 child: DropdownButton(
-                  value: game["NationSelection"],
+                  value: "${game["NationSelection"]}",
                   items: [
                     DropdownMenuItem(child: Text(l10n.random), value: "random"),
                     DropdownMenuItem(
                         child: Text(l10n.preferences), value: "preferences"),
                   ],
                   onChanged: (newValue) {
-                    setState(
-                        () => game["NationSelection"] = newValue.toString());
+                    setState(() => game["NationSelection"] = "$newValue");
                   },
                 ),
               ),
@@ -445,40 +444,34 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                 Text(l10n.publicChat),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: FloatingActionButton(
-                    child: const Icon(Icons.check),
-                    onPressed: () {
-                      Future<Object?>? updater;
-                      final existed = game.exists;
-                      if (existed) {
-                        final _id = game.id;
-                        game.remove("ID");
-                        updater = gameCollection.doc(_id).update(game);
-                      } else {
-                        updater = gameCollection.add(game);
-                      }
-                      updater.then((_) {
-                        appRouter.pop().then((_) {
-                          toast(context,
-                              existed ? l10n.gameUpdated : l10n.gameCreated);
-                        });
-                      }).catchError((err) {
-                        debugPrint("$err");
-                        toast(context, l10n.failedCreatingGame_Err_("$err"));
-                      });
-                    },
-                  ),
-                ),
-              ],
-            )
           ],
         ),
+        Positioned(
+          right: 0,
+          bottom: 0,
+          child: FloatingActionButton(
+            child: const Icon(Icons.check),
+            onPressed: () {
+              Future<Object?>? updater;
+              final existed = game.exists;
+              if (existed) {
+                final _id = game.id;
+                game.remove("ID");
+                updater = gameCollection.doc(_id).update(game);
+              } else {
+                updater = gameCollection.add(game);
+              }
+              updater.then((_) {
+                appRouter.pop().then((_) {
+                  toast(context, existed ? l10n.gameUpdated : l10n.gameCreated);
+                });
+              }).catchError((err) {
+                debugPrint("$err");
+                toast(context, l10n.failedCreatingGame_Err_("$err"));
+              });
+            },
+          ),
+        )
       ],
     );
   }
