@@ -33,6 +33,8 @@ class GameMetadataWidget extends StatelessWidget {
             if (game.private) _MetadataRow(Icons.lock, l10n.private),
             if (game.ownerUID != "")
               _MetadataRow(Icons.gavel, l10n.hasGameMaster),
+            if (game.invitationRequired)
+              _MetadataRow(Icons.lock_open, l10n.onlyPlayersAssignedByGM),
             _MetadataRow(Icons.av_timer,
                 l10n.phaseDeadline_Date_(game.phaseLengthDuration(context))),
             if (game.nonMovementPhaseLengthMinutes != 0 &&
@@ -41,6 +43,12 @@ class GameMetadataWidget extends StatelessWidget {
                   Icons.av_timer,
                   l10n.nonMovementPhaseDeadline_Date_(
                       game.nonMovementPhaseLengthDuration(context))),
+            if (game.hasLimitedStartTime)
+              _MetadataRow(
+                  Icons.timer_off,
+                  l10n.onlyStartTheGameBetween_F_and_T(
+                      game.dontStartBefore.format(context),
+                      game.dontStartAfter.format(context))),
             _MetadataRow(Icons.cake, l10n.created_Date_(game.createdAt)),
             if (game.isStarted)
               _MetadataRow(Icons.flag, l10n.started_Date_(game.startedAt)),

@@ -76,10 +76,19 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
                                     l10n.hasAutoReplacements),
                               if (game.hasGrace || game.hasExtensions)
                                 _MetadataIcon(Icons.pause, l10n.hasGraceOrExt),
+                              if (game.hasLimitedStartTime)
+                                _MetadataIcon(
+                                    Icons.timer_off,
+                                    l10n.onlyStartTheGameBetween_F_and_T(
+                                        game.dontStartBefore.format(context),
+                                        game.dontStartAfter.format(context))),
                               if (game.private)
                                 _MetadataIcon(Icons.lock, l10n.private),
                               if (game.ownerUID != "")
                                 _MetadataIcon(Icons.gavel, l10n.hasGameMaster),
+                              if (game.invitationRequired)
+                                _MetadataIcon(Icons.lock_open,
+                                    l10n.onlyPlayersAssignedByGM),
                               if (game.disablePrivateChat ||
                                   game.disableGroupChat ||
                                   game.disableConferenceChat)
