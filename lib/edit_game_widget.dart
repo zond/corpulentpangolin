@@ -99,8 +99,10 @@ class _EditGameWidgetState extends State<EditGameWidget> {
   late Game game;
   late _SplitTime phaseLength;
   late _SplitTime nonMovementPhaseLength;
+  late _SplitTime gracePeriodLength;
   bool displayNonMovementPhaseLength = false;
   bool displayStartTimeRequirements = false;
+  bool displayGraceOptions = false;
   final gameCollection = FirebaseFirestore.instance.collection("Game");
 
   @override
@@ -110,9 +112,11 @@ class _EditGameWidgetState extends State<EditGameWidget> {
     phaseLength = _SplitTime(game.phaseLengthMinutes.toInt());
     nonMovementPhaseLength =
         _SplitTime(game.nonMovementPhaseLengthMinutes.toInt());
+    gracePeriodLength = _SplitTime(game.graceLengtMinutes.toInt());
     displayNonMovementPhaseLength = game.nonMovementPhaseLengthMinutes != 0 &&
         game.nonMovementPhaseLengthMinutes != game.phaseLengthMinutes;
     displayStartTimeRequirements = game.dontStartAfter != game.dontStartBefore;
+    displayGraceOptions = game.hasGrace;
   }
 
   @override
@@ -462,6 +466,126 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                   });
                 },
               ),
+            Row(
+              children: [
+                Switch(
+                  value: displayGraceOptions,
+                  onChanged: (newValue) {
+                    setState(() {
+                      displayGraceOptions = newValue;
+                      if (!newValue) {
+                        game["GraceLengthMinutes"] = 0;
+                        game["GracesPerPlayer"] = 0;
+                        game["GracesPerPhase"] = 0;
+                      }
+                    });
+                  },
+                ),
+                Text(l10n.allowGracePeriods),
+              ],
+            ),
+            if (displayGraceOptions) ...[
+              Row(
+                children: [
+                  Expanded(child: Text(l10n.gracePeriodLength)),
+                  SizedBox(
+                    width: 50,
+                    child: TextFormField(
+                      initialValue: "${gracePeriodLength.days}",
+                      decoration: InputDecoration(
+                        labelText: l10n.days,
+                      ),
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: false, decimal: false),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onChanged: (newValue) {
+                        setState(() {
+                          gracePeriodLength.days = int.parse(newValue);
+                          game["GraceLengthMinutes"] =
+                              gracePeriodLength.toMinutes();
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 50,
+                    child: TextFormField(
+                      initialValue: "${gracePeriodLength.hours}",
+                      decoration: InputDecoration(
+                        labelText: l10n.hours,
+                      ),
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: false, decimal: false),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onChanged: (newValue) {
+                        setState(() {
+                          gracePeriodLength.hours = int.parse(newValue);
+                          game["GraceLengthMinutes"] =
+                              gracePeriodLength.toMinutes();
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 50,
+                    child: TextFormField(
+                      initialValue: "${gracePeriodLength.minutes}",
+                      decoration: InputDecoration(
+                        labelText: l10n.minutes,
+                      ),
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: false, decimal: false),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onChanged: (newValue) {
+                        setState(() {
+                          gracePeriodLength.minutes = int.parse(newValue);
+                          game["GraceLengthMinutes"] =
+                              gracePeriodLength.toMinutes();
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(child: Text(l10n.gracesPerPlayer)),
+                  SizedBox(
+                    width: 50,
+                    child: TextFormField(
+                      initialValue: "${game.gracesPerPlayer}",
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: false, decimal: false),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onChanged: (newValue) {
+                        setState(() {
+                          game["GracesPerPlayer"] = int.parse(newValue);
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(child: Text(l10n.gracesPerPhase)),
+                  SizedBox(
+                    width: 50,
+                    child: TextFormField(
+                      initialValue: "${game.gracesPerPhase}",
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: false, decimal: false),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onChanged: (newValue) {
+                        setState(() {
+                          game["GracesPerPhase"] = int.parse(newValue);
+                        });
+                      },
+                    ),
+                  )
+                ],
+              )
+            ],
             const Divider(thickness: 5),
             InputDecorator(
               decoration: InputDecoration(

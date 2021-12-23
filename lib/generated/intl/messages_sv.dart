@@ -65,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "adjustment": MessageLookupByLibrary.simpleMessage("Justering"),
+        "allowGracePeriods":
+            MessageLookupByLibrary.simpleMessage("Automatiska förlängningar"),
         "anonymous": MessageLookupByLibrary.simpleMessage("Anonym"),
         "appName": MessageLookupByLibrary.simpleMessage("corpulentpangolin"),
         "army": MessageLookupByLibrary.simpleMessage("Armé"),
@@ -112,6 +114,12 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Spelledare endast möjligt i privata spel (risk för missbruk)."),
         "gameUpdated": MessageLookupByLibrary.simpleMessage("Spel uppdaterat"),
         "gameVariant_Var_": m8,
+        "gracePeriodLength": MessageLookupByLibrary.simpleMessage(
+            "Automatisk förlängning när en spelare är inaktiv"),
+        "gracesPerPhase": MessageLookupByLibrary.simpleMessage(
+            "Maximalt antal automatiska förlängningar per fas"),
+        "gracesPerPlayer": MessageLookupByLibrary.simpleMessage(
+            "Maximalt antal automatiska förlängningar per spelare per spel"),
         "groupChat": MessageLookupByLibrary.simpleMessage("Gruppchat"),
         "groupChatDisabled":
             MessageLookupByLibrary.simpleMessage("Gruppchat avstängd"),

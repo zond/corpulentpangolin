@@ -1278,6 +1278,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Allow grace periods`
+  String get allowGracePeriods {
+    return Intl.message(
+      'Allow grace periods',
+      name: 'allowGracePeriods',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automatic phase extension when player is inactive`
+  String get gracePeriodLength {
+    return Intl.message(
+      'Automatic phase extension when player is inactive',
+      name: 'gracePeriodLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum number of automatic phase extensions per player per game`
+  String get gracesPerPlayer {
+    return Intl.message(
+      'Maximum number of automatic phase extensions per player per game',
+      name: 'gracesPerPlayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum number of automatic phase extensions per phase`
+  String get gracesPerPhase {
+    return Intl.message(
+      'Maximum number of automatic phase extensions per phase',
+      name: 'gracesPerPhase',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -120,5 +120,9 @@
   "limitWhenGameStarts": "Begränsa tiden på dygnet då spelet kan starta",
   "onlyStartTheGameBetween_F_and_T": "Starta endast spelet mellan {F} och {T}",
   "dontStartGameBefore": "Starta inte spelet innan",
-  "dontStartGameAfter": "Starta inte spelet efter"
+  "dontStartGameAfter": "Starta inte spelet efter",
+  "allowGracePeriods": "Automatiska förlängningar",
+  "gracePeriodLength": "Automatisk förlängning när en spelare är inaktiv",
+  "gracesPerPlayer": "Maximalt antal automatiska förlängningar per spelare per spel",
+  "gracesPerPhase": "Maximalt antal automatiska förlängningar per fas"
 }

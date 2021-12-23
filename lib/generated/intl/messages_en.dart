@@ -65,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "adjustment": MessageLookupByLibrary.simpleMessage("Adjustment"),
+        "allowGracePeriods":
+            MessageLookupByLibrary.simpleMessage("Allow grace periods"),
         "anonymous": MessageLookupByLibrary.simpleMessage("Anonymous"),
         "appName": MessageLookupByLibrary.simpleMessage("corpulentpangolin"),
         "army": MessageLookupByLibrary.simpleMessage("Army"),
@@ -112,6 +114,12 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Game master only allowed in private games due to risk of abuse."),
         "gameUpdated": MessageLookupByLibrary.simpleMessage("Game updated"),
         "gameVariant_Var_": m8,
+        "gracePeriodLength": MessageLookupByLibrary.simpleMessage(
+            "Automatic phase extension when player is inactive"),
+        "gracesPerPhase": MessageLookupByLibrary.simpleMessage(
+            "Maximum number of automatic phase extensions per phase"),
+        "gracesPerPlayer": MessageLookupByLibrary.simpleMessage(
+            "Maximum number of automatic phase extensions per player per game"),
         "groupChat": MessageLookupByLibrary.simpleMessage("Group chat"),
         "groupChatDisabled":
             MessageLookupByLibrary.simpleMessage("Group chat disabled"),

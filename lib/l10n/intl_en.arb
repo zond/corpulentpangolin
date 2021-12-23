@@ -236,5 +236,9 @@
     }
   },
   "dontStartGameBefore": "Don't start the game before",
-  "dontStartGameAfter": "Don't start the game after"
+  "dontStartGameAfter": "Don't start the game after",
+  "allowGracePeriods": "Allow grace periods",
+  "gracePeriodLength": "Automatic phase extension when player is inactive",
+  "gracesPerPlayer": "Maximum number of automatic phase extensions per player per game",
+  "gracesPerPhase": "Maximum number of automatic phase extensions per phase"
 }
