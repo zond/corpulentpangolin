@@ -72,7 +72,8 @@ class _EditGamePageState extends State<EditGamePage> {
               onPressed: () => appRouter.replace(const HomePageRoute()),
             ),
           ),
-          body: SmallPadding(child: EditGameWidget(game: game)),
+          body: SmallPadding(
+              child: EditGameWidget(game: game, title: l10n.editGame)),
         );
       },
     );
