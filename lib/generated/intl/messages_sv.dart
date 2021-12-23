@@ -48,17 +48,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m13(deadline) => "Faslängd ej förflyttning: ${deadline}";
 
-  static String m14(deadline) => "Faslängd: ${deadline}";
+  static String m14(F, T) => "Starta endast spelet mellan ${F} och ${T}";
 
-  static String m15(v) => "Regler: ${v}";
+  static String m15(deadline) => "Faslängd: ${deadline}";
 
-  static String m16(date) => "Started: ${date}";
+  static String m16(v) => "Regler: ${v}";
 
-  static String m17(err) => "Kunde ej ladda URL: ${err}";
+  static String m17(date) => "Started: ${date}";
 
-  static String m18(v) => "Användarnamn: ${v}";
+  static String m18(err) => "Kunde ej ladda URL: ${err}";
 
-  static String m19(v) => "Röster nödvändiga för förlängning: ${v}";
+  static String m19(v) => "Användarnamn: ${v}";
+
+  static String m20(v) => "Röster nödvändiga för förlängning: ${v}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -86,6 +88,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "description_V_": m3,
         "differentPhaseForNonMovement": MessageLookupByLibrary.simpleMessage(
             "Annan längd för icke-förlyttningsfaser"),
+        "dontStartGameAfter":
+            MessageLookupByLibrary.simpleMessage("Starta inte spelet efter"),
+        "dontStartGameBefore":
+            MessageLookupByLibrary.simpleMessage("Starta inte spelet innan"),
         "edit": MessageLookupByLibrary.simpleMessage("Redigera"),
         "editGame": MessageLookupByLibrary.simpleMessage("Redigera spel"),
         "error": MessageLookupByLibrary.simpleMessage("Fel"),
@@ -130,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "join": MessageLookupByLibrary.simpleMessage("Delta"),
         "leave": MessageLookupByLibrary.simpleMessage("Lämna"),
         "leftGame": MessageLookupByLibrary.simpleMessage("Lämnade spelet"),
+        "limitWhenGameStarts": MessageLookupByLibrary.simpleMessage(
+            "Begränsa tiden på dygnet då spelet kan starta"),
         "liveGames": MessageLookupByLibrary.simpleMessage("Pågående spel"),
         "loading": MessageLookupByLibrary.simpleMessage("Laddar..."),
         "logInToSeeYourGames": MessageLookupByLibrary.simpleMessage(
@@ -166,9 +174,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Faser med order:"),
         "onlyPlayersAssignedByGM": MessageLookupByLibrary.simpleMessage(
             "Endast spelare godkända av spelledaren kan delta."),
+        "onlyStartTheGameBetween_F_and_T": m14,
         "openGames": MessageLookupByLibrary.simpleMessage("Öppna spel"),
         "orders": MessageLookupByLibrary.simpleMessage("Order"),
-        "phaseDeadline_Date_": m14,
+        "phaseDeadline_Date_": m15,
         "phaseLength": MessageLookupByLibrary.simpleMessage("Faslängd"),
         "players": MessageLookupByLibrary.simpleMessage("Spelare"),
         "preferences": MessageLookupByLibrary.simpleMessage("Prioritetslista"),
@@ -189,7 +198,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "requireAssignmentToJoin":
             MessageLookupByLibrary.simpleMessage("Godkännande nödvändigt"),
         "retreat": MessageLookupByLibrary.simpleMessage("Reträtt"),
-        "rules_V_": m15,
+        "rules_V_": m16,
         "share": MessageLookupByLibrary.simpleMessage("Dela"),
         "someChatsDisabled":
             MessageLookupByLibrary.simpleMessage("Vissa chattar avstängda"),
@@ -197,14 +206,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Någon du svartlistat, eller någon som svartlistat dig, är redan i spelet"),
         "source": MessageLookupByLibrary.simpleMessage("Källkod"),
         "spring": MessageLookupByLibrary.simpleMessage("Vår"),
-        "started_Date_": m16,
-        "unableToLoadURL": m17,
+        "started_Date_": m17,
+        "unableToLoadURL": m18,
         "unnamed": MessageLookupByLibrary.simpleMessage("namnlöst"),
         "username": MessageLookupByLibrary.simpleMessage("Användarnamn"),
-        "username_V_": m18,
+        "username_V_": m19,
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("Se"),
-        "votesRequiredForExtension_V_": m19,
+        "votesRequiredForExtension_V_": m20,
         "w": MessageLookupByLibrary.simpleMessage("v"),
         "youAreAlreadyInGame": MessageLookupByLibrary.simpleMessage(
             "Du deltar redan i det här spelet"),

@@ -43,6 +43,8 @@ class _CreateGamePageState extends State<CreateGamePage> {
     "Players": [FirebaseAuth.instance.currentUser?.uid],
     "CategorySortKey": 1000,
     "Seeded": false,
+    "DontStartBeforeMinuteInDay": 0,
+    "DontStartAfterMinuteInDay": 0
   });
   final gameCollection = FirebaseFirestore.instance.collection("Game");
 

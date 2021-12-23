@@ -116,5 +116,9 @@
   "votesRequiredForExtension_V_": "Röster nödvändiga för förlängning: {v}",
   "leave": "Lämna",
   "youCantLeaveStartedGames": "Du kan inte lämna startade spel",
-  "leftGame": "Lämnade spelet"
+  "leftGame": "Lämnade spelet",
+  "limitWhenGameStarts": "Begränsa tiden på dygnet då spelet kan starta",
+  "onlyStartTheGameBetween_F_and_T": "Starta endast spelet mellan {F} och {T}",
+  "dontStartGameBefore": "Starta inte spelet innan",
+  "dontStartGameAfter": "Starta inte spelet efter"
 }

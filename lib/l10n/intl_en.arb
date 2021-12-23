@@ -226,5 +226,15 @@
   "gameJoined": "Game joined",
   "leave": "Leave",
   "youCantLeaveStartedGames": "You can't leave started games",
-  "leftGame": "Left game"
+  "leftGame": "Left game",
+  "limitWhenGameStarts": "Limit the time of day when the game can start",
+  "onlyStartTheGameBetween_F_and_T": "Only start the game between {F} and {T}",
+  "@onlyStartTheGameBetween_F_and_T": {
+    "placeholders": {
+      "F": {},
+      "T": {}
+    }
+  },
+  "dontStartGameBefore": "Don't start the game before",
+  "dontStartGameAfter": "Don't start the game after"
 }

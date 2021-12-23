@@ -19,8 +19,10 @@ class _VariantMapWidget extends StatelessWidget {
   final String variant;
   final double? height;
   final double? width;
+
   const _VariantMapWidget(this.variant, {Key? key, this.height, this.width})
       : super(key: key);
+
   @override
   Widget build(context) {
     Widget _wrap(Widget w) {
@@ -68,6 +70,7 @@ class _VariantMapWidget extends StatelessWidget {
 
 class EditGameWidget extends StatefulWidget {
   final Game game;
+
   const EditGameWidget({Key? key, required this.game}) : super(key: key);
 
   @override
@@ -78,6 +81,7 @@ class _SplitTime {
   late int days;
   late int hours;
   late int minutes;
+
   _SplitTime(int m) {
     days = m ~/ (60 * 24);
     m -= days * 60 * 24;
@@ -85,6 +89,7 @@ class _SplitTime {
     m -= hours * 60;
     minutes = m;
   }
+
   int toMinutes() {
     return days * 60 * 24 + hours * 60 + minutes;
   }
@@ -95,6 +100,7 @@ class _EditGameWidgetState extends State<EditGameWidget> {
   late _SplitTime phaseLength;
   late _SplitTime nonMovementPhaseLength;
   bool displayNonMovementPhaseLength = false;
+  bool displayStartTimeRequirements = false;
   final gameCollection = FirebaseFirestore.instance.collection("Game");
 
   @override
@@ -106,6 +112,7 @@ class _EditGameWidgetState extends State<EditGameWidget> {
         _SplitTime(game.nonMovementPhaseLengthMinutes.toInt());
     displayNonMovementPhaseLength = game.nonMovementPhaseLengthMinutes != 0 &&
         game.nonMovementPhaseLengthMinutes != game.phaseLengthMinutes;
+    displayStartTimeRequirements = game.dontStartAfter != game.dontStartBefore;
   }
 
   @override
@@ -204,6 +211,65 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                         }),
                     ],
                   ),
+            Row(
+              children: [
+                Switch(
+                  value: game.private,
+                  onChanged: (newValue) {
+                    setState(() {
+                      game["Private"] = newValue;
+                      game["OwnerUID"] = "";
+                      game["InvitationRequired"] = false;
+                    });
+                  },
+                ),
+                Text(l10n.private),
+              ],
+            ),
+            Row(
+              children: [
+                Switch(
+                  value: (game["OwnerUID"] as String) == user.uid,
+                  onChanged: game.private
+                      ? (newValue) {
+                          setState(() {
+                            if (newValue) {
+                              game["OwnerUID"] = user.uid;
+                            } else {
+                              game["OwnerUID"] = "";
+                              game["InvitationRequired"] = false;
+                            }
+                          });
+                        }
+                      : null,
+                ),
+                Text(l10n.manageAsGameMaster),
+              ],
+            ),
+            if (!game.private)
+              Text(l10n.gameMasterOnlyAllowedInPrivateGames,
+                  style: Theme.of(context).textTheme.bodyText2),
+            if (game.private)
+              Text(l10n.asGameMasterYouCan,
+                  style: Theme.of(context).textTheme.bodyText2),
+            if (game.private && game.ownerUID != "") ...[
+              Row(
+                children: [
+                  Switch(
+                    value: game.invitationRequired,
+                    onChanged: (newValue) {
+                      setState(() {
+                        game["InvitationRequired"] = newValue;
+                      });
+                    },
+                  ),
+                  Text(l10n.requireAssignmentToJoin),
+                ],
+              ),
+              Text(l10n.onlyPlayersAssignedByGM,
+                  style: Theme.of(context).textTheme.bodyText2),
+            ],
+            const Divider(thickness: 5),
             Row(
               children: [
                 Expanded(child: Text(l10n.phaseLength)),
@@ -345,61 +411,56 @@ class _EditGameWidgetState extends State<EditGameWidget> {
             Row(
               children: [
                 Switch(
-                  value: game.private,
+                  value: displayStartTimeRequirements,
                   onChanged: (newValue) {
                     setState(() {
-                      game["Private"] = newValue;
-                      game["OwnerUID"] = "";
-                      game["InvitationRequired"] = false;
+                      displayStartTimeRequirements = newValue;
+                      if (newValue) {
+                        game["DontStartBeforeMinuteInDay"] = 0;
+                        game["DontStartAfterMinuteInDay"] = 24 * 60;
+                      } else {
+                        game["DontStartBeforeMinuteInDay"] = 0;
+                        game["DontStartAfterMinuteInDay"] = 0;
+                      }
                     });
                   },
                 ),
-                Text(l10n.private),
+                Text(l10n.limitWhenGameStarts),
               ],
             ),
-            Row(
-              children: [
-                Switch(
-                  value: (game["OwnerUID"] as String) == user.uid,
-                  onChanged: game.private
-                      ? (newValue) {
+            if (displayStartTimeRequirements)
+              ElevatedButton(
+                child: Text(l10n.onlyStartTheGameBetween_F_and_T(
+                    game.dontStartBefore.format(context),
+                    game.dontStartAfter.format(context))),
+                onPressed: () {
+                  showTimePicker(
+                          context: context,
+                          initialTime: game.dontStartBefore,
+                          helpText: l10n.dontStartGameBefore)
+                      .then((dontStartBefore) {
+                    if (dontStartBefore != null) {
+                      showTimePicker(
+                        context: context,
+                        initialTime: game.dontStartAfter,
+                        helpText: l10n.dontStartGameAfter,
+                      ).then((dontStartAfter) {
+                        if (dontStartAfter != null) {
                           setState(() {
-                            if (newValue) {
-                              game["OwnerUID"] = user.uid;
-                            } else {
-                              game["OwnerUID"] = "";
-                              game["InvitationRequired"] = false;
-                            }
+                            game["DontStartBeforeMinuteInDay"] =
+                                60 * dontStartBefore.hour +
+                                    dontStartBefore.minute;
+                            game["DontStartAfterMinuteInDay"] =
+                                60 * dontStartAfter.hour +
+                                    dontStartAfter.minute;
                           });
                         }
-                      : null,
-                ),
-                Text(l10n.manageAsGameMaster),
-              ],
-            ),
-            if (!game.private)
-              Text(l10n.gameMasterOnlyAllowedInPrivateGames,
-                  style: Theme.of(context).textTheme.bodyText2),
-            if (game.private)
-              Text(l10n.asGameMasterYouCan,
-                  style: Theme.of(context).textTheme.bodyText2),
-            if (game.private && game.ownerUID != "") ...[
-              Row(
-                children: [
-                  Switch(
-                    value: game.invitationRequired,
-                    onChanged: (newValue) {
-                      setState(() {
-                        game["InvitationRequired"] = newValue;
                       });
-                    },
-                  ),
-                  Text(l10n.requireAssignmentToJoin),
-                ],
+                    }
+                  });
+                },
               ),
-              Text(l10n.onlyPlayersAssignedByGM,
-                  style: Theme.of(context).textTheme.bodyText2),
-            ],
+            const Divider(thickness: 5),
             InputDecorator(
               decoration: InputDecoration(
                 labelText: l10n.nationSelection,

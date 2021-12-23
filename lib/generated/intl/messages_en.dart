@@ -48,17 +48,19 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m13(deadline) => "Non movement phase deadline: ${deadline}";
 
-  static String m14(deadline) => "Phase deadline: ${deadline}";
+  static String m14(F, T) => "Only start the game between ${F} and ${T}";
 
-  static String m15(v) => "Rules: ${v}";
+  static String m15(deadline) => "Phase deadline: ${deadline}";
 
-  static String m16(date) => "Started: ${date}";
+  static String m16(v) => "Rules: ${v}";
 
-  static String m17(err) => "Unable to load URL: ${err}";
+  static String m17(date) => "Started: ${date}";
 
-  static String m18(v) => "Username: ${v}";
+  static String m18(err) => "Unable to load URL: ${err}";
 
-  static String m19(v) => "Votes required for extension: ${v}";
+  static String m19(v) => "Username: ${v}";
+
+  static String m20(v) => "Votes required for extension: ${v}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -86,6 +88,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "description_V_": m3,
         "differentPhaseForNonMovement": MessageLookupByLibrary.simpleMessage(
             "Different length for non movement phases"),
+        "dontStartGameAfter":
+            MessageLookupByLibrary.simpleMessage("Don\'t start the game after"),
+        "dontStartGameBefore": MessageLookupByLibrary.simpleMessage(
+            "Don\'t start the game before"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "editGame": MessageLookupByLibrary.simpleMessage("Edit game"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
@@ -130,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "join": MessageLookupByLibrary.simpleMessage("Join"),
         "leave": MessageLookupByLibrary.simpleMessage("Leave"),
         "leftGame": MessageLookupByLibrary.simpleMessage("Left game"),
+        "limitWhenGameStarts": MessageLookupByLibrary.simpleMessage(
+            "Limit the time of day when the game can start"),
         "liveGames": MessageLookupByLibrary.simpleMessage("Live games"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
         "logInToSeeYourGames":
@@ -166,9 +174,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Non NMR phases:"),
         "onlyPlayersAssignedByGM": MessageLookupByLibrary.simpleMessage(
             "Only players assigned by the game master can join."),
+        "onlyStartTheGameBetween_F_and_T": m14,
         "openGames": MessageLookupByLibrary.simpleMessage("Open games"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
-        "phaseDeadline_Date_": m14,
+        "phaseDeadline_Date_": m15,
         "phaseLength": MessageLookupByLibrary.simpleMessage("Phase length"),
         "players": MessageLookupByLibrary.simpleMessage("Players"),
         "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
@@ -189,7 +198,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "requireAssignmentToJoin":
             MessageLookupByLibrary.simpleMessage("Require assignment to join"),
         "retreat": MessageLookupByLibrary.simpleMessage("Retreat"),
-        "rules_V_": m15,
+        "rules_V_": m16,
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "someChatsDisabled":
             MessageLookupByLibrary.simpleMessage("Some chats disabled"),
@@ -197,14 +206,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Someone you banned, or someone banned by you, is already in the game"),
         "source": MessageLookupByLibrary.simpleMessage("Source"),
         "spring": MessageLookupByLibrary.simpleMessage("Spring"),
-        "started_Date_": m16,
-        "unableToLoadURL": m17,
+        "started_Date_": m17,
+        "unableToLoadURL": m18,
         "unnamed": MessageLookupByLibrary.simpleMessage("unnamed"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
-        "username_V_": m18,
+        "username_V_": m19,
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("View"),
-        "votesRequiredForExtension_V_": m19,
+        "votesRequiredForExtension_V_": m20,
         "w": MessageLookupByLibrary.simpleMessage("w"),
         "youAreAlreadyInGame": MessageLookupByLibrary.simpleMessage(
             "You have already joined this game"),

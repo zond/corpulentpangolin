@@ -155,6 +155,22 @@ class Game extends JSONMapView {
     return false;
   }
 
+  TimeOfDay get dontStartBefore {
+    if (containsKey("DontStartBeforeMinuteInDay")) {
+      final mid = this["DontStartBeforeMinuteInDay"] as int;
+      return TimeOfDay(hour: mid ~/ 60, minute: mid % 60);
+    }
+    return const TimeOfDay(hour: 0, minute: 0);
+  }
+
+  TimeOfDay get dontStartAfter {
+    if (containsKey("DontStartAfterMinuteInDay")) {
+      final mid = this["DontStartAfterMinuteInDay"] as int;
+      return TimeOfDay(hour: mid ~/ 60, minute: mid % 60);
+    }
+    return const TimeOfDay(hour: 0, minute: 0);
+  }
+
   bool get seeded {
     if (containsKey("Seeded")) {
       return this["Seeded"] as bool;

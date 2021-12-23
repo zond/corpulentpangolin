@@ -1238,6 +1238,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Limit the time of day when the game can start`
+  String get limitWhenGameStarts {
+    return Intl.message(
+      'Limit the time of day when the game can start',
+      name: 'limitWhenGameStarts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Only start the game between {F} and {T}`
+  String onlyStartTheGameBetween_F_and_T(Object F, Object T) {
+    return Intl.message(
+      'Only start the game between $F and $T',
+      name: 'onlyStartTheGameBetween_F_and_T',
+      desc: '',
+      args: [F, T],
+    );
+  }
+
+  /// `Don't start the game before`
+  String get dontStartGameBefore {
+    return Intl.message(
+      'Don\'t start the game before',
+      name: 'dontStartGameBefore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Don't start the game after`
+  String get dontStartGameAfter {
+    return Intl.message(
+      'Don\'t start the game after',
+      name: 'dontStartGameAfter',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
