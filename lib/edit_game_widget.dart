@@ -453,6 +453,8 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                             game["DontStartAfterMinuteInDay"] =
                                 60 * dontStartAfter.hour +
                                     dontStartAfter.minute;
+                            game["DontStartLimitTimezone"] =
+                                DateTime.now().timeZoneName;
                           });
                         }
                       });
