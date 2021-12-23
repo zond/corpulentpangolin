@@ -769,7 +769,8 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                                   const TextInputType.numberWithOptions(
                                       signed: false, decimal: true),
                               inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9.]'))
                               ],
                               onChanged: (newValue) {
                                 setState(() {
@@ -794,7 +795,8 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                                   const TextInputType.numberWithOptions(
                                       signed: false, decimal: true),
                               inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9.]'))
                               ],
                               onChanged: (newValue) {
                                 setState(() {
@@ -819,7 +821,8 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                                   const TextInputType.numberWithOptions(
                                       signed: false, decimal: true),
                               inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly
+                                FilteringTextInputFormatter.allow(
+                                    RegExp(r'[0-9.]'))
                               ],
                               onChanged: (newValue) {
                                 setState(() {
