@@ -168,8 +168,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "map": MessageLookupByLibrary.simpleMessage("Map"),
         "maxExtensionLength": MessageLookupByLibrary.simpleMessage(
             "Maximum length of player initiated phase extension"),
+        "minimumQuicknessToJoin":
+            MessageLookupByLibrary.simpleMessage("Minimum quickness to join"),
         "minimumQuickness_V_": m9,
+        "minimumRatingToJoin":
+            MessageLookupByLibrary.simpleMessage("Minimum rating to join"),
         "minimumRating_V_": m10,
+        "minimumReliabilityToJoin":
+            MessageLookupByLibrary.simpleMessage("Minimum reliability to join"),
         "minimumReliability_V_": m11,
         "minutes": MessageLookupByLibrary.simpleMessage("Minutes"),
         "movement": MessageLookupByLibrary.simpleMessage("Movement"),

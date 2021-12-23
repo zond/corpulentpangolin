@@ -526,8 +526,10 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                                       ],
                                       onChanged: (newValue) {
                                         setState(() {
-                                          game["GracesPerPlayer"] =
-                                              int.parse(newValue);
+                                          try {
+                                            game["GracesPerPlayer"] =
+                                                int.parse(newValue);
+                                          } catch (_) {}
                                         });
                                       },
                                     ),
@@ -549,8 +551,10 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                                       ],
                                       onChanged: (newValue) {
                                         setState(() {
-                                          game["GracesPerPhase"] =
-                                              int.parse(newValue);
+                                          try {
+                                            game["GracesPerPhase"] =
+                                                int.parse(newValue);
+                                          } catch (_) {}
                                         });
                                       },
                                     ),
@@ -609,8 +613,10 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                                       ],
                                       onChanged: (newValue) {
                                         setState(() {
-                                          game["ExtensionsPerPlayer"] =
-                                              int.parse(newValue);
+                                          try {
+                                            game["ExtensionsPerPlayer"] =
+                                                int.parse(newValue);
+                                          } catch (_) {}
                                         });
                                       },
                                     ),
@@ -634,8 +640,10 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                                       ],
                                       onChanged: (newValue) {
                                         setState(() {
-                                          game["ExtensionsPerPhase"] =
-                                              int.parse(newValue);
+                                          try {
+                                            game["ExtensionsPerPhase"] =
+                                                int.parse(newValue);
+                                          } catch (_) {}
                                         });
                                       },
                                     ),
@@ -742,7 +750,91 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                   ),
                 ],
               ),
-            ))
+            )),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 60),
+              child: Card(
+                  elevation: smallSpace,
+                  child: SmallPadding(
+                      child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(child: Text(l10n.minimumReliabilityToJoin)),
+                          SizedBox(
+                            width: 50,
+                            child: TextFormField(
+                              initialValue: "${game.minimumReliability}",
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      signed: false, decimal: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              onChanged: (newValue) {
+                                setState(() {
+                                  try {
+                                    game["MinimumReliability"] =
+                                        num.parse(newValue);
+                                  } catch (_) {}
+                                });
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(child: Text(l10n.minimumQuicknessToJoin)),
+                          SizedBox(
+                            width: 50,
+                            child: TextFormField(
+                              initialValue: "${game.minimumReliability}",
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      signed: false, decimal: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              onChanged: (newValue) {
+                                setState(() {
+                                  try {
+                                    game["MinimumQuickness"] =
+                                        num.parse(newValue);
+                                  } catch (_) {}
+                                });
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(child: Text(l10n.minimumRatingToJoin)),
+                          SizedBox(
+                            width: 50,
+                            child: TextFormField(
+                              initialValue: "${game.minimumReliability}",
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      signed: false, decimal: true),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              onChanged: (newValue) {
+                                setState(() {
+                                  try {
+                                    game["MinimumRating"] = num.parse(newValue);
+                                  } catch (_) {}
+                                });
+                              },
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ))),
+            )
           ],
         ),
         Positioned(

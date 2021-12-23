@@ -1368,6 +1368,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Minimum reliability to join`
+  String get minimumReliabilityToJoin {
+    return Intl.message(
+      'Minimum reliability to join',
+      name: 'minimumReliabilityToJoin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum quickness to join`
+  String get minimumQuicknessToJoin {
+    return Intl.message(
+      'Minimum quickness to join',
+      name: 'minimumQuicknessToJoin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Minimum rating to join`
+  String get minimumRatingToJoin {
+    return Intl.message(
+      'Minimum rating to join',
+      name: 'minimumRatingToJoin',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

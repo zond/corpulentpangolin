@@ -245,5 +245,8 @@
   "maxExtensionLength": "Maximum length of player initiated phase extension",
   "extensionsPerPlayer": "Maximum number of player initiated phase extensions per player per game",
   "extensionsPerPhase": "Maximum number of player initiated phase extensions per phase",
-  "votesRequiredForExtraExtension": "Player votes required for extra player initiated phase extension"
+  "votesRequiredForExtraExtension": "Player votes required for extra player initiated phase extension",
+  "minimumReliabilityToJoin": "Minimum reliability to join",
+  "minimumQuicknessToJoin": "Minimum quickness to join",
+  "minimumRatingToJoin": "Minimum rating to join"
 }

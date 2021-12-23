@@ -129,5 +129,9 @@
   "maxExtensionLength": "Maximal längd av spelarvald förlängning",
   "extensionsPerPlayer": "Maximalt antal spelarvalda förlängningar per spelare per spel",
   "extensionsPerPhase": "Maximalt antal spelarvalda förlängningar per fas",
-  "votesRequiredForExtraExtension": "Röster nödvändiga för extra spelarvalda förlängningar"
+  "votesRequiredForExtraExtension": "Röster nödvändiga för extra spelarvalda förlängningar",
+  "minimumReliabilityToJoin": "Nödvändig pålitlighet för att delta",
+  "minimumQuicknessToJoin": "Nödvändig snabbhet för att delta",
+  "minimumRatingToJoin": "Nödvändig rang för att delta"
+
 }

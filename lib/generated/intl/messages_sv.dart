@@ -168,8 +168,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "map": MessageLookupByLibrary.simpleMessage("Karta"),
         "maxExtensionLength": MessageLookupByLibrary.simpleMessage(
             "Maximal längd av spelarvald förlängning"),
+        "minimumQuicknessToJoin": MessageLookupByLibrary.simpleMessage(
+            "Nödvändig snabbhet för att delta"),
         "minimumQuickness_V_": m9,
+        "minimumRatingToJoin": MessageLookupByLibrary.simpleMessage(
+            "Nödvändig rang för att delta"),
         "minimumRating_V_": m10,
+        "minimumReliabilityToJoin": MessageLookupByLibrary.simpleMessage(
+            "Nödvändig pålitlighet för att delta"),
         "minimumReliability_V_": m11,
         "minutes": MessageLookupByLibrary.simpleMessage("Minuter"),
         "movement": MessageLookupByLibrary.simpleMessage("Förflyttning"),
