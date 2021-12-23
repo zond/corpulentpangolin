@@ -1318,6 +1318,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Allow phase extensions`
+  String get allowExtensions {
+    return Intl.message(
+      'Allow phase extensions',
+      name: 'allowExtensions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum length of player initiated phase extension`
+  String get maxExtensionLength {
+    return Intl.message(
+      'Maximum length of player initiated phase extension',
+      name: 'maxExtensionLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum number of player initiated phase extensions per player per game`
+  String get extensionsPerPlayer {
+    return Intl.message(
+      'Maximum number of player initiated phase extensions per player per game',
+      name: 'extensionsPerPlayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maximum number of player initiated phase extensions per phase`
+  String get extensionsPerPhase {
+    return Intl.message(
+      'Maximum number of player initiated phase extensions per phase',
+      name: 'extensionsPerPhase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Player votes required for extra player initiated phase extension`
+  String get votesRequiredForExtraExtension {
+    return Intl.message(
+      'Player votes required for extra player initiated phase extension',
+      name: 'votesRequiredForExtraExtension',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -124,5 +124,10 @@
   "allowGracePeriods": "Automatiska förlängningar",
   "gracePeriodLength": "Automatisk förlängning när en spelare är inaktiv",
   "gracesPerPlayer": "Maximalt antal automatiska förlängningar per spelare per spel",
-  "gracesPerPhase": "Maximalt antal automatiska förlängningar per fas"
+  "gracesPerPhase": "Maximalt antal automatiska förlängningar per fas",
+  "allowExtensions": "Spelarvalda förlängningar",
+  "maxExtensionLength": "Maximal längd av spelarvald förlängning",
+  "extensionsPerPlayer": "Maximalt antal spelarvalda förlängningar per spelare per spel",
+  "extensionsPerPhase": "Maximalt antal spelarvalda förlängningar per fas",
+  "votesRequiredForExtraExtension": "Röster nödvändiga för extra spelarvalda förlängningar"
 }

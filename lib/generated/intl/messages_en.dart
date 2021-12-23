@@ -65,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "adjustment": MessageLookupByLibrary.simpleMessage("Adjustment"),
+        "allowExtensions":
+            MessageLookupByLibrary.simpleMessage("Allow phase extensions"),
         "allowGracePeriods":
             MessageLookupByLibrary.simpleMessage("Allow grace periods"),
         "anonymous": MessageLookupByLibrary.simpleMessage("Anonymous"),
@@ -97,6 +99,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "editGame": MessageLookupByLibrary.simpleMessage("Edit game"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
+        "extensionsPerPhase": MessageLookupByLibrary.simpleMessage(
+            "Maximum number of player initiated phase extensions per phase"),
+        "extensionsPerPlayer": MessageLookupByLibrary.simpleMessage(
+            "Maximum number of player initiated phase extensions per player per game"),
         "failedCreatingGame_Err_": m4,
         "failedSavingGame_Err_": m5,
         "failedSavingProfile_Err_": m6,
@@ -160,6 +166,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "manageAsGameMaster":
             MessageLookupByLibrary.simpleMessage("Manage as game master"),
         "map": MessageLookupByLibrary.simpleMessage("Map"),
+        "maxExtensionLength": MessageLookupByLibrary.simpleMessage(
+            "Maximum length of player initiated phase extension"),
         "minimumQuickness_V_": m9,
         "minimumRating_V_": m10,
         "minimumReliability_V_": m11,
@@ -222,6 +230,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("View"),
         "votesRequiredForExtension_V_": m20,
+        "votesRequiredForExtraExtension": MessageLookupByLibrary.simpleMessage(
+            "Player votes required for extra player initiated phase extension"),
         "w": MessageLookupByLibrary.simpleMessage("w"),
         "youAreAlreadyInGame": MessageLookupByLibrary.simpleMessage(
             "You have already joined this game"),

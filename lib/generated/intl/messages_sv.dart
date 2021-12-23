@@ -65,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "adjustment": MessageLookupByLibrary.simpleMessage("Justering"),
+        "allowExtensions":
+            MessageLookupByLibrary.simpleMessage("Spelarvalda förlängningar"),
         "allowGracePeriods":
             MessageLookupByLibrary.simpleMessage("Automatiska förlängningar"),
         "anonymous": MessageLookupByLibrary.simpleMessage("Anonym"),
@@ -97,6 +99,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "edit": MessageLookupByLibrary.simpleMessage("Redigera"),
         "editGame": MessageLookupByLibrary.simpleMessage("Redigera spel"),
         "error": MessageLookupByLibrary.simpleMessage("Fel"),
+        "extensionsPerPhase": MessageLookupByLibrary.simpleMessage(
+            "Maximalt antal spelarvalda förlängningar per fas"),
+        "extensionsPerPlayer": MessageLookupByLibrary.simpleMessage(
+            "Maximalt antal spelarvalda förlängningar per spelare per spel"),
         "failedCreatingGame_Err_": m4,
         "failedSavingGame_Err_": m5,
         "failedSavingProfile_Err_": m6,
@@ -160,6 +166,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "manageAsGameMaster":
             MessageLookupByLibrary.simpleMessage("Administrera som spelledare"),
         "map": MessageLookupByLibrary.simpleMessage("Karta"),
+        "maxExtensionLength": MessageLookupByLibrary.simpleMessage(
+            "Maximal längd av spelarvald förlängning"),
         "minimumQuickness_V_": m9,
         "minimumRating_V_": m10,
         "minimumReliability_V_": m11,
@@ -222,6 +230,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("Se"),
         "votesRequiredForExtension_V_": m20,
+        "votesRequiredForExtraExtension": MessageLookupByLibrary.simpleMessage(
+            "Röster nödvändiga för extra spelarvalda förlängningar"),
         "w": MessageLookupByLibrary.simpleMessage("v"),
         "youAreAlreadyInGame": MessageLookupByLibrary.simpleMessage(
             "Du deltar redan i det här spelet"),

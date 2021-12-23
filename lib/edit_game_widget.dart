@@ -95,6 +95,99 @@ class _SplitTime {
   }
 }
 
+class _MinuteLengthField extends StatefulWidget {
+  final int initialValue;
+  final String label;
+  final Function(int) onChange;
+  const _MinuteLengthField(
+      {Key? key,
+      required this.initialValue,
+      required this.label,
+      required this.onChange})
+      : super(key: key);
+  @override
+  State<_MinuteLengthField> createState() => _MinuteLengthFieldState();
+}
+
+class _MinuteLengthFieldState extends State<_MinuteLengthField> {
+  late _SplitTime value;
+  @override
+  void initState() {
+    super.initState();
+    value = _SplitTime(widget.initialValue);
+  }
+
+  @override
+  Widget build(context) {
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    return Row(
+      children: [
+        Expanded(child: Text(widget.label)),
+        SizedBox(
+          width: 50,
+          child: TextFormField(
+            initialValue: "${value.days}",
+            decoration: InputDecoration(
+              labelText: l10n.days,
+            ),
+            keyboardType: const TextInputType.numberWithOptions(
+                signed: false, decimal: false),
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            onChanged: (newValue) {
+              setState(() {
+                try {
+                  value.days = int.parse(newValue);
+                  widget.onChange(value.toMinutes());
+                } catch (e) {}
+              });
+            },
+          ),
+        ),
+        SizedBox(
+          width: 50,
+          child: TextFormField(
+            initialValue: "${value.hours}",
+            decoration: InputDecoration(
+              labelText: l10n.hours,
+            ),
+            keyboardType: const TextInputType.numberWithOptions(
+                signed: false, decimal: false),
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            onChanged: (newValue) {
+              setState(() {
+                try {
+                  value.hours = int.parse(newValue);
+                  widget.onChange(value.toMinutes());
+                } catch (e) {}
+              });
+            },
+          ),
+        ),
+        SizedBox(
+          width: 50,
+          child: TextFormField(
+            initialValue: "${value.minutes}",
+            decoration: InputDecoration(
+              labelText: l10n.minutes,
+            ),
+            keyboardType: const TextInputType.numberWithOptions(
+                signed: false, decimal: false),
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            onChanged: (newValue) {
+              setState(() {
+                try {
+                  value.minutes = int.parse(newValue);
+                  widget.onChange(value.toMinutes());
+                } catch (e) {}
+              });
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _EditGameWidgetState extends State<EditGameWidget> {
   late Game game;
   late _SplitTime phaseLength;
@@ -103,6 +196,7 @@ class _EditGameWidgetState extends State<EditGameWidget> {
   bool displayNonMovementPhaseLength = false;
   bool displayStartTimeRequirements = false;
   bool displayGraceOptions = false;
+  bool displayExtensionOptions = false;
   final gameCollection = FirebaseFirestore.instance.collection("Game");
 
   @override
@@ -117,6 +211,7 @@ class _EditGameWidgetState extends State<EditGameWidget> {
         game.nonMovementPhaseLengthMinutes != game.phaseLengthMinutes;
     displayStartTimeRequirements = game.dontStartAfter != game.dontStartBefore;
     displayGraceOptions = game.hasGrace;
+    displayExtensionOptions = game.hasExtensions;
   }
 
   @override
@@ -274,64 +369,12 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                   style: Theme.of(context).textTheme.bodyText2),
             ],
             const Divider(thickness: 5),
-            Row(
-              children: [
-                Expanded(child: Text(l10n.phaseLength)),
-                SizedBox(
-                  width: 50,
-                  child: TextFormField(
-                    initialValue: "${phaseLength.days}",
-                    decoration: InputDecoration(
-                      labelText: l10n.days,
-                    ),
-                    keyboardType: const TextInputType.numberWithOptions(
-                        signed: false, decimal: false),
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    onChanged: (newValue) {
-                      setState(() {
-                        phaseLength.days = int.parse(newValue);
-                        game["PhaseLengthMinutes"] = phaseLength.toMinutes();
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(
-                  width: 50,
-                  child: TextFormField(
-                    initialValue: "${phaseLength.hours}",
-                    decoration: InputDecoration(
-                      labelText: l10n.hours,
-                    ),
-                    keyboardType: const TextInputType.numberWithOptions(
-                        signed: false, decimal: false),
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    onChanged: (newValue) {
-                      setState(() {
-                        phaseLength.hours = int.parse(newValue);
-                        game["PhaseLengthMinutes"] = phaseLength.toMinutes();
-                      });
-                    },
-                  ),
-                ),
-                SizedBox(
-                  width: 50,
-                  child: TextFormField(
-                    initialValue: "${phaseLength.minutes}",
-                    decoration: InputDecoration(
-                      labelText: l10n.minutes,
-                    ),
-                    keyboardType: const TextInputType.numberWithOptions(
-                        signed: false, decimal: false),
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    onChanged: (newValue) {
-                      setState(() {
-                        phaseLength.minutes = int.parse(newValue);
-                        game["PhaseLengthMinutes"] = phaseLength.toMinutes();
-                      });
-                    },
-                  ),
-                ),
-              ],
+            _MinuteLengthField(
+              initialValue: game.phaseLengthMinutes.toInt(),
+              label: l10n.phaseLength,
+              onChange: (m) => setState(() {
+                game["PhaseLengthMinutes"] = m;
+              }),
             ),
             Row(
               children: [
@@ -350,67 +393,12 @@ class _EditGameWidgetState extends State<EditGameWidget> {
               ],
             ),
             if (displayNonMovementPhaseLength)
-              Row(
-                children: [
-                  Expanded(child: Text(l10n.nonMovementPhaseLength)),
-                  SizedBox(
-                    width: 50,
-                    child: TextFormField(
-                      initialValue: "${nonMovementPhaseLength.days}",
-                      decoration: InputDecoration(
-                        labelText: l10n.days,
-                      ),
-                      keyboardType: const TextInputType.numberWithOptions(
-                          signed: false, decimal: false),
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      onChanged: (newValue) {
-                        setState(() {
-                          nonMovementPhaseLength.days = int.parse(newValue);
-                          game["NonMovementPhaseLengthMinutes"] =
-                              nonMovementPhaseLength.toMinutes();
-                        });
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 50,
-                    child: TextFormField(
-                      initialValue: "${nonMovementPhaseLength.hours}",
-                      decoration: InputDecoration(
-                        labelText: l10n.hours,
-                      ),
-                      keyboardType: const TextInputType.numberWithOptions(
-                          signed: false, decimal: false),
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      onChanged: (newValue) {
-                        setState(() {
-                          nonMovementPhaseLength.hours = int.parse(newValue);
-                          game["NonMovementPhaseLengthMinutes"] =
-                              nonMovementPhaseLength.toMinutes();
-                        });
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 50,
-                    child: TextFormField(
-                      initialValue: "${nonMovementPhaseLength.minutes}",
-                      decoration: InputDecoration(
-                        labelText: l10n.minutes,
-                      ),
-                      keyboardType: const TextInputType.numberWithOptions(
-                          signed: false, decimal: false),
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      onChanged: (newValue) {
-                        setState(() {
-                          nonMovementPhaseLength.minutes = int.parse(newValue);
-                          game["NonMovementPhaseLengthMinutes"] =
-                              nonMovementPhaseLength.toMinutes();
-                        });
-                      },
-                    ),
-                  ),
-                ],
+              _MinuteLengthField(
+                initialValue: game.nonMovementPhaseLengthMinutes.toInt(),
+                label: l10n.nonMovementPhaseLength,
+                onChange: (m) => setState(() {
+                  game["NonMovementPhaseLengthMinutes"] = m;
+                }),
               ),
             Row(
               children: [
@@ -485,67 +473,12 @@ class _EditGameWidgetState extends State<EditGameWidget> {
               ],
             ),
             if (displayGraceOptions) ...[
-              Row(
-                children: [
-                  Expanded(child: Text(l10n.gracePeriodLength)),
-                  SizedBox(
-                    width: 50,
-                    child: TextFormField(
-                      initialValue: "${gracePeriodLength.days}",
-                      decoration: InputDecoration(
-                        labelText: l10n.days,
-                      ),
-                      keyboardType: const TextInputType.numberWithOptions(
-                          signed: false, decimal: false),
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      onChanged: (newValue) {
-                        setState(() {
-                          gracePeriodLength.days = int.parse(newValue);
-                          game["GraceLengthMinutes"] =
-                              gracePeriodLength.toMinutes();
-                        });
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 50,
-                    child: TextFormField(
-                      initialValue: "${gracePeriodLength.hours}",
-                      decoration: InputDecoration(
-                        labelText: l10n.hours,
-                      ),
-                      keyboardType: const TextInputType.numberWithOptions(
-                          signed: false, decimal: false),
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      onChanged: (newValue) {
-                        setState(() {
-                          gracePeriodLength.hours = int.parse(newValue);
-                          game["GraceLengthMinutes"] =
-                              gracePeriodLength.toMinutes();
-                        });
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 50,
-                    child: TextFormField(
-                      initialValue: "${gracePeriodLength.minutes}",
-                      decoration: InputDecoration(
-                        labelText: l10n.minutes,
-                      ),
-                      keyboardType: const TextInputType.numberWithOptions(
-                          signed: false, decimal: false),
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      onChanged: (newValue) {
-                        setState(() {
-                          gracePeriodLength.minutes = int.parse(newValue);
-                          game["GraceLengthMinutes"] =
-                              gracePeriodLength.toMinutes();
-                        });
-                      },
-                    ),
-                  ),
-                ],
+              _MinuteLengthField(
+                initialValue: game.graceLengtMinutes,
+                label: l10n.gracePeriodLength,
+                onChange: (m) => setState(() {
+                  game["GraceLengthMinutes"] = m;
+                }),
               ),
               Row(
                 children: [
@@ -583,6 +516,98 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                       },
                     ),
                   )
+                ],
+              )
+            ],
+            Row(
+              children: [
+                Switch(
+                  value: displayExtensionOptions,
+                  onChanged: (newValue) {
+                    setState(() {
+                      displayExtensionOptions = newValue;
+                      if (!newValue) {
+                        game["MaxExtensionLengthMinutes"] = 0;
+                        game["ExtensionsPerPlayer"] = 0;
+                        game["PlayerRatioForExtraExtensionVote"] = 0;
+                      }
+                    });
+                  },
+                ),
+                Text(l10n.allowExtensions),
+              ],
+            ),
+            if (displayExtensionOptions) ...[
+              _MinuteLengthField(
+                initialValue: game.maxExtensionLengthMinutes,
+                label: l10n.maxExtensionLength,
+                onChange: (m) => setState(() {
+                  game["MaxExtensionLengthMinutes"] = m;
+                }),
+              ),
+              Row(
+                children: [
+                  Expanded(child: Text(l10n.extensionsPerPlayer)),
+                  SizedBox(
+                    width: 50,
+                    child: TextFormField(
+                      initialValue: "${game.extensionsPerPlayer}",
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: false, decimal: false),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onChanged: (newValue) {
+                        setState(() {
+                          game["ExtensionsPerPlayer"] = int.parse(newValue);
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(child: Text(l10n.extensionsPerPhase)),
+                  SizedBox(
+                    width: 50,
+                    child: TextFormField(
+                      initialValue: "${game.extensionsPerPhase}",
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: false, decimal: false),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onChanged: (newValue) {
+                        setState(() {
+                          game["ExtensionsPerPhase"] = int.parse(newValue);
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(child: Text(l10n.votesRequiredForExtraExtension)),
+                  SizedBox(
+                    width: 40,
+                    child: TextFormField(
+                      initialValue:
+                          "${(game.playerRatioForExtraExtensionVote * 100).toInt()}",
+                      keyboardType: const TextInputType.numberWithOptions(
+                          signed: false, decimal: false),
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      onChanged: (newValue) {
+                        setState(() {
+                          try {
+                            game["PlayerRatioForExtraExtensionVote"] =
+                                int.parse(newValue) / 100.0;
+                          } catch (e) {}
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                    child: Text("%"),
+                  ),
                 ],
               )
             ],

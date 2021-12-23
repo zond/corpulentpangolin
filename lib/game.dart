@@ -55,6 +55,8 @@ class Game extends JSONMapView {
 
   int get extensionsPerPlayer => getInt("ExtensionsPerPlayer");
 
+  int get extensionsPerPhase => getInt("ExtensionsPerPhase");
+
   num get playerRatioForExtraExtensionVote =>
       getFloat("PlayerRatioForExtraExtensionVote");
 

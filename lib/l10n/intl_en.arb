@@ -240,5 +240,10 @@
   "allowGracePeriods": "Allow grace periods",
   "gracePeriodLength": "Automatic phase extension when player is inactive",
   "gracesPerPlayer": "Maximum number of automatic phase extensions per player per game",
-  "gracesPerPhase": "Maximum number of automatic phase extensions per phase"
+  "gracesPerPhase": "Maximum number of automatic phase extensions per phase",
+  "allowExtensions": "Allow phase extensions",
+  "maxExtensionLength": "Maximum length of player initiated phase extension",
+  "extensionsPerPlayer": "Maximum number of player initiated phase extensions per player per game",
+  "extensionsPerPhase": "Maximum number of player initiated phase extensions per phase",
+  "votesRequiredForExtraExtension": "Player votes required for extra player initiated phase extension"
 }
