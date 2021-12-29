@@ -78,8 +78,10 @@ class GameControlsWidget extends StatelessWidget {
                 appUser.reliability >= game.minimumReliability &&
                 appUser.quickness >= game.minimumQuickness &&
                 appUser.rating >= game.minimumRating);
+        final invitationOK = !game.invitationRequired || game.invitedPlayers.contains(user.uid);
         // TODO(zond): When we have replacement support, this needs more logic.
         final isJoinable = !isBanned &&
+            invitationOK &&
             matchesRequirements &&
             !game.players.contains(user.uid) &&
             game.players.length <

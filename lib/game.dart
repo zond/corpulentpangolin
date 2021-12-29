@@ -117,47 +117,17 @@ class Game extends JSONMapView {
         short: short);
   }
 
-  DateTime get startedAt {
-    if (containsKey("StartedAt")) {
-      return (this["StartedAt"] as Timestamp).toDate();
-    }
-    return DateTime.fromMicrosecondsSinceEpoch(0);
-  }
+  DateTime get startedAt => getDateTime("StartedAt");
 
-  DateTime get finishedAt {
-    if (containsKey("FinishedAt")) {
-      return (this["FinishedAt"] as Timestamp).toDate();
-    }
-    return DateTime.fromMicrosecondsSinceEpoch(0);
-  }
+  DateTime get finishedAt => getDateTime("FinishedAt");
 
-  DateTime get createdAt {
-    if (containsKey("CreatedAt")) {
-      return (this["CreatedAt"] as Timestamp).toDate();
-    }
-    return DateTime.fromMicrosecondsSinceEpoch(0);
-  }
+  DateTime get createdAt => getDateTime("CreatedAt");
 
-  num get phaseLengthMinutes {
-    if (containsKey("PhaseLengthMinutes")) {
-      return this["PhaseLengthMinutes"] as num;
-    }
-    return 0;
-  }
+  int get phaseLengthMinutes => getInt("PhaseLengthMinutes");
 
-  num get nonMovementPhaseLengthMinutes {
-    if (containsKey("NonMovementPhaseLengthMinutes")) {
-      return this["NonMovementPhaseLengthMinutes"] as num;
-    }
-    return 0;
-  }
+  int get nonMovementPhaseLengthMinutes => getInt("NonMovementPhaseLengthMinutes");
 
-  bool get finished {
-    if (containsKey("Finished")) {
-      return this["Finished"] as bool;
-    }
-    return false;
-  }
+  bool get finished => getBool("Finished");
 
   TimeOfDay get dontStartBefore {
     if (containsKey("DontStartBeforeMinuteInDay")) {
@@ -175,54 +145,21 @@ class Game extends JSONMapView {
     return const TimeOfDay(hour: 0, minute: 0);
   }
 
-  bool get seeded {
-    if (containsKey("Seeded")) {
-      return this["Seeded"] as bool;
-    }
-    return false;
-  }
+  bool get seeded => getBool("Seeded");
 
-  String get id {
-    if (containsKey("ID")) {
-      return this["ID"] as String;
-    }
-    return "no-id";
-  }
+  String get id => getString("ID");
 
-  bool get isStarted {
-    if (containsKey("Started")) {
-      return this["Started"] as bool;
-    }
-    return false;
-  }
+  bool get isStarted => getBool("Started");
 
-  bool get isFinished {
-    if (containsKey("Finished")) {
-      return this["Finished"] as bool;
-    }
-    return false;
-  }
+  bool get isFinished => getBool("Finished");
 
-  String get ownerUID {
-    if (containsKey("OwnerUID")) {
-      return this["OwnerUID"] as String;
-    }
-    return "";
-  }
+  String get ownerUID => getString("OwnerUID");
 
-  List<String> get players {
-    if (containsKey("Players")) {
-      return (this["Players"] as List<dynamic>).map((p) => "$p").toList();
-    }
-    return [];
-  }
+  List<String> get invitedPlayers => getList<String>("InvitedPlayers");
 
-  String get desc {
-    if (containsKey("Desc")) {
-      return this["Desc"] as String;
-    }
-    return "";
-  }
+  List<String> get players => getList<String>("Players");
+
+  String get desc => getString("Desc");
 
   Object? get err {
     if (containsKey("Error")) {
