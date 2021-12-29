@@ -200,6 +200,7 @@ class _EditGameWidgetState extends State<EditGameWidget> {
   bool displayStartTimeRequirements = false;
   bool displayGraceOptions = false;
   bool displayExtensionOptions = false;
+  bool working = false;
   final gameCollection = FirebaseFirestore.instance.collection("Game");
 
   @override
@@ -845,25 +846,34 @@ class _EditGameWidgetState extends State<EditGameWidget> {
           bottom: 0,
           child: FloatingActionButton(
             child: const Icon(Icons.check),
-            onPressed: () {
-              Future<Object?>? updater;
-              final existed = game.exists;
-              if (existed) {
-                final _id = game.id;
-                game.remove("ID");
-                updater = gameCollection.doc(_id).update(game);
-              } else {
-                updater = gameCollection.add(game);
-              }
-              updater.then((_) {
-                appRouter.pop().then((_) {
-                  toast(context, existed ? l10n.gameUpdated : l10n.gameCreated);
-                });
-              }).catchError((err) {
-                debugPrint("Failed creating game: $err");
-                toast(context, l10n.failedCreatingGame_Err_("$err"));
-              });
-            },
+            onPressed: working
+                ? null
+                : () {
+                    Future<Object?>? updater;
+                    final existed = game.exists;
+                    if (existed) {
+                      final _id = game.id;
+                      game.remove("ID");
+                      updater = gameCollection.doc(_id).update(game);
+                    } else {
+                      updater = gameCollection.add(game);
+                    }
+                    setState(() {
+                      working = true;
+                    });
+                    updater.then((_) {
+                      setState(() {
+                        working = false;
+                      });
+                      appRouter.pop().then((_) {
+                        toast(context,
+                            existed ? l10n.gameUpdated : l10n.gameCreated);
+                      });
+                    }).catchError((err) {
+                      debugPrint("Failed creating game: $err");
+                      toast(context, l10n.failedCreatingGame_Err_("$err"));
+                    });
+                  },
           ),
         )
       ],
