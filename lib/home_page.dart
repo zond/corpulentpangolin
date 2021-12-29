@@ -27,24 +27,28 @@ class HomePage extends StatelessWidget {
       drawer: mainDrawer(context),
       appBar: mainAppBar(context),
       body: withBackground(
-        Column(
-          children: [
-            if (user == null)
-              Material(child: ListTile(title: Text(l10n.logInToSeeYourGames))),
-            if (user != null) ...[
-              Material(
-                child: ListTile(
-                  title: Text(l10n.myGames,
-                      style: Theme.of(context).textTheme.headline5),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 80),
+          child: Column(
+            children: [
+              if (user == null)
+                Material(
+                    child: ListTile(title: Text(l10n.logInToSeeYourGames))),
+              if (user != null) ...[
+                Material(
+                  child: ListTile(
+                    title: Text(l10n.myGames,
+                        style: Theme.of(context).textTheme.headline5),
+                  ),
                 ),
-              ),
-              GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance
-                  .collection("Game")
-                  .where("Players", arrayContains: user.uid)
-                  .orderBy("CategorySortKey")
-                  .orderBy("TimeSortKey"))),
+                GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance
+                    .collection("Game")
+                    .where("Players", arrayContains: user.uid)
+                    .orderBy("CategorySortKey")
+                    .orderBy("TimeSortKey"))),
+              ],
             ],
-          ],
+          ),
         ),
       ),
       floatingActionButton: user == null
