@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:corpulentpangolin/spinner_widget.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,7 +14,6 @@ import 'package:corpulentpangolin/variant.dart';
 import 'app_user.dart';
 import 'game.dart';
 import 'router.gr.dart';
-import 'spinner_widget.dart';
 import 'toast.dart';
 
 @immutable
@@ -21,20 +21,20 @@ class GameControlsWidget extends StatelessWidget {
   const GameControlsWidget({Key? key}) : super(key: key);
   @override
   Widget build(context) {
-    final game = context.watch<Game?>();
     final user = context.watch<User?>();
     final appUser = context.watch<AppUser?>();
-    final variant = context.watch<Variant?>();
     final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
     final appRouter = context.read<AppRouter>();
-    if (game == null || variant == null) {
+    final variant = context.watch<Variant?>();
+    final game = context.watch<Game?>();
+    if (game == null) {
       return const SpinnerWidget();
     }
-    if (game.err != null || variant.err != null) {
+    if (variant?.err != null || game.err != null) {
       return Column(
         children: [
-          Text("GameControlsWidget Game error: ${game.err}"),
-          Text("GameControlsWidget Variant error: ${variant.err}"),
+          Text("Variant error: ${variant?.err}"),
+          Text("Game error: ${game.err}"),
         ],
       );
     }
@@ -82,10 +82,12 @@ class GameControlsWidget extends StatelessWidget {
         final isJoinable = !isBanned &&
             matchesRequirements &&
             !game.players.contains(user.uid) &&
-            game.players.length < variant.nations.length;
+            game.players.length <
+                (variant == null ? 0 : variant.nations.length);
         List<String> joinTooltips = [
           if (game.players.contains(user.uid)) l10n.youAreAlreadyInGame,
-          if (game.players.length >= variant.nations.length)
+          if (game.players.length >=
+              (variant == null ? -1 : variant.nations.length))
             l10n.gameFullNoReplacements,
           if (isBanned) l10n.someoneYouBanned,
           if (!matchesRequirements) l10n.youDonMatchRequirements,

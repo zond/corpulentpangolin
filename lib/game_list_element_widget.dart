@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:corpulentpangolin/spinner_widget.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -12,7 +13,6 @@ import 'game.dart';
 import 'game_metadata_widget.dart';
 import 'layout.dart';
 import 'router.gr.dart';
-import 'spinner_widget.dart';
 import 'variant.dart';
 
 class GameListElementWidget extends StatefulWidget {
@@ -30,20 +30,20 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
     final game = context.watch<Game?>();
     final variant = context.watch<Variant?>();
     final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
-    if (game == null || variant == null) {
+    if (game == null) {
       return const SpinnerWidget();
     }
-    // TODO(zond): When we have replacement support, this needs more logic.
-    if (game.err != null || variant.err != null) {
+    if (variant?.err != null || game.err != null) {
       return Column(
         children: [
-          Text("${game.err}"),
-          Text("${variant.err}"),
+          Text("Variant error: ${variant?.err}"),
+          Text("Game error: ${game.err}"),
         ],
       );
     }
-    final nVariantNations = (variant["Nations"] as List<dynamic>).length;
-    final nMembers = (game["Players"] as List<dynamic>).length;
+    final nVariantNations =
+        variant == null ? "?" : variant.nations.length.toString();
+    final nMembers = game.players.length;
     return Material(
       child: Column(
         children: [
@@ -55,8 +55,9 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
                   title: Row(
                     children: [
                       Expanded(
-                          child: Text(
-                              "${game["Desc"] == "" ? "[${l10n.unnamed}]" : game["Desc"]}")),
+                          child: Text(game.desc == ""
+                              ? "[${l10n.unnamed}]"
+                              : game.desc)),
                       Row(
                         children: [
                           Row(
@@ -98,7 +99,7 @@ class _GameListElementWidgetState extends State<GameListElementWidget> {
                           ),
                           Tooltip(
                               message: l10n.c_of_p_playersJoined(
-                                  "$nMembers", "$nVariantNations"),
+                                  "$nMembers", nVariantNations),
                               child: Row(
                                 children: [
                                   const Icon(Icons.people,

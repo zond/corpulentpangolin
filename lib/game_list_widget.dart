@@ -34,9 +34,10 @@ class GameListWidget extends StatelessWidget {
           child: ListView.builder(
             itemCount: games.length,
             itemBuilder: (context, idx) {
+              final game = Game(games[idx]);
               return gameProvider(
-                gameID: games[idx].id,
-                initialData: Game(games[idx]),
+                gameID: game.id,
+                initialData: game,
                 child: const GameListElementWidget(),
               );
             },

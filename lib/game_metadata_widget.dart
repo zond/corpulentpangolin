@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:corpulentpangolin/spinner_widget.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -11,8 +12,8 @@ import 'package:corpulentpangolin/layout.dart';
 import 'package:corpulentpangolin/player_widget.dart';
 import 'game.dart';
 import 'player_widget.dart';
-import 'spinner_widget.dart';
 
+@immutable
 class GameMetadataWidget extends StatelessWidget {
   const GameMetadataWidget({Key? key}) : super(key: key);
   @override
@@ -23,7 +24,7 @@ class GameMetadataWidget extends StatelessWidget {
       return const SpinnerWidget();
     }
     if (game.err != null) {
-      return Text("Game error: ${game.err}");
+      return Text("Game error ${game.err}");
     }
     return Column(
       children: [
