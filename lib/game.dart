@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -13,6 +14,15 @@ import 'json_map_view.dart';
 import 'phase.dart';
 import 'time.dart';
 import 'variant.dart';
+import 'app_user.dart';
+import 'toast.dart';
+
+@immutable
+class ReasonBool {
+  final bool value;
+  final List<String> reasons;
+  const ReasonBool({required this.value, this.reasons = const []});
+}
 
 @immutable
 class Game extends JSONMapView {
@@ -21,6 +31,100 @@ class Game extends JSONMapView {
     this["ID"] = snapshot.id;
   }
   const Game.fromMap(base) : super(base);
+
+  Future<Object?> leave(
+      {required BuildContext context, required User? user}) async {
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    if (user == null) {
+      toast(context, "Not logged in");
+      return null;
+    }
+    await FirebaseFirestore.instance
+        .collection("Game")
+        .doc(id)
+        .update({
+          "Players": players.where((id) => id != user.uid).toList(),
+        })
+        .then((_) => toast(context, l10n.leftGame))
+        .catchError((err) {
+          debugPrint("Failed saving game: $err");
+          toast(context, l10n.failedSavingGame_Err_(err));
+        });
+    return null;
+  }
+
+  ReasonBool leavable({required BuildContext context, required User? user}) {
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    if (user == null) {
+      return ReasonBool(value: false, reasons: [l10n.logInToEnableThisButton]);
+    }
+    if (!players.contains(user.uid)) {
+      return ReasonBool(
+          value: false, reasons: [l10n.youAreNotAMemberOfThisGame]);
+    }
+    if (started) {
+      return ReasonBool(value: false, reasons: [l10n.youCantLeaveStartedGames]);
+    }
+    return const ReasonBool(value: true);
+  }
+
+  Future<Object?> join(
+      {required BuildContext context, required User? user}) async {
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    if (user == null) {
+      toast(context, "Not logged in");
+      return null;
+    }
+    await FirebaseFirestore.instance
+        .collection("Game")
+        .doc(id)
+        .update({
+          "Players": [...players, user.uid],
+        })
+        .then((_) => toast(context, l10n.gameJoined))
+        .catchError((err) {
+          debugPrint("Failed saving game: $err");
+          toast(context, l10n.failedSavingGame_Err_(err));
+        });
+    return null;
+  }
+
+  ReasonBool joinable(
+      {required BuildContext context,
+      required User? user,
+      required AppUser? appUser,
+      required Variant? variant}) {
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    if (user == null) {
+      return ReasonBool(value: false, reasons: [l10n.logInToEnableThisButton]);
+    }
+    if (players.contains(user.uid)) {
+      return ReasonBool(value: false, reasons: [l10n.youAreAlreadyInGame]);
+    }
+    if (players.length >= (variant == null ? -1 : variant.nations.length)) {
+      return ReasonBool(value: false, reasons: [l10n.gameFull]);
+    }
+    final isBanned = appUser != null &&
+        (appUser.bannedUsers.intersection(players.toSet()).isNotEmpty ||
+            appUser.bannedByUsers.intersection(players.toSet()).isNotEmpty);
+    final matchesRequirements = (minimumReliability == 0 &&
+            minimumQuickness == 0 &&
+            minimumRating == 0) ||
+        (appUser != null &&
+            appUser.reliability >= minimumReliability &&
+            appUser.quickness >= minimumQuickness &&
+            appUser.rating >= minimumRating);
+    final invitationOK =
+        !invitationRequired || invitedPlayers.contains(user.uid);
+    // TODO(zond): When we have replacement support, this needs more logic.
+    final result = !isBanned && invitationOK && matchesRequirements;
+    List<String> reasons = [
+      if (isBanned) l10n.someoneYouBanned,
+      if (!matchesRequirements) l10n.youDonMatchRequirements,
+      if (!invitationOK) l10n.thisGameRequiresAnInvitation,
+    ];
+    return ReasonBool(value: result, reasons: reasons);
+  }
 
   PhaseMeta get phaseMeta => PhaseMeta(getMap("PhaseMeta"));
 
@@ -125,7 +229,8 @@ class Game extends JSONMapView {
 
   int get phaseLengthMinutes => getInt("PhaseLengthMinutes");
 
-  int get nonMovementPhaseLengthMinutes => getInt("NonMovementPhaseLengthMinutes");
+  int get nonMovementPhaseLengthMinutes =>
+      getInt("NonMovementPhaseLengthMinutes");
 
   bool get finished => getBool("Finished");
 

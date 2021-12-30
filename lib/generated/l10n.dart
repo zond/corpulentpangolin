@@ -1179,11 +1179,11 @@ class S {
     );
   }
 
-  /// `Game is already full and has no replaceable players`
-  String get gameFullNoReplacements {
+  /// `Game is already full`
+  String get gameFull {
     return Intl.message(
-      'Game is already full and has no replaceable players',
-      name: 'gameFullNoReplacements',
+      'Game is already full',
+      name: 'gameFull',
       desc: '',
       args: [],
     );
@@ -1394,6 +1394,36 @@ class S {
     return Intl.message(
       'Minimum rating to join',
       name: 'minimumRatingToJoin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log in to enable this button`
+  String get logInToEnableThisButton {
+    return Intl.message(
+      'Log in to enable this button',
+      name: 'logInToEnableThisButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are not a member of this game`
+  String get youAreNotAMemberOfThisGame {
+    return Intl.message(
+      'You are not a member of this game',
+      name: 'youAreNotAMemberOfThisGame',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This game requires an invitation to join`
+  String get thisGameRequiresAnInvitation {
+    return Intl.message(
+      'This game requires an invitation to join',
+      name: 'thisGameRequiresAnInvitation',
       desc: '',
       args: [],
     );

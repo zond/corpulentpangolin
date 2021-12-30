@@ -110,7 +110,7 @@
   "someoneYouBanned": "Någon du svartlistat, eller någon som svartlistat dig, är redan i spelet",
   "youDonMatchRequirements": "Din pålitlighet, snabbhet, eller rang motsvarar inte kraven för spelet",
   "youAreAlreadyInGame": "Du deltar redan i det här spelet",
-  "gameFullNoReplacements": "Spelet är redan fullt och saknar utbytbara spelare",
+  "gameFull": "Spelet är redan fullt",
   "youAreNotLoggedIn": "Du är inte inloggad",
   "gameJoined": "Deltar i spelet",
   "votesRequiredForExtension_V_": "Röster nödvändiga för förlängning: {v}",
@@ -132,6 +132,8 @@
   "votesRequiredForExtraExtension": "Röster nödvändiga för extra spelarvalda förlängningar",
   "minimumReliabilityToJoin": "Nödvändig pålitlighet för att delta",
   "minimumQuicknessToJoin": "Nödvändig snabbhet för att delta",
-  "minimumRatingToJoin": "Nödvändig rang för att delta"
-
+  "minimumRatingToJoin": "Nödvändig rang för att delta",
+  "logInToEnableThisButton": "Logga in för att aktivera den här knappen",
+  "youAreNotAMemberOfThisGame": "Du är inte en medlem i det här spelet",
+  "thisGameRequiresAnInvitation": "Det här spelet kräver en inbjudan för att delta"
 }

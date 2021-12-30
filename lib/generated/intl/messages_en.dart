@@ -112,8 +112,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "fleet": MessageLookupByLibrary.simpleMessage("Fleet"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Game created"),
-        "gameFullNoReplacements": MessageLookupByLibrary.simpleMessage(
-            "Game is already full and has no replaceable players"),
+        "gameFull":
+            MessageLookupByLibrary.simpleMessage("Game is already full"),
         "gameJoined": MessageLookupByLibrary.simpleMessage("Game joined"),
         "gameMasterOnlyAllowedInPrivateGames":
             MessageLookupByLibrary.simpleMessage(
@@ -154,6 +154,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Limit the time of day when the game can start"),
         "liveGames": MessageLookupByLibrary.simpleMessage("Live games"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
+        "logInToEnableThisButton": MessageLookupByLibrary.simpleMessage(
+            "Log in to enable this button"),
         "logInToSeeYourGames":
             MessageLookupByLibrary.simpleMessage("Log in to see your games"),
         "logInToSeeYourProfile":
@@ -229,6 +231,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "source": MessageLookupByLibrary.simpleMessage("Source"),
         "spring": MessageLookupByLibrary.simpleMessage("Spring"),
         "started_Date_": m17,
+        "thisGameRequiresAnInvitation": MessageLookupByLibrary.simpleMessage(
+            "This game requires an invitation to join"),
         "unableToLoadURL": m18,
         "unnamed": MessageLookupByLibrary.simpleMessage("unnamed"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
@@ -241,6 +245,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "w": MessageLookupByLibrary.simpleMessage("w"),
         "youAreAlreadyInGame": MessageLookupByLibrary.simpleMessage(
             "You have already joined this game"),
+        "youAreNotAMemberOfThisGame": MessageLookupByLibrary.simpleMessage(
+            "You are not a member of this game"),
         "youAreNotLoggedIn":
             MessageLookupByLibrary.simpleMessage("You aren\'t logged in"),
         "youCantEditGamesYouDontOwn": MessageLookupByLibrary.simpleMessage(

@@ -112,8 +112,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "fleet": MessageLookupByLibrary.simpleMessage("Flotta"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Spel skapat"),
-        "gameFullNoReplacements": MessageLookupByLibrary.simpleMessage(
-            "Spelet är redan fullt och saknar utbytbara spelare"),
+        "gameFull":
+            MessageLookupByLibrary.simpleMessage("Spelet är redan fullt"),
         "gameJoined": MessageLookupByLibrary.simpleMessage("Deltar i spelet"),
         "gameMasterOnlyAllowedInPrivateGames":
             MessageLookupByLibrary.simpleMessage(
@@ -154,6 +154,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Begränsa tiden på dygnet då spelet kan starta"),
         "liveGames": MessageLookupByLibrary.simpleMessage("Pågående spel"),
         "loading": MessageLookupByLibrary.simpleMessage("Laddar..."),
+        "logInToEnableThisButton": MessageLookupByLibrary.simpleMessage(
+            "Logga in för att aktivera den här knappen"),
         "logInToSeeYourGames": MessageLookupByLibrary.simpleMessage(
             "Logga in för att se dina spel"),
         "logInToSeeYourProfile": MessageLookupByLibrary.simpleMessage(
@@ -229,6 +231,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "source": MessageLookupByLibrary.simpleMessage("Källkod"),
         "spring": MessageLookupByLibrary.simpleMessage("Vår"),
         "started_Date_": m17,
+        "thisGameRequiresAnInvitation": MessageLookupByLibrary.simpleMessage(
+            "Det här spelet kräver en inbjudan för att delta"),
         "unableToLoadURL": m18,
         "unnamed": MessageLookupByLibrary.simpleMessage("namnlöst"),
         "username": MessageLookupByLibrary.simpleMessage("Användarnamn"),
@@ -241,6 +245,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "w": MessageLookupByLibrary.simpleMessage("v"),
         "youAreAlreadyInGame": MessageLookupByLibrary.simpleMessage(
             "Du deltar redan i det här spelet"),
+        "youAreNotAMemberOfThisGame": MessageLookupByLibrary.simpleMessage(
+            "Du är inte en medlem i det här spelet"),
         "youAreNotLoggedIn":
             MessageLookupByLibrary.simpleMessage("Du är inte inloggad"),
         "youCantEditGamesYouDontOwn": MessageLookupByLibrary.simpleMessage(

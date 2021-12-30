@@ -221,7 +221,7 @@
   "someoneYouBanned": "Someone you banned, or someone banned by you, is already in the game",
   "youDonMatchRequirements": "Your reliability, quickness, or rating doesn't match the requirements for the game",
   "youAreAlreadyInGame": "You have already joined this game",
-  "gameFullNoReplacements": "Game is already full and has no replaceable players",
+  "gameFull": "Game is already full",
   "youAreNotLoggedIn": "You aren't logged in",
   "gameJoined": "Game joined",
   "leave": "Leave",
@@ -248,5 +248,8 @@
   "votesRequiredForExtraExtension": "Player votes required for extra player initiated phase extension",
   "minimumReliabilityToJoin": "Minimum reliability to join",
   "minimumQuicknessToJoin": "Minimum quickness to join",
-  "minimumRatingToJoin": "Minimum rating to join"
+  "minimumRatingToJoin": "Minimum rating to join",
+  "logInToEnableThisButton": "Log in to enable this button",
+  "youAreNotAMemberOfThisGame": "You are not a member of this game",
+  "thisGameRequiresAnInvitation": "This game requires an invitation to join"
 }
