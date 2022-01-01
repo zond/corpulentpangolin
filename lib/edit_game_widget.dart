@@ -71,10 +71,8 @@ class _VariantMapWidget extends StatelessWidget {
 
 class EditGameWidget extends StatefulWidget {
   final Game game;
-  final String title;
 
-  const EditGameWidget({Key? key, required this.game, required this.title})
-      : super(key: key);
+  const EditGameWidget({Key? key, required this.game}) : super(key: key);
 
   @override
   _EditGameWidgetState createState() => _EditGameWidgetState();
@@ -125,7 +123,6 @@ class _MinuteLengthFieldState extends State<_MinuteLengthField> {
     final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
     return Row(
       children: [
-        Expanded(child: Text(widget.label)),
         SizedBox(
           width: 50,
           child: TextFormField(
@@ -238,10 +235,6 @@ class _EditGameWidgetState extends State<EditGameWidget> {
       children: [
         ListView(
           children: [
-            ListTile(
-              title: Text(game.exists ? l10n.editGame : l10n.createGame,
-                  style: Theme.of(context).textTheme.headline5),
-            ),
             Card(
               child: SmallPadding(
                 child: Column(

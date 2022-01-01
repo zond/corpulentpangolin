@@ -69,7 +69,14 @@ class _CreateGamePageState extends State<CreateGamePage> {
         ),
       ),
       body: SmallPadding(
-          child: EditGameWidget(game: game, title: l10n.createGame)),
+          child: Column(
+        children: [
+          Text(l10n.createGame, style: Theme.of(context).textTheme.headline5),
+          Expanded(
+            child: EditGameWidget(game: game),
+          ),
+        ],
+      )),
     );
   }
 }
