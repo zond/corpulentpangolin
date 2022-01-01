@@ -32,6 +32,10 @@ class Game extends JSONMapView {
   }
   const Game.fromMap(base) : super(base);
 
+  bool canMuster(User? user) {
+    return started && !mustered && user != null && players.contains(user.uid);
+  }
+
   Future<Object?> leave(
       {required BuildContext context, required User? user}) async {
     final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
@@ -48,9 +52,21 @@ class Game extends JSONMapView {
         .then((_) => toast(context, l10n.leftGame))
         .catchError((err) {
           debugPrint("Failed saving game: $err");
-          toast(context, l10n.failedSavingGame_Err_(err));
+          toast(context, "Failed saving game: $err");
         });
     return null;
+  }
+
+  ReasonBool editable({required BuildContext context, required User? user}) {
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    if (user == null) {
+      return ReasonBool(value: false, reasons: [l10n.logInToEnableThisButton]);
+    }
+    if (user.uid != ownerUID) {
+      return ReasonBool(
+          value: false, reasons: [l10n.youCantEditGamesYouDontOwn]);
+    }
+    return const ReasonBool(value: true);
   }
 
   ReasonBool leavable({required BuildContext context, required User? user}) {
@@ -84,7 +100,7 @@ class Game extends JSONMapView {
         .then((_) => toast(context, l10n.gameJoined))
         .catchError((err) {
           debugPrint("Failed saving game: $err");
-          toast(context, l10n.failedSavingGame_Err_(err));
+          toast(context, "Failed saving game: $err");
         });
     return null;
   }
@@ -154,6 +170,8 @@ class Game extends JSONMapView {
   bool get invitationRequired => getBool("InvitationRequired");
 
   bool get musteringRequired => getBool("MusteringRequired");
+
+  bool get mustered => getBool("Mustered");
 
   int get gracesPerPlayer => getInt("GracesPerPlayer");
 

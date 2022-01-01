@@ -28,39 +28,33 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(v) => "Beskrivning: ${v}";
 
-  static String m4(err) => "Misslyckades med att skapa spel: ${err}";
+  static String m4(date) => "Avslutat: ${date}";
 
-  static String m5(err) => "Misslyckades med att spara spel: ${err}";
+  static String m5(variant) => "Spelvariant: ${variant}";
 
-  static String m6(err) => "Misslyckades med att spara profil: ${err}";
+  static String m6(v) => "Nödvändig snabbhet: ${v}";
 
-  static String m7(date) => "Avslutat: ${date}";
+  static String m7(v) => "Nödvändig rang: ${v}";
 
-  static String m8(variant) => "Spelvariant: ${variant}";
+  static String m8(v) => "Nödvändig pålitlighet: ${v}";
 
-  static String m9(v) => "Nödvändig snabbhet: ${v}";
+  static String m9(type) => "Val av land: ${type}";
 
-  static String m10(v) => "Nödvändig rang: ${v}";
+  static String m10(deadline) => "Faslängd ej förflyttning: ${deadline}";
 
-  static String m11(v) => "Nödvändig pålitlighet: ${v}";
+  static String m11(F, T) => "Starta endast spelet mellan ${F} och ${T}";
 
-  static String m12(type) => "Val av land: ${type}";
+  static String m12(deadline) => "Faslängd: ${deadline}";
 
-  static String m13(deadline) => "Faslängd ej förflyttning: ${deadline}";
+  static String m13(v) => "Regler: ${v}";
 
-  static String m14(F, T) => "Starta endast spelet mellan ${F} och ${T}";
+  static String m14(date) => "Started: ${date}";
 
-  static String m15(deadline) => "Faslängd: ${deadline}";
+  static String m15(err) => "Kunde ej ladda URL: ${err}";
 
-  static String m16(v) => "Regler: ${v}";
+  static String m16(v) => "Användarnamn: ${v}";
 
-  static String m17(date) => "Started: ${date}";
-
-  static String m18(err) => "Kunde ej ladda URL: ${err}";
-
-  static String m19(v) => "Användarnamn: ${v}";
-
-  static String m20(v) => "Röster nödvändiga för förlängning: ${v}";
+  static String m17(v) => "Röster nödvändiga för förlängning: ${v}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -103,12 +97,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Maximalt antal spelarvalda förlängningar per fas"),
         "extensionsPerPlayer": MessageLookupByLibrary.simpleMessage(
             "Maximalt antal spelarvalda förlängningar per spelare per spel"),
-        "failedCreatingGame_Err_": m4,
-        "failedSavingGame_Err_": m5,
-        "failedSavingProfile_Err_": m6,
         "fall": MessageLookupByLibrary.simpleMessage("Höst"),
         "finishedGames": MessageLookupByLibrary.simpleMessage("Avslutade spel"),
-        "finished_Date_": m7,
+        "finished_Date_": m4,
         "fleet": MessageLookupByLibrary.simpleMessage("Flotta"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Spel skapat"),
@@ -119,7 +110,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Spelledare endast möjligt i privata spel (risk för missbruk)."),
         "gameUpdated": MessageLookupByLibrary.simpleMessage("Spel uppdaterat"),
-        "gameVariant_Var_": m8,
+        "gameVariant_Var_": m5,
         "gracePeriodLength": MessageLookupByLibrary.simpleMessage(
             "Automatisk förlängning när en spelare är inaktiv"),
         "gracesPerPhase": MessageLookupByLibrary.simpleMessage(
@@ -172,18 +163,18 @@ class MessageLookup extends MessageLookupByLibrary {
             "Maximal längd av spelarvald förlängning"),
         "minimumQuicknessToJoin": MessageLookupByLibrary.simpleMessage(
             "Nödvändig snabbhet för att delta"),
-        "minimumQuickness_V_": m9,
+        "minimumQuickness_V_": m6,
         "minimumRatingToJoin": MessageLookupByLibrary.simpleMessage(
             "Nödvändig rang för att delta"),
-        "minimumRating_V_": m10,
+        "minimumRating_V_": m7,
         "minimumReliabilityToJoin": MessageLookupByLibrary.simpleMessage(
             "Nödvändig pålitlighet för att delta"),
-        "minimumReliability_V_": m11,
+        "minimumReliability_V_": m8,
         "minutes": MessageLookupByLibrary.simpleMessage("Minuter"),
         "movement": MessageLookupByLibrary.simpleMessage("Förflyttning"),
         "myGames": MessageLookupByLibrary.simpleMessage("Mina spel"),
         "nationSelection": MessageLookupByLibrary.simpleMessage("Val av land"),
-        "nationSelection_Type_": m12,
+        "nationSelection_Type_": m9,
         "newProfilePictureURL":
             MessageLookupByLibrary.simpleMessage("URL till ny profilbild"),
         "nmrPhases_":
@@ -191,17 +182,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "noGamesFound": MessageLookupByLibrary.simpleMessage("Inga spel funna"),
         "nonCommittedPhases_": MessageLookupByLibrary.simpleMessage(
             "Faser utan redo för resolution:"),
-        "nonMovementPhaseDeadline_Date_": m13,
+        "nonMovementPhaseDeadline_Date_": m10,
         "nonMovementPhaseLength": MessageLookupByLibrary.simpleMessage(
             "Faslängd för icke-förflyttningsfaser"),
         "nonNMRPhases_":
             MessageLookupByLibrary.simpleMessage("Faser med order:"),
         "onlyPlayersAssignedByGM": MessageLookupByLibrary.simpleMessage(
             "Endast spelare godkända av spelledaren kan delta."),
-        "onlyStartTheGameBetween_F_and_T": m14,
+        "onlyStartTheGameBetween_F_and_T": m11,
         "openGames": MessageLookupByLibrary.simpleMessage("Öppna spel"),
         "orders": MessageLookupByLibrary.simpleMessage("Order"),
-        "phaseDeadline_Date_": m15,
+        "phaseDeadline_Date_": m12,
         "phaseLength": MessageLookupByLibrary.simpleMessage("Faslängd"),
         "players": MessageLookupByLibrary.simpleMessage("Spelare"),
         "preferences": MessageLookupByLibrary.simpleMessage("Prioritetslista"),
@@ -218,11 +209,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "quickness_": MessageLookupByLibrary.simpleMessage("Snabbhet:"),
         "random": MessageLookupByLibrary.simpleMessage("Slumpvis"),
         "rating_": MessageLookupByLibrary.simpleMessage("Rang:"),
+        "readyToStart": MessageLookupByLibrary.simpleMessage("Redo"),
         "reliability_": MessageLookupByLibrary.simpleMessage("Pålitlighet:"),
         "requireAssignmentToJoin":
             MessageLookupByLibrary.simpleMessage("Godkännande nödvändigt"),
         "retreat": MessageLookupByLibrary.simpleMessage("Reträtt"),
-        "rules_V_": m16,
+        "rules_V_": m13,
         "share": MessageLookupByLibrary.simpleMessage("Dela"),
         "someChatsDisabled":
             MessageLookupByLibrary.simpleMessage("Vissa chattar avstängda"),
@@ -230,16 +222,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "Någon du svartlistat, eller någon som svartlistat dig, är redan i spelet"),
         "source": MessageLookupByLibrary.simpleMessage("Källkod"),
         "spring": MessageLookupByLibrary.simpleMessage("Vår"),
-        "started_Date_": m17,
+        "started_Date_": m14,
         "thisGameRequiresAnInvitation": MessageLookupByLibrary.simpleMessage(
             "Det här spelet kräver en inbjudan för att delta"),
-        "unableToLoadURL": m18,
+        "unableToLoadURL": m15,
         "unnamed": MessageLookupByLibrary.simpleMessage("namnlöst"),
         "username": MessageLookupByLibrary.simpleMessage("Användarnamn"),
-        "username_V_": m19,
+        "username_V_": m16,
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("Se"),
-        "votesRequiredForExtension_V_": m20,
+        "votesRequiredForExtension_V_": m17,
         "votesRequiredForExtraExtension": MessageLookupByLibrary.simpleMessage(
             "Röster nödvändiga för extra spelarvalda förlängningar"),
         "w": MessageLookupByLibrary.simpleMessage("v"),

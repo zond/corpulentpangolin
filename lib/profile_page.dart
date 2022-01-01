@@ -121,10 +121,8 @@ class ProfilePage extends StatelessWidget {
                                         }).catchError((err) {
                                           debugPrint(
                                               "Failed saving profile: $err");
-                                          toast(
-                                              context,
-                                              l10n.failedSavingProfile_Err_(
-                                                  "$err"));
+                                          toast(context,
+                                              "Failed saving profile: $err");
                                         });
                                       },
                                     )
@@ -283,7 +281,7 @@ class _ChangePictureURLDialogState extends State<_ChangePictureURLDialog> {
                         Navigator.of(context).pop();
                       }).catchError((err) {
                         debugPrint("Failed saving profile: $err");
-                        toast(context, l10n.failedSavingProfile_Err_("$err"));
+                        toast(context, "Failed saving profile: $err");
                       });
                     },
                   ),

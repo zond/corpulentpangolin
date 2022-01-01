@@ -39,8 +39,9 @@ class GameControlsWidget extends StatelessWidget {
     final joinable = game.joinable(
         context: context, appUser: appUser, user: user, variant: variant);
     final leavable = game.leavable(context: context, user: user);
-    return ButtonBar(
-      alignment: MainAxisAlignment.start,
+    final editable = game.editable(context: context, user: user);
+    return Wrap(
+      spacing: 2.0,
       children: [
         if (joinable.value && !leavable.value)
           ElevatedButton(
@@ -52,6 +53,14 @@ class GameControlsWidget extends StatelessWidget {
             onPressed: () => game.leave(context: context, user: user),
             child: Text(l10n.leave),
           ),
+        if (!joinable.value && !leavable.value)
+          Tooltip(
+            message: joinable.reasons.join("\n"),
+            child: ElevatedButton(
+              onPressed: null,
+              child: Text(l10n.join),
+            ),
+          ),
         ElevatedButton(
           onPressed: null,
           child: Text(l10n.share),
@@ -60,14 +69,15 @@ class GameControlsWidget extends StatelessWidget {
           onPressed: () => appRouter.push(GamePageRoute(gameID: game.id)),
           child: Text(l10n.view),
         ),
+        if (game.canMuster(user))
+          ElevatedButton(
+            onPressed: null,
+            child: Text(l10n.readyToStart),
+          ),
         Tooltip(
-          message: user == null
-              ? l10n.logInToEnableThisButton
-              : (user.uid == game.ownerUID
-                  ? ""
-                  : l10n.youCantEditGamesYouDontOwn),
+          message: editable.reasons.join("\n"),
           child: ElevatedButton(
-            onPressed: user?.uid == game.ownerUID
+            onPressed: editable.value
                 ? () => appRouter.push(EditGamePageRoute(gameID: game.id))
                 : null,
             child: Text(l10n.edit),

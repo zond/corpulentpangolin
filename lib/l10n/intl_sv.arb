@@ -19,9 +19,6 @@
   "days": "Dagar",
   "hours": "Timmar",
   "minutes": "Minuter",
-  "failedCreatingGame_Err_": "Misslyckades med att skapa spel: {err}",
-  "failedSavingGame_Err_": "Misslyckades med att spara spel: {err}",
-  "failedSavingProfile_Err_": "Misslyckades med att spara profil: {err}",
   "unnamed": "namnlöst",
   "spring": "Vår",
   "fall": "Höst",
@@ -135,5 +132,6 @@
   "minimumRatingToJoin": "Nödvändig rang för att delta",
   "logInToEnableThisButton": "Logga in för att aktivera den här knappen",
   "youAreNotAMemberOfThisGame": "Du är inte en medlem i det här spelet",
-  "thisGameRequiresAnInvitation": "Det här spelet kräver en inbjudan för att delta"
+  "thisGameRequiresAnInvitation": "Det här spelet kräver en inbjudan för att delta",
+  "readyToStart": "Redo"
 }

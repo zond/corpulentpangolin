@@ -23,24 +23,6 @@
   "gameUpdated": "Game updated",
   "youCantEditGamesYouDontOwn": "You can't edit games you aren't game master for",
   "cantChangeVariant": "You can't change variant of an existing game",
-  "failedSavingGame_Err_": "Failed saving game: {err}",
-  "@failedSavingGame_Err_": {
-    "placeholders": {
-      "err": {}
-    }
-  },
-  "failedSavingProfile_Err_": "Failed saving profile: {err}",
-  "@failedSavingProfile_Err_": {
-    "placeholders": {
-      "err": {}
-    }
-  },
-  "failedCreatingGame_Err_": "Failed creating game: {err}",
-  "@failedCreatingGame_Err_": {
-    "placeholders": {
-      "err": {}
-    }
-  },
   "gameVariant_Var_": "Game variant: {variant}",
   "@gameVariant_Var_": {
     "placeholders": {
@@ -251,5 +233,6 @@
   "minimumRatingToJoin": "Minimum rating to join",
   "logInToEnableThisButton": "Log in to enable this button",
   "youAreNotAMemberOfThisGame": "You are not a member of this game",
-  "thisGameRequiresAnInvitation": "This game requires an invitation to join"
+  "thisGameRequiresAnInvitation": "This game requires an invitation to join",
+  "readyToStart": "Ready"
 }

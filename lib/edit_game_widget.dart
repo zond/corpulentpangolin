@@ -870,8 +870,8 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                             existed ? l10n.gameUpdated : l10n.gameCreated);
                       });
                     }).catchError((err) {
-                      debugPrint("Failed creating game: $err");
-                      toast(context, l10n.failedCreatingGame_Err_("$err"));
+                      debugPrint("Failed saving game: $err");
+                      toast(context, "Failed saving game: $err");
                     });
                   },
           ),

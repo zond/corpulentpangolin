@@ -28,39 +28,33 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m3(v) => "Description: ${v}";
 
-  static String m4(err) => "Failed creating game: ${err}";
+  static String m4(date) => "Finished: ${date}";
 
-  static String m5(err) => "Failed saving game: ${err}";
+  static String m5(variant) => "Game variant: ${variant}";
 
-  static String m6(err) => "Failed saving profile: ${err}";
+  static String m6(v) => "Minimum quickness: ${v}";
 
-  static String m7(date) => "Finished: ${date}";
+  static String m7(v) => "Minimum rating: ${v}";
 
-  static String m8(variant) => "Game variant: ${variant}";
+  static String m8(v) => "Minimum reliability: ${v}";
 
-  static String m9(v) => "Minimum quickness: ${v}";
+  static String m9(type) => "Nation selection: ${type}";
 
-  static String m10(v) => "Minimum rating: ${v}";
+  static String m10(deadline) => "Non movement phase deadline: ${deadline}";
 
-  static String m11(v) => "Minimum reliability: ${v}";
+  static String m11(F, T) => "Only start the game between ${F} and ${T}";
 
-  static String m12(type) => "Nation selection: ${type}";
+  static String m12(deadline) => "Phase deadline: ${deadline}";
 
-  static String m13(deadline) => "Non movement phase deadline: ${deadline}";
+  static String m13(v) => "Rules: ${v}";
 
-  static String m14(F, T) => "Only start the game between ${F} and ${T}";
+  static String m14(date) => "Started: ${date}";
 
-  static String m15(deadline) => "Phase deadline: ${deadline}";
+  static String m15(err) => "Unable to load URL: ${err}";
 
-  static String m16(v) => "Rules: ${v}";
+  static String m16(v) => "Username: ${v}";
 
-  static String m17(date) => "Started: ${date}";
-
-  static String m18(err) => "Unable to load URL: ${err}";
-
-  static String m19(v) => "Username: ${v}";
-
-  static String m20(v) => "Votes required for extension: ${v}";
+  static String m17(v) => "Votes required for extension: ${v}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -103,12 +97,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Maximum number of player initiated phase extensions per phase"),
         "extensionsPerPlayer": MessageLookupByLibrary.simpleMessage(
             "Maximum number of player initiated phase extensions per player per game"),
-        "failedCreatingGame_Err_": m4,
-        "failedSavingGame_Err_": m5,
-        "failedSavingProfile_Err_": m6,
         "fall": MessageLookupByLibrary.simpleMessage("Fall"),
         "finishedGames": MessageLookupByLibrary.simpleMessage("Finished games"),
-        "finished_Date_": m7,
+        "finished_Date_": m4,
         "fleet": MessageLookupByLibrary.simpleMessage("Fleet"),
         "forum": MessageLookupByLibrary.simpleMessage("Forum"),
         "gameCreated": MessageLookupByLibrary.simpleMessage("Game created"),
@@ -119,7 +110,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Game master only allowed in private games due to risk of abuse."),
         "gameUpdated": MessageLookupByLibrary.simpleMessage("Game updated"),
-        "gameVariant_Var_": m8,
+        "gameVariant_Var_": m5,
         "gracePeriodLength": MessageLookupByLibrary.simpleMessage(
             "Automatic phase extension when player is inactive"),
         "gracesPerPhase": MessageLookupByLibrary.simpleMessage(
@@ -172,36 +163,36 @@ class MessageLookup extends MessageLookupByLibrary {
             "Maximum length of player initiated phase extension"),
         "minimumQuicknessToJoin":
             MessageLookupByLibrary.simpleMessage("Minimum quickness to join"),
-        "minimumQuickness_V_": m9,
+        "minimumQuickness_V_": m6,
         "minimumRatingToJoin":
             MessageLookupByLibrary.simpleMessage("Minimum rating to join"),
-        "minimumRating_V_": m10,
+        "minimumRating_V_": m7,
         "minimumReliabilityToJoin":
             MessageLookupByLibrary.simpleMessage("Minimum reliability to join"),
-        "minimumReliability_V_": m11,
+        "minimumReliability_V_": m8,
         "minutes": MessageLookupByLibrary.simpleMessage("Minutes"),
         "movement": MessageLookupByLibrary.simpleMessage("Movement"),
         "myGames": MessageLookupByLibrary.simpleMessage("My games"),
         "nationSelection":
             MessageLookupByLibrary.simpleMessage("Nation selection"),
-        "nationSelection_Type_": m12,
+        "nationSelection_Type_": m9,
         "newProfilePictureURL":
             MessageLookupByLibrary.simpleMessage("New profile picture URL"),
         "nmrPhases_": MessageLookupByLibrary.simpleMessage("NMR phases:"),
         "noGamesFound": MessageLookupByLibrary.simpleMessage("No games found"),
         "nonCommittedPhases_":
             MessageLookupByLibrary.simpleMessage("Non committed phases:"),
-        "nonMovementPhaseDeadline_Date_": m13,
+        "nonMovementPhaseDeadline_Date_": m10,
         "nonMovementPhaseLength":
             MessageLookupByLibrary.simpleMessage("Non movement phase length"),
         "nonNMRPhases_":
             MessageLookupByLibrary.simpleMessage("Non NMR phases:"),
         "onlyPlayersAssignedByGM": MessageLookupByLibrary.simpleMessage(
             "Only players assigned by the game master can join."),
-        "onlyStartTheGameBetween_F_and_T": m14,
+        "onlyStartTheGameBetween_F_and_T": m11,
         "openGames": MessageLookupByLibrary.simpleMessage("Open games"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
-        "phaseDeadline_Date_": m15,
+        "phaseDeadline_Date_": m12,
         "phaseLength": MessageLookupByLibrary.simpleMessage("Phase length"),
         "players": MessageLookupByLibrary.simpleMessage("Players"),
         "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
@@ -218,11 +209,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "quickness_": MessageLookupByLibrary.simpleMessage("Quickness:"),
         "random": MessageLookupByLibrary.simpleMessage("Random"),
         "rating_": MessageLookupByLibrary.simpleMessage("Rating:"),
+        "readyToStart": MessageLookupByLibrary.simpleMessage("Ready"),
         "reliability_": MessageLookupByLibrary.simpleMessage("Reliability:"),
         "requireAssignmentToJoin":
             MessageLookupByLibrary.simpleMessage("Require assignment to join"),
         "retreat": MessageLookupByLibrary.simpleMessage("Retreat"),
-        "rules_V_": m16,
+        "rules_V_": m13,
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "someChatsDisabled":
             MessageLookupByLibrary.simpleMessage("Some chats disabled"),
@@ -230,16 +222,16 @@ class MessageLookup extends MessageLookupByLibrary {
             "Someone you banned, or someone banned by you, is already in the game"),
         "source": MessageLookupByLibrary.simpleMessage("Source"),
         "spring": MessageLookupByLibrary.simpleMessage("Spring"),
-        "started_Date_": m17,
+        "started_Date_": m14,
         "thisGameRequiresAnInvitation": MessageLookupByLibrary.simpleMessage(
             "This game requires an invitation to join"),
-        "unableToLoadURL": m18,
+        "unableToLoadURL": m15,
         "unnamed": MessageLookupByLibrary.simpleMessage("unnamed"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
-        "username_V_": m19,
+        "username_V_": m16,
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
         "view": MessageLookupByLibrary.simpleMessage("View"),
-        "votesRequiredForExtension_V_": m20,
+        "votesRequiredForExtension_V_": m17,
         "votesRequiredForExtraExtension": MessageLookupByLibrary.simpleMessage(
             "Player votes required for extra player initiated phase extension"),
         "w": MessageLookupByLibrary.simpleMessage("w"),

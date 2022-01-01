@@ -290,36 +290,6 @@ class S {
     );
   }
 
-  /// `Failed saving game: {err}`
-  String failedSavingGame_Err_(Object err) {
-    return Intl.message(
-      'Failed saving game: $err',
-      name: 'failedSavingGame_Err_',
-      desc: '',
-      args: [err],
-    );
-  }
-
-  /// `Failed saving profile: {err}`
-  String failedSavingProfile_Err_(Object err) {
-    return Intl.message(
-      'Failed saving profile: $err',
-      name: 'failedSavingProfile_Err_',
-      desc: '',
-      args: [err],
-    );
-  }
-
-  /// `Failed creating game: {err}`
-  String failedCreatingGame_Err_(Object err) {
-    return Intl.message(
-      'Failed creating game: $err',
-      name: 'failedCreatingGame_Err_',
-      desc: '',
-      args: [err],
-    );
-  }
-
   /// `Game variant: {variant}`
   String gameVariant_Var_(Object variant) {
     return Intl.message(
@@ -1424,6 +1394,16 @@ class S {
     return Intl.message(
       'This game requires an invitation to join',
       name: 'thisGameRequiresAnInvitation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ready`
+  String get readyToStart {
+    return Intl.message(
+      'Ready',
+      name: 'readyToStart',
       desc: '',
       args: [],
     );
