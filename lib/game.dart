@@ -319,7 +319,7 @@ Widget gameProvider({
                 .collection("Game")
                 .doc(gameID)
                 .collection("Phase")
-                .orderBy("Ordinal", descending: true)
+                .orderBy("Meta.Ordinal", descending: true)
                 .limit(1))
             .map((snapshot) {
           if (snapshot.size == 0) {
