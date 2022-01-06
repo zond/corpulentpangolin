@@ -845,9 +845,7 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                     Future<Object?>? updater;
                     final existed = game.exists;
                     if (existed) {
-                      final _id = game.id;
-                      game.remove("ID");
-                      updater = gameCollection.doc(_id).update(game);
+                      updater = gameCollection.doc(game.id).update(game);
                     } else {
                       updater = gameCollection.add(game);
                     }
