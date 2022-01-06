@@ -152,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "logInToSeeYourProfile":
             MessageLookupByLibrary.simpleMessage("Log in to see your profile."),
         "loggedIn": MessageLookupByLibrary.simpleMessage("Logged in"),
+        "loggedInAs": MessageLookupByLibrary.simpleMessage("Logged in as"),
         "loggedOut": MessageLookupByLibrary.simpleMessage("Logged out"),
         "login": MessageLookupByLibrary.simpleMessage("Log in"),
         "logout": MessageLookupByLibrary.simpleMessage("Log out"),

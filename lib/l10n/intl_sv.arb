@@ -133,5 +133,6 @@
   "logInToEnableThisButton": "Logga in för att aktivera den här knappen",
   "youAreNotAMemberOfThisGame": "Du är inte en medlem i det här spelet",
   "thisGameRequiresAnInvitation": "Det här spelet kräver en inbjudan för att delta",
-  "readyToStart": "Redo"
+  "readyToStart": "Redo",
+  "loggedInAs": "Inloggad som"
 }

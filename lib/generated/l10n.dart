@@ -1408,6 +1408,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Logged in as`
+  String get loggedInAs {
+    return Intl.message(
+      'Logged in as',
+      name: 'loggedInAs',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

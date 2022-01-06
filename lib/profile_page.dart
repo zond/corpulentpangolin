@@ -1,17 +1,17 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+// Project imports:
+import 'package:corpulentpangolin/cache.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
-// Project imports:
-import 'package:corpulentpangolin/cache.dart';
 import 'app_user.dart';
 import 'layout.dart';
 import 'onblur_text_form_field.dart';
@@ -22,6 +22,7 @@ import 'toast.dart';
 @immutable
 class ProfilePage extends StatelessWidget {
   final String uid;
+
   const ProfilePage({Key? key, @PathParam('uid') required this.uid})
       : super(key: key);
 
@@ -41,6 +42,9 @@ class ProfilePage extends StatelessWidget {
         final appRouter = context.read<AppRouter>();
         final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
         final user = context.watch<User?>();
+        if (user == null) {
+          return const Text("Log in to see the profile page");
+        }
         final appUser = context.watch<AppUser?>();
         return Scaffold(
           appBar: AppBar(
@@ -52,6 +56,17 @@ class ProfilePage extends StatelessWidget {
           ),
           body: Column(
             children: [
+              Card(
+                child: SmallPadding(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(l10n.loggedInAs),
+                      Text(user.email ?? l10n.unnamed),
+                    ],
+                  ),
+                ),
+              ),
               if (appUser == null) const SpinnerWidget(),
               if (appUser != null) ...[
                 Column(
@@ -168,7 +183,9 @@ class ProfilePage extends StatelessWidget {
 class _StatRow extends StatelessWidget {
   final String label;
   final num value;
+
   const _StatRow(this.label, this.value, {Key? key}) : super(key: key);
+
   @override
   Widget build(context) {
     return LayoutBuilder(
@@ -198,9 +215,11 @@ class _StatRow extends StatelessWidget {
 class _ChangePictureURLDialog extends StatefulWidget {
   final AppUser appUser;
   final User user;
+
   const _ChangePictureURLDialog(
       {Key? key, required this.appUser, required this.user})
       : super(key: key);
+
   @override
   State<_ChangePictureURLDialog> createState() =>
       _ChangePictureURLDialogState();
@@ -209,6 +228,7 @@ class _ChangePictureURLDialog extends StatefulWidget {
 class _ChangePictureURLDialogState extends State<_ChangePictureURLDialog> {
   bool verified = false;
   String url = "";
+
   @override
   void initState() {
     super.initState();
