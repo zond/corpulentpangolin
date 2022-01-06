@@ -38,9 +38,8 @@ class SVGBundle {
   }
 }
 
-@immutable
 class Graph extends JSONMapView {
-  const Graph(base) : super(base);
+  Graph(base) : super.fromMap(base);
   Map<String, dynamic> get nodes {
     if (!containsKey("Nodes")) {
       return {};
@@ -51,10 +50,9 @@ class Graph extends JSONMapView {
 
 class Variant extends JSONMapView {
   Variant(DocumentSnapshot<Map<String, dynamic>> snapshot)
-      : super(snapshot.data()!) {
-    this["ID"] = snapshot.id;
-  }
-  Variant.fromMap(base) : super(base);
+      : super.fromSnapshot(snapshot);
+  Variant.fromMap(base) : super.fromMap(base);
+  Variant.error(Object? err) : super.error(err);
 
   List<int> _decode(DocumentSnapshot<Map<String, dynamic>> doc) {
     return brotliDecode((doc.data()!["Bytes"] as Blob).bytes);
@@ -65,10 +63,6 @@ class Variant extends JSONMapView {
   String get rules => getString("Rules");
 
   String get description => getString("Description");
-
-  String get id => getString("ID");
-
-  Object? get err => this["Error"];
 
   Map<String, String>? _provinceLongNames;
   Map<String, String> get provinceLongNames {

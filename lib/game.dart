@@ -24,13 +24,11 @@ class ReasonBool {
   const ReasonBool({required this.value, this.reasons = const []});
 }
 
-@immutable
 class Game extends JSONMapView {
   Game(DocumentSnapshot<Map<String, dynamic>> snapshot)
-      : super(snapshot.data()!) {
-    this["ID"] = snapshot.id;
-  }
-  const Game.fromMap(base) : super(base);
+      : super.fromSnapshot(snapshot);
+  Game.fromMap(base) : super.fromMap(base);
+  Game.error(Object? err) : super.error(err);
 
   bool canMuster(User? user) {
     return started && !mustered && user != null && players.contains(user.uid);
@@ -145,8 +143,6 @@ class Game extends JSONMapView {
   PhaseMeta get phaseMeta => PhaseMeta(getMap("PhaseMeta"));
 
   bool get hasLimitedStartTime => dontStartAfter != dontStartBefore;
-
-  bool get exists => containsKey("ID");
 
   bool get started => getBool("Started");
 
@@ -270,8 +266,6 @@ class Game extends JSONMapView {
 
   bool get seeded => getBool("Seeded");
 
-  String get id => getString("ID");
-
   bool get isStarted => getBool("Started");
 
   bool get isFinished => getBool("Finished");
@@ -283,13 +277,6 @@ class Game extends JSONMapView {
   List<String> get players => getList<String>("Players");
 
   String get desc => getString("Desc");
-
-  Object? get err {
-    if (containsKey("Error")) {
-      return this["Error"];
-    }
-    return null;
-  }
 }
 
 Widget gameProvider({
@@ -304,13 +291,13 @@ Widget gameProvider({
                 FirebaseFirestore.instance.collection("Game").doc(gameID))
             .map((snapshot) {
           if (!snapshot.exists) {
-            return Game.fromMap({"Error": "No game with id $gameID found!"});
+            return Game.error("No game with id $gameID found!");
           }
           return Game(snapshot);
         }),
         catchError: (context, e) {
           debugPrint("gameProvider Game: $e");
-          return Game.fromMap({"Error": "gameProvider Game: $e"});
+          return Game.error("gameProvider Game: $e");
         },
         initialData: initialData,
       ),
@@ -329,7 +316,7 @@ Widget gameProvider({
         }),
         catchError: (context, e) {
           debugPrint("gameProvider Phase: $e");
-          return Phase.fromMap({"Error": "gameProvider Phase: $e"});
+          return Phase.error("gameProvider Phase: $e");
         },
         initialData: null,
       ),
@@ -340,14 +327,13 @@ Widget gameProvider({
             return null;
           }
           if (game.err != null) {
-            return Variant.fromMap({"Error": "gameProvider Game: ${game.err}"});
+            return Variant.error("gameProvider Game: ${game.err}");
           }
           if (variants == null) {
             return null;
           }
           if (variants.err != null) {
-            return Variant.fromMap(
-                {"Error": "gameProvider Variant: ${variants.err}"});
+            return Variant.error("gameProvider Variant: ${variants.err}");
           }
           return variants.map[game["Variant"] as String];
         },

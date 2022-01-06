@@ -33,7 +33,7 @@ class PlayerWidget extends StatelessWidget {
         }),
         catchError: (context, err) {
           debugPrint("PlayerWidget User: $err");
-          AppUser.fromMap({"Error": err});
+          AppUser.error(err);
         },
         initialData: null,
         builder: (context, _) {

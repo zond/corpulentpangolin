@@ -38,8 +38,7 @@ class _EditGamePageState extends State<EditGamePage> {
       value:
           cacheDocSnapshots(gameCollection.doc(widget.gameID)).map((snapshot) {
         if (!snapshot.exists) {
-          return const Game.fromMap(
-              {"Error": "EditGamePage Game error: Game doesn't exist!"});
+          return Game.error("EditGamePage Game error: Game doesn't exist!");
         }
         return Game(snapshot);
       }),

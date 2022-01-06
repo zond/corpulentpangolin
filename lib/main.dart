@@ -74,7 +74,7 @@ class _App extends StatelessWidget {
             }),
             catchError: (context, err) {
               debugPrint("App AppUser error: $err");
-              AppUser.fromMap({"Error": err});
+              AppUser.error(err);
             },
             initialData: null,
             child: child,

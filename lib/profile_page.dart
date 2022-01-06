@@ -87,7 +87,7 @@ class ProfilePage extends StatelessWidget {
                                     if (!appUser.exists ||
                                         appUser.pictureURL == "")
                                       Image.asset("assets/images/anon.png"),
-                                    if (user != null && user.uid == uid)
+                                    if (user.uid == uid)
                                       Positioned(
                                         right: 0.0,
                                         bottom: 0.0,
@@ -110,7 +110,7 @@ class ProfilePage extends StatelessWidget {
                             ),
                             SizedBox(
                               width: constraints.maxWidth / 2,
-                              child: user != null && user.uid == uid
+                              child: user.uid == uid
                                   ? OnBlurTextFormField(
                                       label: l10n.username,
                                       initialValue: appUser.username,

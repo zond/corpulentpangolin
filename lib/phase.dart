@@ -17,7 +17,7 @@ class Unit {
 }
 
 class PhaseMeta extends JSONMapView {
-  PhaseMeta(Map<String, dynamic> base) : super(base);
+  PhaseMeta(Map<String, dynamic> base) : super.fromMap(base);
 
   String get season => getString("Season");
 
@@ -55,10 +55,9 @@ class PhaseMeta extends JSONMapView {
 
 class Phase extends JSONMapView {
   Phase(DocumentSnapshot<Map<String, dynamic>> snapshot)
-      : super(snapshot.data()!) {
-    this["ID"] = snapshot.id;
-  }
-  Phase.fromMap(Map<String, dynamic> base) : super(base);
+      : super.fromSnapshot(snapshot);
+  Phase.fromMap(Map<String, dynamic> base) : super.fromMap(base);
+  Phase.error(Object? err) : super.error(err);
 
   PhaseMeta get meta => PhaseMeta(getMap("Meta"));
 
@@ -89,6 +88,4 @@ class Phase extends JSONMapView {
           k, Unit(type: "${unit["Type"]}", nation: "${unit["Nation"]}"));
     });
   }
-
-  Object? get err => this["Error"];
 }

@@ -6,21 +6,17 @@ import 'json_map_view.dart';
 
 class AppUser extends JSONMapView {
   AppUser(DocumentSnapshot<Map<String, dynamic>> snapshot)
-      : super(snapshot.data()!) {
-    this["ID"] = snapshot.id;
-  }
+      : super.fromSnapshot(snapshot);
 
-  AppUser.fromMap(Map<String, dynamic> base) : super(base);
+  AppUser.fromMap(Map<String, dynamic> base) : super.fromMap(base);
 
-  AppUser.missing() : super({}) {
-    this["Exists"] = false;
-  }
+  AppUser.missing() : super.fromMap({});
+
+  AppUser.error(Object? err) : super.error(err);
 
   Set<String> get bannedUsers => getList<String>("BannedUsers").toSet();
 
   Set<String> get bannedByUsers => getList<String>("BannedByUsers").toSet();
-
-  String get id => getString("ID");
 
   num get reliability => getFloat("Reliability");
 
@@ -36,16 +32,7 @@ class AppUser extends JSONMapView {
 
   num get rating => getFloat("Rating");
 
-  bool get exists {
-    if (containsKey("Exists")) {
-      return this["Exists"] as bool;
-    }
-    return true;
-  }
-
   String get pictureURL => getString("PictureURL");
 
   String get username => getString("Username");
-
-  Object? get err => this["Error"];
 }

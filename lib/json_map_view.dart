@@ -3,7 +3,16 @@ import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class JSONMapView extends MapView<String, dynamic> {
-  const JSONMapView(Map<String, dynamic> base) : super(base);
+  String id = "";
+  bool exists = false;
+  Object? err;
+  JSONMapView.error(this.err) : super({});
+  JSONMapView.fromMap(Map<String, dynamic> base) : super(base);
+  JSONMapView.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot)
+      : super(snapshot.data() ?? {}) {
+    exists = snapshot.exists;
+    id = snapshot.id;
+  }
 
   String getString(String key) {
     if (containsKey(key)) {
