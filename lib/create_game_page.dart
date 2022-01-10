@@ -42,7 +42,6 @@ class _CreateGamePageState extends State<CreateGamePage> {
     "Variant": "Classical",
     "Players": [FirebaseAuth.instance.currentUser?.uid],
     "CategorySortKey": 1000,
-    "Seeded": false,
     "DontStartBeforeMinuteInDay": 0,
     "DontStartAfterMinuteInDay": 0
   });

@@ -1,6 +1,7 @@
 // Dart imports:
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class JSONMapView extends MapView<String, dynamic> {
   String id = "";
@@ -26,6 +27,10 @@ class JSONMapView extends MapView<String, dynamic> {
       return (this[key] as Timestamp).toDate();
     }
     return DateTime.fromMicrosecondsSinceEpoch(0);
+  }
+
+  void removeTimestamps() {
+    removeWhere((key, value) => value is Timestamp);
   }
 
   List<T> getList<T>(String key) {
