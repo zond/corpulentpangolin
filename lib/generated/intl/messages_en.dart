@@ -160,6 +160,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "manageAsGameMaster":
             MessageLookupByLibrary.simpleMessage("Manage as game master"),
         "map": MessageLookupByLibrary.simpleMessage("Map"),
+        "markedAsReady":
+            MessageLookupByLibrary.simpleMessage("Marked as ready"),
         "maxExtensionLength": MessageLookupByLibrary.simpleMessage(
             "Maximum length of player initiated phase extension"),
         "minimumQuicknessToJoin":

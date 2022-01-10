@@ -134,5 +134,6 @@
   "youAreNotAMemberOfThisGame": "Du är inte en medlem i det här spelet",
   "thisGameRequiresAnInvitation": "Det här spelet kräver en inbjudan för att delta",
   "readyToStart": "Redo",
-  "loggedInAs": "Inloggad som"
+  "loggedInAs": "Inloggad som",
+  "markedAsReady": "Markerad som redo"
 }

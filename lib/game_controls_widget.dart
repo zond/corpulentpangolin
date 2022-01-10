@@ -71,6 +71,11 @@ class GameControlsWidget extends StatelessWidget {
         ),
         if (game.canMuster(user))
           ElevatedButton(
+            onPressed: () => game.muster(context: context, user: user),
+            child: Text(l10n.readyToStart),
+          ),
+        if (game.hasMustered(user))
+          ElevatedButton(
             onPressed: null,
             child: Text(l10n.readyToStart),
           ),

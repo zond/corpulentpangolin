@@ -1409,6 +1409,16 @@ class S {
     );
   }
 
+  /// `Marked as ready`
+  String get markedAsReady {
+    return Intl.message(
+      'Marked as ready',
+      name: 'markedAsReady',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Logged in as`
   String get loggedInAs {
     return Intl.message(

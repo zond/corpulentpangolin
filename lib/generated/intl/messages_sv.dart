@@ -160,6 +160,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "manageAsGameMaster":
             MessageLookupByLibrary.simpleMessage("Administrera som spelledare"),
         "map": MessageLookupByLibrary.simpleMessage("Karta"),
+        "markedAsReady":
+            MessageLookupByLibrary.simpleMessage("Markerad som redo"),
         "maxExtensionLength": MessageLookupByLibrary.simpleMessage(
             "Maximal längd av spelarvald förlängning"),
         "minimumQuicknessToJoin": MessageLookupByLibrary.simpleMessage(

@@ -235,5 +235,6 @@
   "youAreNotAMemberOfThisGame": "You are not a member of this game",
   "thisGameRequiresAnInvitation": "This game requires an invitation to join",
   "readyToStart": "Ready",
+  "markedAsReady": "Marked as ready",
   "loggedInAs": "Logged in as"
 }

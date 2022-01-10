@@ -31,7 +31,41 @@ class Game extends JSONMapView {
   Game.error(Object? err) : super.error(err);
 
   bool canMuster(User? user) {
-    return started && !mustered && user != null && players.contains(user.uid);
+    return started &&
+        !mustered &&
+        user != null &&
+        players.contains(user.uid) &&
+        !musteredPlayers.contains(user.uid);
+  }
+
+  bool hasMustered(User? user) {
+    return started &&
+        !mustered &&
+        user != null &&
+        players.contains(user.uid) &&
+        musteredPlayers.contains(user.uid);
+  }
+
+  Future<Object?> muster(
+      {required BuildContext context, required User? user}) async {
+    final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
+    if (user == null) {
+      toast(context, "Not logged in");
+      return null;
+    }
+    final newMusteredPlayers = musteredPlayers.toSet()..add(user.uid);
+    await FirebaseFirestore.instance
+        .collection("Game")
+        .doc(id)
+        .update({
+          "MusteredPlayers": newMusteredPlayers.toList(),
+        })
+        .then((_) => toast(context, l10n.markedAsReady))
+        .catchError((err) {
+          debugPrint("Failed saving game: $err");
+          toast(context, "Failed saving game: $err");
+        });
+    return null;
   }
 
   Future<Object?> leave(
@@ -275,6 +309,8 @@ class Game extends JSONMapView {
   List<String> get invitedPlayers => getList<String>("InvitedPlayers");
 
   List<String> get players => getList<String>("Players");
+
+  List<String> get musteredPlayers => getList<String>("MusteredPlayers");
 
   String get desc => getString("Desc");
 }

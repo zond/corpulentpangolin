@@ -35,6 +35,9 @@ class JSONMapView extends MapView<String, dynamic> {
 
   List<T> getList<T>(String key) {
     if (containsKey(key)) {
+      if (this[key] == null) {
+        return [];
+      }
       return (this[key] as List<dynamic>).map((e) => e as T).toList();
     }
     return [];
@@ -42,6 +45,9 @@ class JSONMapView extends MapView<String, dynamic> {
 
   Map<String, T> getMap<T>(String key) {
     if (containsKey(key)) {
+      if (this[key] == null) {
+        return {};
+      }
       return (this[key] as Map<String, dynamic>)
           .map((k, v) => MapEntry(k, v as T));
     }
