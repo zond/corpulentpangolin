@@ -41,6 +41,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
     "DisableConferenceChat": false,
     "Variant": "Classical",
     "Players": [FirebaseAuth.instance.currentUser?.uid],
+    "Members": [FirebaseAuth.instance.currentUser?.uid],
     "CategorySortKey": 1000,
     "DontStartBeforeMinuteInDay": 0,
     "DontStartAfterMinuteInDay": 0

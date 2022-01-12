@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
                 ),
                 GameListWidget(cacheQuerySnapshots(FirebaseFirestore.instance
                     .collection("Game")
-                    .where("Players", arrayContains: user.uid)
+                    .where("Members", arrayContains: user.uid)
                     .orderBy("CategorySortKey")
                     .orderBy("TimeSortKey"))),
               ],

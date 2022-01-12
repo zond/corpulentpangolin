@@ -341,8 +341,10 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                                   setState(() {
                                     if (newValue) {
                                       game["OwnerUID"] = user.uid;
+                                      game["Players"] = [];
                                     } else {
                                       game["OwnerUID"] = "";
+                                      game["Players"] = [user.uid];
                                       game["InvitationRequired"] = false;
                                     }
                                   });

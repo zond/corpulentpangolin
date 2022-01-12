@@ -80,6 +80,9 @@ class Game extends JSONMapView {
         .doc(id)
         .update({
           "Players": players.where((id) => id != user.uid).toList(),
+          "Members": ownerUID == user.uid
+              ? members
+              : members.where((id) => id != user.uid).toList(),
         })
         .then((_) => toast(context, l10n.leftGame))
         .catchError((err) {
@@ -123,11 +126,16 @@ class Game extends JSONMapView {
       toast(context, "Not logged in");
       return null;
     }
+    final p = players.toSet();
+    p.add(user.uid);
+    final m = members.toSet();
+    m.add(user.uid);
     await FirebaseFirestore.instance
         .collection("Game")
         .doc(id)
         .update({
-          "Players": [...players, user.uid],
+          "Players": p.toList(),
+          "Members": m.toList(),
         })
         .then((_) => toast(context, l10n.gameJoined))
         .catchError((err) {
@@ -309,6 +317,8 @@ class Game extends JSONMapView {
   List<String> get invitedPlayers => getList<String>("InvitedPlayers");
 
   List<String> get players => getList<String>("Players");
+
+  List<String> get members => getList<String>("Members");
 
   List<String> get musteredPlayers => getList<String>("MusteredPlayers");
 
