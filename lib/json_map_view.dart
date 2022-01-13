@@ -1,7 +1,6 @@
 // Dart imports:
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class JSONMapView extends MapView<String, dynamic> {
   String id = "";

@@ -135,5 +135,7 @@
   "thisGameRequiresAnInvitation": "Det här spelet kräver en inbjudan för att delta",
   "readyToStart": "Redo",
   "loggedInAs": "Inloggad som",
-  "markedAsReady": "Markerad som redo"
+  "markedAsReady": "Markerad som redo",
+  "userID": "Användar-ID",
+  "copiedToClipboard": "Kopierat till urklipp"
 }

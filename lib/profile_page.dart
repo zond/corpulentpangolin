@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:corpulentpangolin/cache.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 import 'package:http/http.dart';
@@ -58,11 +59,28 @@ class ProfilePage extends StatelessWidget {
             children: [
               Card(
                 child: SmallPadding(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
                     children: [
-                      Text(l10n.loggedInAs),
-                      Text(user.email ?? l10n.unnamed),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(l10n.loggedInAs),
+                          Text(user.email ?? l10n.unnamed),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(l10n.userID),
+                          TextButton(
+                            onPressed: () {
+                              Clipboard.setData(ClipboardData(text: user.uid));
+                              toast(context, l10n.copiedToClipboard);
+                            },
+                            child: Text(user.uid),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

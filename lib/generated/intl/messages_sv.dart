@@ -76,6 +76,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "committedPhases_":
             MessageLookupByLibrary.simpleMessage("Faser redo för resolution:"),
+        "copiedToClipboard":
+            MessageLookupByLibrary.simpleMessage("Kopierat till urklipp"),
         "createGame": MessageLookupByLibrary.simpleMessage("Skapa spel"),
         "createdBy_V_": m1,
         "created_Date_": m2,
@@ -230,6 +232,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Det här spelet kräver en inbjudan för att delta"),
         "unableToLoadURL": m15,
         "unnamed": MessageLookupByLibrary.simpleMessage("namnlöst"),
+        "userID": MessageLookupByLibrary.simpleMessage("Användar-ID"),
         "username": MessageLookupByLibrary.simpleMessage("Användarnamn"),
         "username_V_": m16,
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),

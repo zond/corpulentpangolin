@@ -236,5 +236,7 @@
   "thisGameRequiresAnInvitation": "This game requires an invitation to join",
   "readyToStart": "Ready",
   "markedAsReady": "Marked as ready",
-  "loggedInAs": "Logged in as"
+  "loggedInAs": "Logged in as",
+  "userID": "User ID",
+  "copiedToClipboard": "Copied to clipboard"
 }

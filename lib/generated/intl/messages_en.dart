@@ -76,6 +76,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "chat": MessageLookupByLibrary.simpleMessage("Chat"),
         "committedPhases_":
             MessageLookupByLibrary.simpleMessage("Committed phases:"),
+        "copiedToClipboard":
+            MessageLookupByLibrary.simpleMessage("Copied to clipboard"),
         "createGame": MessageLookupByLibrary.simpleMessage("Create game"),
         "createdBy_V_": m1,
         "created_Date_": m2,
@@ -230,6 +232,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "This game requires an invitation to join"),
         "unableToLoadURL": m15,
         "unnamed": MessageLookupByLibrary.simpleMessage("unnamed"),
+        "userID": MessageLookupByLibrary.simpleMessage("User ID"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "username_V_": m16,
         "variant": MessageLookupByLibrary.simpleMessage("Variant"),
