@@ -46,7 +46,7 @@ class PlayerWidget extends StatelessWidget {
           }
           return ListTile(
             onTap: () => appRouter.push(ProfilePageRoute(uid: uid)),
-            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+            visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
             leading: SizedBox(
               child: user.exists && user.pictureURL != ""
                   ? Image.network(user.pictureURL)

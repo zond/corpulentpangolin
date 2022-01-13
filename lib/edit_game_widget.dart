@@ -411,7 +411,7 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                                           }
                                         });
                                       },
-                                      icon: Icon(Icons.delete),
+                                      icon: const Icon(Icons.delete),
                                     ),
                                   ))
                               .toList(),
@@ -426,7 +426,7 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                         }),
                       ),
                       variant == null
-                          ? SpinnerWidget()
+                          ? const SpinnerWidget()
                           : Row(
                               children: [
                                 Expanded(
@@ -470,7 +470,7 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                                     game["InvitedPlayers"] = ip;
                                     game["InvitedNations"] = ina;
                                   }),
-                                  icon: Icon(Icons.add),
+                                  icon: const Icon(Icons.add),
                                 ),
                               ],
                             ),
