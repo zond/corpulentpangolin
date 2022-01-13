@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations_en.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 import 'spinner_widget.dart';
 import 'variant.dart';
@@ -541,38 +542,40 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                     ),
                     if (displayStartTimeRequirements)
                       ElevatedButton(
-                        child: Text(l10n.onlyStartTheGameBetween_F_and_T(
-                            game.dontStartBefore.format(context),
-                            game.dontStartAfter.format(context))),
-                        onPressed: () {
-                          showTimePicker(
+                          child: Text(l10n.onlyStartTheGameBetween_F_and_T(
+                              game.dontStartBefore.format(context),
+                              game.dontStartAfter.format(context))),
+                          onPressed: () {
+                            showTimePicker(
+                                    context: context,
+                                    initialTime: game.dontStartBefore,
+                                    helpText: l10n.dontStartGameBefore)
+                                .then((dontStartBefore) {
+                              if (dontStartBefore != null) {
+                                showTimePicker(
                                   context: context,
-                                  initialTime: game.dontStartBefore,
-                                  helpText: l10n.dontStartGameBefore)
-                              .then((dontStartBefore) {
-                            if (dontStartBefore != null) {
-                              showTimePicker(
-                                context: context,
-                                initialTime: game.dontStartAfter,
-                                helpText: l10n.dontStartGameAfter,
-                              ).then((dontStartAfter) {
-                                if (dontStartAfter != null) {
-                                  setState(() {
-                                    game["DontStartBeforeMinuteInDay"] =
-                                        60 * dontStartBefore.hour +
-                                            dontStartBefore.minute;
-                                    game["DontStartAfterMinuteInDay"] =
-                                        60 * dontStartAfter.hour +
-                                            dontStartAfter.minute;
-                                    game["DontStartLimitTimezone"] =
-                                        DateTime.now().timeZoneName;
-                                  });
-                                }
-                              });
-                            }
-                          });
-                        },
-                      ),
+                                  initialTime: game.dontStartAfter,
+                                  helpText: l10n.dontStartGameAfter,
+                                ).then((dontStartAfter) {
+                                  if (dontStartAfter != null) {
+                                    FlutterNativeTimezone.getLocalTimezone()
+                                        .then((tz) {
+                                      setState(() {
+                                        game["DontStartBeforeMinuteInDay"] =
+                                            60 * dontStartBefore.hour +
+                                                dontStartBefore.minute;
+                                        game["DontStartAfterMinuteInDay"] =
+                                            60 * dontStartAfter.hour +
+                                                dontStartAfter.minute;
+                                        game["DontStartLimitTimezone"] = tz;
+                                        debugPrint(game.dontStartLimitTimezone);
+                                      });
+                                    });
+                                  }
+                                });
+                              }
+                            });
+                          }),
                     Row(
                       children: [
                         Switch(

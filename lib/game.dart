@@ -298,6 +298,8 @@ class Game extends JSONMapView {
     return const TimeOfDay(hour: 0, minute: 0);
   }
 
+  String get dontStartLimitTimezone => getString("DontStartLimitTimezone");
+
   TimeOfDay get dontStartAfter {
     if (containsKey("DontStartAfterMinuteInDay")) {
       final mid = this["DontStartAfterMinuteInDay"] as int;

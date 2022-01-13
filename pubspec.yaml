@@ -31,6 +31,7 @@ dependencies:
   url_launcher:
   intl:
   universal_html:
+  flutter_native_timezone:
 
 dev_dependencies:
   import_sorter:
