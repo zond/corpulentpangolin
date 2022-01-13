@@ -178,6 +178,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "minutes": MessageLookupByLibrary.simpleMessage("Minuter"),
         "movement": MessageLookupByLibrary.simpleMessage("Förflyttning"),
         "myGames": MessageLookupByLibrary.simpleMessage("Mina spel"),
+        "nation": MessageLookupByLibrary.simpleMessage("Nation"),
         "nationSelection": MessageLookupByLibrary.simpleMessage("Val av land"),
         "nationSelection_Type_": m9,
         "newProfilePictureURL":
@@ -232,6 +233,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Det här spelet kräver en inbjudan för att delta"),
         "unableToLoadURL": m15,
         "unnamed": MessageLookupByLibrary.simpleMessage("namnlöst"),
+        "unspecified": MessageLookupByLibrary.simpleMessage("Ospecificerat"),
         "userID": MessageLookupByLibrary.simpleMessage("Användar-ID"),
         "username": MessageLookupByLibrary.simpleMessage("Användarnamn"),
         "username_V_": m16,

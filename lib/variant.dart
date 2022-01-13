@@ -62,6 +62,8 @@ class Variant extends JSONMapView {
 
   String get rules => getString("Rules");
 
+  List<String> get nations => getList<String>("Nations");
+
   String get description => getString("Description");
 
   Map<String, String>? _provinceLongNames;
@@ -72,16 +74,6 @@ class Variant extends JSONMapView {
       }
       return (this["ProvinceLongNames"] as Map<String, dynamic>)
           .map((k, v) => MapEntry(k, "$v"));
-    }();
-  }
-
-  List<String>? _nations;
-  List<String> get nations {
-    return _nations ??= () {
-      if (!containsKey("Nations")) {
-        return const [] as List<String>;
-      }
-      return (this["Nations"] as List<dynamic>).map((nat) => "$nat").toList();
     }();
   }
 

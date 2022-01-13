@@ -137,5 +137,7 @@
   "loggedInAs": "Inloggad som",
   "markedAsReady": "Markerad som redo",
   "userID": "Användar-ID",
-  "copiedToClipboard": "Kopierat till urklipp"
+  "copiedToClipboard": "Kopierat till urklipp",
+  "nation": "Nation",
+  "unspecified": "Ospecificerat"
 }

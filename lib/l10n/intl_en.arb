@@ -238,5 +238,7 @@
   "markedAsReady": "Marked as ready",
   "loggedInAs": "Logged in as",
   "userID": "User ID",
-  "copiedToClipboard": "Copied to clipboard"
+  "copiedToClipboard": "Copied to clipboard",
+  "nation": "Nation",
+  "unspecified": "Unspecified"
 }

@@ -316,6 +316,8 @@ class Game extends JSONMapView {
 
   List<String> get invitedPlayers => getList<String>("InvitedPlayers");
 
+  List<String> get invitedNations => getList<String>("InvitedNations");
+
   List<String> get players => getList<String>("Players");
 
   List<String> get members => getList<String>("Members");

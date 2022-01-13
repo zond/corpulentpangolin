@@ -17,7 +17,10 @@ import 'spinner_widget.dart';
 @immutable
 class PlayerWidget extends StatelessWidget {
   final String uid;
-  const PlayerWidget({Key? key, required this.uid}) : super(key: key);
+  final String? nation;
+  final Widget? trailing;
+  const PlayerWidget({Key? key, required this.uid, this.nation, this.trailing})
+      : super(key: key);
   @override
   Widget build(context) {
     final appRouter = context.read<AppRouter>();
@@ -41,21 +44,25 @@ class PlayerWidget extends StatelessWidget {
           if (user == null) {
             return const SpinnerWidget();
           }
-          return InkWell(
+          return ListTile(
             onTap: () => appRouter.push(ProfilePageRoute(uid: uid)),
-            child: Row(
+            visualDensity: VisualDensity(horizontal: -4, vertical: -4),
+            leading: SizedBox(
+              child: user.exists && user.pictureURL != ""
+                  ? Image.network(user.pictureURL)
+                  : Image.asset("assets/images/anon.png"),
+              width: avatarIconWidth,
+              height: avatarIconWidth,
+            ),
+            trailing: trailing,
+            title: Row(
               children: [
-                SizedBox(
-                  child: user.exists && user.pictureURL != ""
-                      ? Image.network(user.pictureURL)
-                      : Image.asset("assets/images/anon.png"),
-                  width: avatarIconWidth,
-                  height: avatarIconWidth,
-                ),
-                smallHorizSpace,
-                Expanded(
-                  child: Text(user.exists ? user.username : l10n.anonymous),
-                )
+                Text(user.exists ? user.username : l10n.anonymous),
+                if (nation != null)
+                  Padding(
+                    padding: const EdgeInsets.only(left: smallSpace),
+                    child: Text(nation!),
+                  ),
               ],
             ),
           );

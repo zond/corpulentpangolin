@@ -178,6 +178,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "minutes": MessageLookupByLibrary.simpleMessage("Minutes"),
         "movement": MessageLookupByLibrary.simpleMessage("Movement"),
         "myGames": MessageLookupByLibrary.simpleMessage("My games"),
+        "nation": MessageLookupByLibrary.simpleMessage("Nation"),
         "nationSelection":
             MessageLookupByLibrary.simpleMessage("Nation selection"),
         "nationSelection_Type_": m9,
@@ -232,6 +233,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "This game requires an invitation to join"),
         "unableToLoadURL": m15,
         "unnamed": MessageLookupByLibrary.simpleMessage("unnamed"),
+        "unspecified": MessageLookupByLibrary.simpleMessage("Unspecified"),
         "userID": MessageLookupByLibrary.simpleMessage("User ID"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "username_V_": m16,

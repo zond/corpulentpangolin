@@ -43,9 +43,6 @@ class ProfilePage extends StatelessWidget {
         final appRouter = context.read<AppRouter>();
         final l10n = AppLocalizations.of(context) ?? AppLocalizationsEn();
         final user = context.watch<User?>();
-        if (user == null) {
-          return const Text("Log in to see the profile page");
-        }
         final appUser = context.watch<AppUser?>();
         return Scaffold(
           appBar: AppBar(
@@ -61,23 +58,24 @@ class ProfilePage extends StatelessWidget {
                 child: SmallPadding(
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(l10n.loggedInAs),
-                          Text(user.email ?? l10n.unnamed),
-                        ],
-                      ),
+                      if (user != null && user.uid == uid)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(l10n.loggedInAs),
+                            Text(user.email ?? l10n.unnamed),
+                          ],
+                        ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(l10n.userID),
                           TextButton(
                             onPressed: () {
-                              Clipboard.setData(ClipboardData(text: user.uid));
+                              Clipboard.setData(ClipboardData(text: uid));
                               toast(context, l10n.copiedToClipboard);
                             },
-                            child: Text(user.uid),
+                            child: Text(uid),
                           ),
                         ],
                       )
@@ -105,7 +103,7 @@ class ProfilePage extends StatelessWidget {
                                     if (!appUser.exists ||
                                         appUser.pictureURL == "")
                                       Image.asset("assets/images/anon.png"),
-                                    if (user.uid == uid)
+                                    if (user != null && user.uid == uid)
                                       Positioned(
                                         right: 0.0,
                                         bottom: 0.0,
@@ -128,7 +126,7 @@ class ProfilePage extends StatelessWidget {
                             ),
                             SizedBox(
                               width: constraints.maxWidth / 2,
-                              child: user.uid == uid
+                              child: user != null && user.uid == uid
                                   ? OnBlurTextFormField(
                                       label: l10n.username,
                                       initialValue: appUser.username,
@@ -171,21 +169,22 @@ class ProfilePage extends StatelessWidget {
                         );
                       },
                     ),
-                    Card(
-                      child: Column(
-                        children: [
-                          _StatRow(l10n.reliability_, appUser.reliability),
-                          _StatRow(l10n.nmrPhases_, appUser.nmrPhases),
-                          _StatRow(l10n.nonNMRPhases_, appUser.nonNMRPhases),
-                          _StatRow(l10n.quickness_, appUser.quickness),
-                          _StatRow(
-                              l10n.committedPhases_, appUser.committedPhases),
-                          _StatRow(l10n.nonCommittedPhases_,
-                              appUser.nonCommittedPhases),
-                          _StatRow(l10n.rating_, appUser.rating),
-                        ],
-                      ),
-                    )
+                    if (appUser.exists)
+                      Card(
+                        child: Column(
+                          children: [
+                            _StatRow(l10n.reliability_, appUser.reliability),
+                            _StatRow(l10n.nmrPhases_, appUser.nmrPhases),
+                            _StatRow(l10n.nonNMRPhases_, appUser.nonNMRPhases),
+                            _StatRow(l10n.quickness_, appUser.quickness),
+                            _StatRow(
+                                l10n.committedPhases_, appUser.committedPhases),
+                            _StatRow(l10n.nonCommittedPhases_,
+                                appUser.nonCommittedPhases),
+                            _StatRow(l10n.rating_, appUser.rating),
+                          ],
+                        ),
+                      )
                   ],
                 ),
               ],

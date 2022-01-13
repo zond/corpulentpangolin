@@ -1448,6 +1448,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Nation`
+  String get nation {
+    return Intl.message(
+      'Nation',
+      name: 'nation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unspecified`
+  String get unspecified {
+    return Intl.message(
+      'Unspecified',
+      name: 'unspecified',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

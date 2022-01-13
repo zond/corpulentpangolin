@@ -1,4 +1,5 @@
 import 'package:corpulentpangolin/layout.dart';
+import 'package:corpulentpangolin/player_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -198,6 +199,8 @@ class _EditGameWidgetState extends State<EditGameWidget> {
   bool displayGraceOptions = false;
   bool displayExtensionOptions = false;
   bool working = false;
+  String inviteNation = "";
+  String invitePlayerID = "";
   final gameCollection = FirebaseFirestore.instance.collection("Game");
 
   @override
@@ -377,6 +380,100 @@ class _EditGameWidgetState extends State<EditGameWidget> {
                       Text(l10n.onlyPlayersAssignedByGM,
                           style: Theme.of(context).textTheme.bodyText2),
                     ],
+                    if (game.private &&
+                        game.ownerUID != "" &&
+                        game.invitationRequired) ...[
+                      if (game.invitedPlayers.isNotEmpty)
+                        Card(
+                            child: Column(
+                          children: game.invitedPlayers
+                              .asMap()
+                              .entries
+                              .map((entry) => PlayerWidget(
+                                    uid: entry.value,
+                                    nation: game.invitedNations.length >
+                                                entry.key &&
+                                            game.invitedNations[entry.key] != ""
+                                        ? game.invitedNations[entry.key]
+                                        : l10n.unspecified,
+                                    trailing: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          final ip = game.invitedPlayers;
+                                          ip.removeAt(entry.key);
+                                          game["InvitedPlayers"] = ip;
+                                          if (game.invitedNations.length >
+                                              entry.key) {
+                                            final ina = game.invitedNations;
+                                            ina.removeAt(entry.key);
+                                            game["InvitedNations"] = ina;
+                                          }
+                                        });
+                                      },
+                                      icon: Icon(Icons.delete),
+                                    ),
+                                  ))
+                              .toList(),
+                        )),
+                      TextFormField(
+                        initialValue: invitePlayerID,
+                        decoration: InputDecoration(
+                          labelText: l10n.userID,
+                        ),
+                        onChanged: (val) => setState(() {
+                          invitePlayerID = val;
+                        }),
+                      ),
+                      variant == null
+                          ? SpinnerWidget()
+                          : Row(
+                              children: [
+                                Expanded(
+                                  child: InputDecorator(
+                                    decoration: InputDecoration(
+                                      labelText: l10n.nation,
+                                    ),
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton(
+                                        isDense: true,
+                                        value: inviteNation,
+                                        items: [
+                                          DropdownMenuItem(
+                                            child: Text(l10n.unspecified),
+                                            value: "",
+                                          ),
+                                          ...variant.nations.map((nation) {
+                                            return DropdownMenuItem(
+                                              child: Text(nation),
+                                              value: nation,
+                                            );
+                                          }).toList(),
+                                        ],
+                                        onChanged: (val) => setState(() {
+                                          inviteNation = "$val";
+                                        }),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () => setState(() {
+                                    if (game.invitedPlayers
+                                        .contains(invitePlayerID)) {
+                                      return;
+                                    }
+                                    final ip = game.invitedPlayers;
+                                    ip.insert(0, invitePlayerID);
+                                    final ina = game.invitedNations;
+                                    ina.insert(0, inviteNation);
+                                    game["InvitedPlayers"] = ip;
+                                    game["InvitedNations"] = ina;
+                                  }),
+                                  icon: Icon(Icons.add),
+                                ),
+                              ],
+                            ),
+                    ]
                   ],
                 ),
               ),
