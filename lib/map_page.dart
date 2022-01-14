@@ -35,15 +35,8 @@ class MapPage extends StatelessWidget {
         SVGBundle(map: const [], units: const {}, err: e);
       },
       initialData: null,
-      child: Column(
-        children: [
-          Text("map ${game["Desc"]}"),
-          Expanded(
-            child: MapWidget(
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor),
-          ),
-        ],
-      ),
+      child:
+          MapWidget(backgroundColor: Theme.of(context).scaffoldBackgroundColor),
     );
   }
 }
