@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'dart:async';
 
 // Project imports:
 import 'package:corpulentpangolin/cache.dart';
@@ -18,7 +19,7 @@ import 'variant.dart';
 
 const bool isProd = bool.fromEnvironment("dart.vm.product");
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
