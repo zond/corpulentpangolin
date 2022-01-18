@@ -1,0 +1,1163 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+    match /Variant/{VariantID} {
+      match /Unit/{UnitID} {
+        allow read;
+      }
+      match /Flag/{FlagID} {
+        allow read;
+      }
+      match /Map/{MapID} {
+        allow read;
+      }
+      allow read;
+    }
+    match /User/{UserID} {
+      function allowreadUser() {
+        return (
+          true
+        );
+      }
+      allow read: if allowreadUser();
+      function allowcreateUser() {
+        let post = request.resource.data;
+        return (
+          (
+            (post.get("Username", "") is string)
+          )
+          &&
+          (
+            (post.get("PictureURL", "") is string)
+          )
+          &&
+          (
+            !("Rating" in post)  // from Rating tag
+            &&
+            (UserID == request.auth.uid)
+          )
+          &&
+          (
+            (post.get("Rating", 0) is number)
+          )
+          &&
+          (
+            !("Reliability" in post)
+          )
+          &&
+          (
+            !("NMRPhases" in post)
+          )
+          &&
+          (
+            !("NonNMRPhases" in post)
+          )
+          &&
+          (
+            !("Quickness" in post)
+          )
+          &&
+          (
+            !("CommittedPhases" in post)
+          )
+          &&
+          (
+            !("NonCommittedPhases" in post)
+          )
+          &&
+          (
+            !("BannedUsers" in post) && (!("BannedUsers" in post) || (post.BannedUsers == null) || (post.BannedUsers.size() == post.BannedUsers.toSet().size()))  // from BannedUsers tag
+          )
+          &&
+          (
+            ((post.get("BannedUsers", []) is list) || (post.BannedUsers == null))
+          )
+          &&
+          (
+            !("BannedByUsers" in post)
+          )
+          &&
+          (
+            post.keys().hasOnly(["BannedByUsers",  // default field presence validation
+                                 "BannedUsers",
+                                 "CommittedPhases",
+                                 "NMRPhases",
+                                 "NonCommittedPhases",
+                                 "NonNMRPhases",
+                                 "PictureURL",
+                                 "Quickness",
+                                 "Rating",
+                                 "Reliability",
+                                 "Username"])
+          )
+        );
+      }
+      allow create: if allowcreateUser();
+      function allowupdateUser() {
+        let pre = resource.data;
+        let post = request.resource.data;
+        let diffkeys = pre.diff(post).affectedKeys();
+        return (
+          (
+            (post.get("Username", "") is string)
+          )
+          &&
+          (
+            (post.get("PictureURL", "") is string)
+          )
+          &&
+          (
+            !("Rating" in diffkeys)  // from Rating tag
+            &&
+            (UserID == request.auth.uid)
+          )
+          &&
+          (
+            (post.get("Rating", 0) is number)
+          )
+          &&
+          (
+            !("Reliability" in diffkeys)
+          )
+          &&
+          (
+            !("NMRPhases" in diffkeys)
+          )
+          &&
+          (
+            !("NonNMRPhases" in diffkeys)
+          )
+          &&
+          (
+            !("Quickness" in diffkeys)
+          )
+          &&
+          (
+            !("CommittedPhases" in diffkeys)
+          )
+          &&
+          (
+            !("NonCommittedPhases" in diffkeys)
+          )
+          &&
+          (
+            !("BannedUsers" in diffkeys) && (!("BannedUsers" in post) || (post.BannedUsers == null) || (post.BannedUsers.size() == post.BannedUsers.toSet().size()))  // from BannedUsers tag
+          )
+          &&
+          (
+            ((post.get("BannedUsers", []) is list) || (post.BannedUsers == null))
+          )
+          &&
+          (
+            !("BannedByUsers" in diffkeys)
+          )
+          &&
+          (
+            post.keys().hasOnly(["BannedByUsers",  // default field presence validation
+                                 "BannedUsers",
+                                 "CommittedPhases",
+                                 "NMRPhases",
+                                 "NonCommittedPhases",
+                                 "NonNMRPhases",
+                                 "PictureURL",
+                                 "Quickness",
+                                 "Rating",
+                                 "Reliability",
+                                 "Username"])
+          )
+        );
+      }
+      allow update: if allowupdateUser();
+    }
+    match /Game/{GameID} {
+      function missingUserDocAndIsOK(doc) {
+        return !exists(/databases/$(database)/documents/User/$(request.auth.uid))
+               &&
+               (doc.get("MinReliability", 0) == 0)
+               &&
+               (doc.get("MinQuickness", 0) == 0)
+               &&
+               (doc.get("MinRating", 0) == 0);
+      }
+      function existingUserAllowedInGame(doc) {
+        let user = get(/databases/$(database)/documents/User/$(request.auth.uid)).data;
+        return (doc.Players.toSet().intersection(user.get("BannedUsers", []).toSet()).size() == 0)
+               &&
+               (doc.Players.toSet().intersection(user.get("BannedByUsers", []).toSet()).size() == 0)
+               &&
+               (user.get("Reliability", 0) >= doc.get("MinReliability", 0))
+               &&
+               (user.get("Quickness", 0) >= doc.get("MinQuickness", 0))
+               &&
+               (user.get("Rating", 0) >= doc.get("MinRating", 0));
+      }
+      function invitedOrDoesntNeedInvitation(doc) {
+        return !doc.get("InvitationRequired", false) || (request.auth.uid in doc.get("InvitedPlayers", []));
+      }
+      function userAllowedInGame(doc) {
+        return invitedOrDoesntNeedInvitation(doc)
+               &&
+               (
+                 missingUserDocAndIsOK(doc)
+                 ||
+                 existingUserAllowedInGame(doc)
+               );
+      }
+      match /Phase/{PhaseID} {
+        function allowcreatePhase() {
+          let post = request.resource.data;
+          return (
+            (
+              !("Meta" in post)
+            )
+            &&
+            (
+              !("Units" in post)
+            )
+            &&
+            (
+              !("SCs" in post)
+            )
+            &&
+            (
+              !("Dislodgeds" in post)
+            )
+            &&
+            (
+              !("Dislodgers" in post)
+            )
+            &&
+            (
+              !("ForcedDisbands" in post)
+            )
+            &&
+            (
+              !("Bounces" in post)
+            )
+            &&
+            (
+              !("Resolutions" in post)
+            )
+            &&
+            (
+              post.keys().hasOnly(["Bounces",  // default field presence validation
+                                   "Dislodgeds",
+                                   "Dislodgers",
+                                   "ForcedDisbands",
+                                   "Meta",
+                                   "Resolutions",
+                                   "SCs",
+                                   "Units"])
+            )
+          );
+        }
+        allow create: if allowcreatePhase();
+        function allowupdatePhase() {
+          let pre = resource.data;
+          let post = request.resource.data;
+          let diffkeys = pre.diff(post).affectedKeys();
+          return (
+            (
+              !("Meta" in diffkeys)
+            )
+            &&
+            (
+              !("Units" in diffkeys)
+            )
+            &&
+            (
+              !("SCs" in diffkeys)
+            )
+            &&
+            (
+              !("Dislodgeds" in diffkeys)
+            )
+            &&
+            (
+              !("Dislodgers" in diffkeys)
+            )
+            &&
+            (
+              !("ForcedDisbands" in diffkeys)
+            )
+            &&
+            (
+              !("Bounces" in diffkeys)
+            )
+            &&
+            (
+              !("Resolutions" in diffkeys)
+            )
+            &&
+            (
+              post.keys().hasOnly(["Bounces",  // default field presence validation
+                                   "Dislodgeds",
+                                   "Dislodgers",
+                                   "ForcedDisbands",
+                                   "Meta",
+                                   "Resolutions",
+                                   "SCs",
+                                   "Units"])
+            )
+          );
+        }
+        allow update: if allowupdatePhase();
+      }
+      match /Preference/{PreferenceID} {
+        function allowreadPreference() {
+          return (
+            request.auth.uid == PreferenceID  // from Prefs tag
+          );
+        }
+        allow read: if allowreadPreference();
+        function allowcreatePreference() {
+          let post = request.resource.data;
+          let game = get(/databases/$(database)/documents/Game/$(GameID)).data;
+          let variant = get(/databases/$(database)/documents/Variant/$(game.Variant)).data;
+          return (
+            (
+              (request.auth.uid == PreferenceID)  // from Prefs tag
+              &&
+              (post.Prefs == null ? [].toSet() : post.get("Prefs", []).toSet()).hasOnly(variant.Nations.toSet())
+            )
+            &&
+            (
+              ((post.get("Prefs", []) is list) || (post.Prefs == null))
+            )
+            &&
+            (
+              post.keys().hasOnly(["Prefs"])  // default field presence validation
+            )
+          );
+        }
+        allow create: if allowcreatePreference();
+        function allowupdatePreference() {
+          let post = request.resource.data;
+          let game = get(/databases/$(database)/documents/Game/$(GameID)).data;
+          let variant = get(/databases/$(database)/documents/Variant/$(game.Variant)).data;
+          return (
+            (
+              (request.auth.uid == PreferenceID)  // from Prefs tag
+              &&
+              (post.Prefs == null ? [].toSet() : post.get("Prefs", []).toSet()).hasOnly(variant.Nations.toSet())
+            )
+            &&
+            (
+              ((post.get("Prefs", []) is list) || (post.Prefs == null))
+            )
+            &&
+            (
+              post.keys().hasOnly(["Prefs"])  // default field presence validation
+            )
+          );
+        }
+        allow update: if allowupdatePreference();
+        function allowdeletePreference() {
+          return (
+            request.auth.uid == PreferenceID  // from Prefs tag
+          );
+        }
+        allow delete: if allowdeletePreference();
+      }
+      function allowgetGame() {
+        return (
+          true
+        );
+      }
+      allow get: if allowgetGame();
+      function allowlistGame() {
+        let pre = resource.data;
+        return (
+          (pre.Private == false)  // from Members tag
+          ||
+          (
+            (request.auth != null)
+            &&
+            (request.auth.uid in pre.Members)
+          )
+        );
+      }
+      allow list: if allowlistGame();
+      function allowcreateGame() {
+        let post = request.resource.data;
+        return (
+          (
+            post.CreatorUID == request.auth.uid  // from CreatorUID tag
+          )
+          &&
+          (
+            (post.get("CreatorUID", "") is string)
+          )
+          &&
+          (
+            (post.OwnerUID == "" || post.OwnerUID == request.auth.uid)  // ownerless, or creator is owner  // from OwnerUID tag
+          )
+          &&
+          (
+            (post.get("OwnerUID", "") is string)
+          )
+          &&
+          (
+            (post.get("ReplacementOwnerUID", "") is string)
+          )
+          &&
+          (
+            !("PhaseMeta" in post)
+          )
+          &&
+          (
+            (post.get("InvitationRequired", false) is bool)
+          )
+          &&
+          (
+            (post.get("Desc", "") is string)
+          )
+          &&
+          (
+            post.NationSelection in ["random", "preferences"]  // from NationSelection tag
+          )
+          &&
+          (
+            (post.get("NationSelection", "") is string)
+          )
+          &&
+          (
+            (post.get("MusteringRequired", false) is bool)
+          )
+          &&
+          (
+            (post.get("NMRsBeforeReplaceable", 0) is int)
+          )
+          &&
+          (
+            !("NMRsPerPlayer" in post)
+          )
+          &&
+          (
+            (post.get("GraceLengthMinutes", 0) is int)
+          )
+          &&
+          (
+            (post.get("GracesPerPlayer", 0) is int)
+          )
+          &&
+          (
+            !("GracesUsedPerPlayer" in post)
+          )
+          &&
+          (
+            (post.get("GracesPerPhase", 0) is int)
+          )
+          &&
+          (
+            (post.get("MaxExtensionLengthMinutes", 0) is int)
+          )
+          &&
+          (
+            (post.get("ExtensionsPerPlayer", 0) is int)
+          )
+          &&
+          (
+            !("ExtensionsUsedPerPlayer" in post)
+          )
+          &&
+          (
+            (post.get("ExtensionsPerPhase", 0) is int)
+          )
+          &&
+          (
+            (post.get("PlayerRatioForExtraExtensionVote", 0) is number)
+          )
+          &&
+          (
+            post.get("PhaseLengthMinutes", 0) >= 0  // from PhaseLengthMinutes tag
+          )
+          &&
+          (
+            (post.get("PhaseLengthMinutes", 0) is int)
+          )
+          &&
+          (
+            post.get("NonMovementPhaseLengthMinutes", 0) >= 0  // from NonMovementPhaseLengthMinutes tag
+          )
+          &&
+          (
+            (post.get("NonMovementPhaseLengthMinutes", 0) is int)
+          )
+          &&
+          (
+            (post.get("DontStartLimitTimezone", "") is string)
+          )
+          &&
+          (
+            post.get("DontStartBeforeMinuteInDay", 0) >= 0 && post.get("DontStartBeforeMinuteInDay", 0) <= 1440  // from DontStartBeforeMinuteInDay tag
+          )
+          &&
+          (
+            (post.get("DontStartBeforeMinuteInDay", 0) is int)
+          )
+          &&
+          (
+            post.get("DontStartAfterMinuteInDay", 0) >= 0 && post.get("DontStartAfterMinuteInDay", 0) <= 1440  // from DontStartAfterMinuteInDay tag
+          )
+          &&
+          (
+            (post.get("DontStartAfterMinuteInDay", 0) is int)
+          )
+          &&
+          (
+            post.get("MinReliability", 0) >= 0  // from MinReliability tag
+          )
+          &&
+          (
+            (post.get("MinReliability", 0) is number)
+          )
+          &&
+          (
+            post.get("MinQuickness", 0) >= 0  // from MinQuickness tag
+          )
+          &&
+          (
+            (post.get("MinQuickness", 0) is number)
+          )
+          &&
+          (
+            post.get("MinRating", 0) >= 0  // from MinRating tag
+          )
+          &&
+          (
+            (post.get("MinRating", 0) is number)
+          )
+          &&
+          (
+            (post.get("Private", false) is bool)
+          )
+          &&
+          (
+            (post.get("DisableConferenceChat", false) is bool)
+          )
+          &&
+          (
+            (post.get("DisableGroupChat", false) is bool)
+          )
+          &&
+          (
+            (post.get("DisablePrivateChat", false) is bool)
+          )
+          &&
+          (
+            exists(/databases/$(database)/documents/Variant/$(post.Variant))  // variant must exist  // from Variant tag
+          )
+          &&
+          (
+            (post.get("Variant", "") is string)
+          )
+          &&
+          (
+            !("ReplaceablePlayers" in post)
+          )
+          &&
+          (
+            (!("InvitedPlayers" in post) || (post.InvitedPlayers == null) || (post.InvitedPlayers.size() == post.InvitedPlayers.toSet().size()))  // from InvitedPlayers tag
+          )
+          &&
+          (
+            ((post.get("InvitedPlayers", []) is list) || (post.InvitedPlayers == null))
+          )
+          &&
+          (
+            ((post.get("InvitedNations", []) is list) || (post.InvitedNations == null))
+          )
+          &&
+          (
+            !("MusteredPlayers" in post)
+          )
+          &&
+          (
+            (!("Members" in post) || (post.Members == null) || (post.Members.size() == post.Members.toSet().size()))  // from Members tag
+            &&
+            (
+              (
+                (post.OwnerUID == "")
+                &&
+                ((post.Members == null ? [].toSet() : post.get("Members", []).toSet()) == (post.Players == null ? [].toSet() : post.get("Players", []).toSet()))
+              )
+              ||
+              (
+                (post.OwnerUID != "")
+                &&
+                ((post.Members == null ? [].toSet() : post.get("Members", []).toSet()) == (post.Players == null ? [].toSet() : post.get("Players", []).toSet()).union([post.OwnerUID].toSet()))
+              )
+            )
+          )
+          &&
+          (
+            ((post.get("Members", []) is list) || (post.Members == null))
+          )
+          &&
+          (
+            (!("Players" in post) || (post.Players == null) || (post.Players.size() == post.Players.toSet().size()))  // no double players  // from Players tag
+            &&
+            (
+              (
+                (post.Players == [request.auth.uid])  // the user is the only player
+                &&
+                userAllowedInGame(post)  // and the user is allowed in the game
+              )
+              ||
+              (
+                (post.OwnerUID == request.auth.uid)  // or the user is the owner
+                &&
+                (post.Players == null || post.Players.size() == 0)  // and there is no player yet
+              )
+            )
+          )
+          &&
+          (
+            ((post.get("Players", []) is list) || (post.Players == null))
+          )
+          &&
+          (
+            !("PlayerNations" in post)
+          )
+          &&
+          (
+            post.CategorySortKey == 1000  // created games must have category sort key 1000  // from CategorySortKey tag
+          )
+          &&
+          (
+            (post.get("CategorySortKey", 0) is int)
+          )
+          &&
+          (
+            !("TimeSortKey" in post)
+          )
+          &&
+          (
+            !("CreatedAt" in post)
+          )
+          &&
+          (
+            !("Seeded" in post)
+          )
+          &&
+          (
+            !("SeededAt" in post)
+          )
+          &&
+          (
+            !("Mustered" in post)
+          )
+          &&
+          (
+            !("MusteredAt" in post)
+          )
+          &&
+          (
+            !("Open" in post)
+          )
+          &&
+          (
+            !("Started" in post)
+          )
+          &&
+          (
+            !("StartedAt" in post)
+          )
+          &&
+          (
+            !("Finished" in post)
+          )
+          &&
+          (
+            !("FinishedAt" in post)
+          )
+          &&
+          (
+            !("ErrorMessage" in post)
+          )
+          &&
+          (
+            post.keys().hasOnly(["CategorySortKey",  // default field presence validation
+                                 "CreatedAt",
+                                 "CreatorUID",
+                                 "Desc",
+                                 "DisableConferenceChat",
+                                 "DisableGroupChat",
+                                 "DisablePrivateChat",
+                                 "DontStartAfterMinuteInDay",
+                                 "DontStartBeforeMinuteInDay",
+                                 "DontStartLimitTimezone",
+                                 "ErrorMessage",
+                                 "ExtensionsPerPhase",
+                                 "ExtensionsPerPlayer",
+                                 "ExtensionsUsedPerPlayer",
+                                 "Finished",
+                                 "FinishedAt",
+                                 "GraceLengthMinutes",
+                                 "GracesPerPhase",
+                                 "GracesPerPlayer",
+                                 "GracesUsedPerPlayer",
+                                 "InvitationRequired",
+                                 "InvitedNations",
+                                 "InvitedPlayers",
+                                 "MaxExtensionLengthMinutes",
+                                 "Members",
+                                 "MinQuickness",
+                                 "MinRating",
+                                 "MinReliability",
+                                 "Mustered",
+                                 "MusteredAt",
+                                 "MusteredPlayers",
+                                 "MusteringRequired",
+                                 "NMRsBeforeReplaceable",
+                                 "NMRsPerPlayer",
+                                 "NationSelection",
+                                 "NonMovementPhaseLengthMinutes",
+                                 "Open",
+                                 "OwnerUID",
+                                 "PhaseLengthMinutes",
+                                 "PhaseMeta",
+                                 "PlayerNations",
+                                 "PlayerRatioForExtraExtensionVote",
+                                 "Players",
+                                 "Private",
+                                 "ReplaceablePlayers",
+                                 "ReplacementOwnerUID",
+                                 "Seeded",
+                                 "SeededAt",
+                                 "Started",
+                                 "StartedAt",
+                                 "TimeSortKey",
+                                 "Variant"])
+          )
+        );
+      }
+      allow create: if allowcreateGame();
+      function allowupdateGame() {
+        let pre = resource.data;
+        let post = request.resource.data;
+        let diffkeys = pre.diff(post).affectedKeys();
+        let post_players = (post.Players == null ? [].toSet() : post.get("Players", []).toSet());
+        let pre_players = (pre.Players == null ? [].toSet() : pre.get("Players", []).toSet());
+        let added_players = post_players.difference(pre_players);
+        let removed_players = pre_players.difference(post_players);
+        let variant = get(/databases/$(database)/documents/Variant/$(post.Variant)).data;
+        return (
+          (
+            !("CreatorUID" in diffkeys)
+          )
+          &&
+          (
+            (  // from OwnerUID tag
+              (diffkeys.hasOnly(["MusteredPlayers", "Players", "Members", "ReplaceablePlayers"]))
+              ||
+              (request.auth.uid == pre.OwnerUID)  // only owner can edit other things than the above set
+            )
+            &&
+            (
+              !("OwnerUID" in diffkeys)
+              ||
+              (
+                (post.OwnerUID == request.auth.uid)
+                &&
+                (post.ReplacementOwnerUID == request.auth.uid)
+              )
+            )
+          )
+          &&
+          (
+            (post.get("OwnerUID", "") is string)
+          )
+          &&
+          (
+            (post.get("ReplacementOwnerUID", "") is string)
+          )
+          &&
+          (
+            !("PhaseMeta" in diffkeys)
+          )
+          &&
+          (
+            (post.get("InvitationRequired", false) is bool)
+          )
+          &&
+          (
+            (post.get("Desc", "") is string)
+          )
+          &&
+          (
+            post.NationSelection in ["random", "preferences"]  // from NationSelection tag
+          )
+          &&
+          (
+            (post.get("NationSelection", "") is string)
+          )
+          &&
+          (
+            (post.get("MusteringRequired", false) is bool)
+          )
+          &&
+          (
+            (post.get("NMRsBeforeReplaceable", 0) is int)
+          )
+          &&
+          (
+            !("NMRsPerPlayer" in diffkeys)
+          )
+          &&
+          (
+            (post.get("GraceLengthMinutes", 0) is int)
+          )
+          &&
+          (
+            (post.get("GracesPerPlayer", 0) is int)
+          )
+          &&
+          (
+            !("GracesUsedPerPlayer" in diffkeys)
+          )
+          &&
+          (
+            (post.get("GracesPerPhase", 0) is int)
+          )
+          &&
+          (
+            (post.get("MaxExtensionLengthMinutes", 0) is int)
+          )
+          &&
+          (
+            (post.get("ExtensionsPerPlayer", 0) is int)
+          )
+          &&
+          (
+            !("ExtensionsUsedPerPlayer" in diffkeys)
+          )
+          &&
+          (
+            (post.get("ExtensionsPerPhase", 0) is int)
+          )
+          &&
+          (
+            (post.get("PlayerRatioForExtraExtensionVote", 0) is number)
+          )
+          &&
+          (
+            post.get("PhaseLengthMinutes", 0) >= 0  // from PhaseLengthMinutes tag
+          )
+          &&
+          (
+            (post.get("PhaseLengthMinutes", 0) is int)
+          )
+          &&
+          (
+            post.get("NonMovementPhaseLengthMinutes", 0) >= 0  // from NonMovementPhaseLengthMinutes tag
+          )
+          &&
+          (
+            (post.get("NonMovementPhaseLengthMinutes", 0) is int)
+          )
+          &&
+          (
+            (post.get("DontStartLimitTimezone", "") is string)
+          )
+          &&
+          (
+            post.get("DontStartBeforeMinuteInDay", 0) >= 0 && post.get("DontStartBeforeMinuteInDay", 0) <= 1440  // from DontStartBeforeMinuteInDay tag
+          )
+          &&
+          (
+            (post.get("DontStartBeforeMinuteInDay", 0) is int)
+          )
+          &&
+          (
+            post.get("DontStartAfterMinuteInDay", 0) >= 0 && post.get("DontStartAfterMinuteInDay", 0) <= 1440  // from DontStartAfterMinuteInDay tag
+          )
+          &&
+          (
+            (post.get("DontStartAfterMinuteInDay", 0) is int)
+          )
+          &&
+          (
+            post.get("MinReliability", 0) >= 0  // from MinReliability tag
+          )
+          &&
+          (
+            (post.get("MinReliability", 0) is number)
+          )
+          &&
+          (
+            post.get("MinQuickness", 0) >= 0  // from MinQuickness tag
+          )
+          &&
+          (
+            (post.get("MinQuickness", 0) is number)
+          )
+          &&
+          (
+            post.get("MinRating", 0) >= 0  // from MinRating tag
+          )
+          &&
+          (
+            (post.get("MinRating", 0) is number)
+          )
+          &&
+          (
+            (post.get("Private", false) is bool)
+          )
+          &&
+          (
+            (post.get("DisableConferenceChat", false) is bool)
+          )
+          &&
+          (
+            (post.get("DisableGroupChat", false) is bool)
+          )
+          &&
+          (
+            (post.get("DisablePrivateChat", false) is bool)
+          )
+          &&
+          (
+            !("Variant" in diffkeys)
+          )
+          &&
+          (
+            (!("ReplaceablePlayers" in post) || (post.ReplaceablePlayers == null) || (post.ReplaceablePlayers.size() == post.ReplaceablePlayers.toSet().size()))  // from ReplaceablePlayers tag
+          )
+          &&
+          (
+            ((post.get("ReplaceablePlayers", []) is list) || (post.ReplaceablePlayers == null))
+          )
+          &&
+          (
+            (!("InvitedPlayers" in post) || (post.InvitedPlayers == null) || (post.InvitedPlayers.size() == post.InvitedPlayers.toSet().size()))  // from InvitedPlayers tag
+          )
+          &&
+          (
+            ((post.get("InvitedPlayers", []) is list) || (post.InvitedPlayers == null))
+          )
+          &&
+          (
+            ((post.get("InvitedNations", []) is list) || (post.InvitedNations == null))
+          )
+          &&
+          (
+            !("MusteredPlayers" in diffkeys)  // from MusteredPlayers tag
+            ||
+            (
+              request.auth.uid in (post.Players == null ? [] : post.get("Players", []))
+              &&
+              (post.MusteredPlayers == null ? [].toSet() : post.get("MusteredPlayers", []).toSet()).difference((pre.MusteredPlayers == null ? [].toSet() : pre.get("MusteredPlayers", []).toSet())) == [request.auth.uid].toSet()
+            )
+          )
+          &&
+          (
+            ((post.get("MusteredPlayers", []) is list) || (post.MusteredPlayers == null))
+          )
+          &&
+          (
+            (!("Members" in post) || (post.Members == null) || (post.Members.size() == post.Members.toSet().size()))  // from Members tag
+            &&
+            (
+              (
+                (post.OwnerUID == "")
+                &&
+                ((post.Members == null ? [].toSet() : post.get("Members", []).toSet()) == (post.Players == null ? [].toSet() : post.get("Players", []).toSet()))
+              )
+              ||
+              (
+                (post.OwnerUID != "")
+                &&
+                ((post.Members == null ? [].toSet() : post.get("Members", []).toSet()) == (post.Players == null ? [].toSet() : post.get("Players", []).toSet()).union([post.OwnerUID].toSet()))
+              )
+            )
+          )
+          &&
+          (
+            ((post.get("Members", []) is list) || (post.Members == null))
+          )
+          &&
+          (
+            (diffkeys.intersection(["Players", "ReplaceablePlayers", "PlayerPreferences"].toSet()).size() == 0)  // no change at all to the players, preferences, or replaceable players  // from Players tag
+            ||
+            (
+              (post_players.size() <= variant.Nations.size())  // never more players than variant nations
+              &&
+              (!("Players" in post) || (post.Players == null) || (post.Players.size() == post.Players.toSet().size()))  // no double players
+              &&
+              (
+                (
+                  !(request.auth.uid in post_players)  // either the user isn't a player
+                  &&
+                  !exists(/databases/$(database)/documents/Game/$(GameID)/Preference/$(request.auth.uid))  // and doesn't have prefs
+                )
+                ||
+                userAllowedInGame(pre)  // or the user is allowed in the game
+              )
+              &&
+              (
+                (
+                  (request.auth.uid == pre.OwnerUID)  // owner can mess with players and replaceable players
+                  &&
+                  (added_players.size() == 0)  // except add players arbitrarily
+                )
+                ||
+                (
+                  !("ReplaceablePlayers" in diffkeys)
+                  &&
+                  (!pre.Started)
+                  &&
+                  (
+                    (
+                      (added_players == [request.auth.uid].toSet())  // user was added
+                      &&
+                      (removed_players.size() == 0)  // nobody was removed
+                    )
+                    ||
+                    (
+                      (added_players.size() == 0)  // nobody was added
+                      &&
+                      (removed_players == [request.auth.uid].toSet())  // user was removed
+                    )
+                  )
+                )
+                ||
+                (
+                  (!pre.Finished)
+                  &&
+                  (post_players.size() == pre_players.size())  // same number of players
+                  &&
+                  (added_players == [request.auth.uid].toSet())  // added themselves
+                  &&
+                  ((post.ReplaceablePlayers == null ? [].toSet() : post.get("ReplaceablePlayers", []).toSet()).size() == (pre.ReplaceablePlayers == null ? [].toSet() : pre.get("ReplaceablePlayers", []).toSet()).size() - 1)  // removed a replaceable player
+                  &&
+                  (removed_players == (pre.ReplaceablePlayers == null ? [].toSet() : pre.get("ReplaceablePlayers", []).toSet()).difference((post.ReplaceablePlayers == null ? [].toSet() : post.get("ReplaceablePlayers", []).toSet())))  // removed players were also removed from replaceable players
+                )
+              )
+            )
+          )
+          &&
+          (
+            ((post.get("Players", []) is list) || (post.Players == null))
+          )
+          &&
+          (
+            !("PlayerNations" in diffkeys)
+          )
+          &&
+          (
+            !("CategorySortKey" in diffkeys)
+          )
+          &&
+          (
+            !("TimeSortKey" in diffkeys)
+          )
+          &&
+          (
+            !("CreatedAt" in diffkeys)
+          )
+          &&
+          (
+            !("Seeded" in diffkeys)
+          )
+          &&
+          (
+            !("SeededAt" in diffkeys)
+          )
+          &&
+          (
+            !("Mustered" in diffkeys)
+          )
+          &&
+          (
+            !("MusteredAt" in diffkeys)
+          )
+          &&
+          (
+            !("Open" in diffkeys)
+          )
+          &&
+          (
+            !("Started" in diffkeys)
+          )
+          &&
+          (
+            !("StartedAt" in diffkeys)
+          )
+          &&
+          (
+            !("Finished" in diffkeys)
+          )
+          &&
+          (
+            !("FinishedAt" in diffkeys)
+          )
+          &&
+          (
+            !("ErrorMessage" in diffkeys)
+          )
+          &&
+          (
+            post.keys().hasOnly(["CategorySortKey",  // default field presence validation
+                                 "CreatedAt",
+                                 "CreatorUID",
+                                 "Desc",
+                                 "DisableConferenceChat",
+                                 "DisableGroupChat",
+                                 "DisablePrivateChat",
+                                 "DontStartAfterMinuteInDay",
+                                 "DontStartBeforeMinuteInDay",
+                                 "DontStartLimitTimezone",
+                                 "ErrorMessage",
+                                 "ExtensionsPerPhase",
+                                 "ExtensionsPerPlayer",
+                                 "ExtensionsUsedPerPlayer",
+                                 "Finished",
+                                 "FinishedAt",
+                                 "GraceLengthMinutes",
+                                 "GracesPerPhase",
+                                 "GracesPerPlayer",
+                                 "GracesUsedPerPlayer",
+                                 "InvitationRequired",
+                                 "InvitedNations",
+                                 "InvitedPlayers",
+                                 "MaxExtensionLengthMinutes",
+                                 "Members",
+                                 "MinQuickness",
+                                 "MinRating",
+                                 "MinReliability",
+                                 "Mustered",
+                                 "MusteredAt",
+                                 "MusteredPlayers",
+                                 "MusteringRequired",
+                                 "NMRsBeforeReplaceable",
+                                 "NMRsPerPlayer",
+                                 "NationSelection",
+                                 "NonMovementPhaseLengthMinutes",
+                                 "Open",
+                                 "OwnerUID",
+                                 "PhaseLengthMinutes",
+                                 "PhaseMeta",
+                                 "PlayerNations",
+                                 "PlayerRatioForExtraExtensionVote",
+                                 "Players",
+                                 "Private",
+                                 "ReplaceablePlayers",
+                                 "ReplacementOwnerUID",
+                                 "Seeded",
+                                 "SeededAt",
+                                 "Started",
+                                 "StartedAt",
+                                 "TimeSortKey",
+                                 "Variant"])
+          )
+        );
+      }
+      allow update: if allowupdateGame();
+    }
+  }
+}
